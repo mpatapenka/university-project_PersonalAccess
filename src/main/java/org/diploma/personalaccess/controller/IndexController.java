@@ -15,4 +15,9 @@ public class IndexController {
         return "Hello, World!";
     }
 
+    @RequestMapping(value = "/hello", method = RequestMethod.GET)
+    public String getHello() {
+        return "hello";
+    }
+
 }

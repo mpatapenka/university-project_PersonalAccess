@@ -3,6 +3,7 @@ package org.diploma.personalaccess.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -32,7 +33,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public CommonsMultipartResolver setupMultipartResolver() {
+    public MultipartResolver setupMultipartResolver() {
         final long maxUploadSize = 1024 * 1024;
 
         CommonsMultipartResolver resolver = new CommonsMultipartResolver();

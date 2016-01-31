@@ -72,7 +72,7 @@ public class DatabaseConfig {
 
         try {
             Properties properties = new Properties();
-            InputStream is = getClass().getResourceAsStream(propertyFile);
+            InputStream is = getClass().getClassLoader().getResourceAsStream(propertyFile);
             properties.load(is);
 
             return properties;

@@ -1,6 +1,7 @@
 package org.diploma.personalaccess.config;
 
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -25,6 +26,8 @@ import java.util.Properties;
 @PropertySource("classpath:db.properties")
 @ComponentScan("org.diploma.personalaccess")
 public class DatabaseConfig {
+
+    private static final Logger log = Logger.getLogger(DatabaseConfig.class);
 
     @Resource
     private Environment env;
@@ -77,7 +80,9 @@ public class DatabaseConfig {
 
             return properties;
         } catch (IOException e) {
-            throw new IllegalArgumentException("Can not find '" + propertyFile + "' in classpath.", e);
+            String message = "Can not find '" + propertyFile + "' in classpath.";
+            log.error(message, e);
+            throw new IllegalArgumentException(message, e);
         }
     }
 

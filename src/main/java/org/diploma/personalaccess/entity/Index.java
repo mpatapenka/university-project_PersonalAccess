@@ -43,14 +43,6 @@ public class Index extends BaseEntity {
             inverseJoinColumns = {@JoinColumn(name = "position_id", nullable = false)})
     private Set<Position> availablePositions = new HashSet<>();
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }

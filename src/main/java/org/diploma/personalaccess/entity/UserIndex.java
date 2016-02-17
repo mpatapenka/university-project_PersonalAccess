@@ -1,19 +1,11 @@
 package org.diploma.personalaccess.entity;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
-import java.io.Serializable;
 import java.sql.Date;
 
 @Entity
 @Table(name = "user_index")
-public class UserIndex implements Serializable {
-
-    @Id
-    @GeneratedValue(generator = "increment")
-    @GenericGenerator(name = "increment", strategy = "increment")
-    private long id;
+public class UserIndex extends BaseEntity {
 
     @Column(name = "self_estimate")
     private int selfEstimate;
@@ -38,14 +30,6 @@ public class UserIndex implements Serializable {
     @ManyToOne
     @JoinColumn(name = "document_id")
     private Document document;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public int getSelfEstimate() {
         return selfEstimate;

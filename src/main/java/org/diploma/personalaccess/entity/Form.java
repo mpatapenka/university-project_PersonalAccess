@@ -1,20 +1,12 @@
 package org.diploma.personalaccess.entity;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "form")
-public class Form implements Serializable {
-
-    @Id
-    @GeneratedValue(generator = "increment")
-    @GenericGenerator(name = "increment", strategy = "increment")
-    private long id;
+public class Form extends BaseEntity {
 
     @Column(name = "firstname", length = 50)
     private String firstName;
@@ -39,14 +31,6 @@ public class Form implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "form")
     private Set<User> users = new HashSet<>();
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getFirstName() {
         return firstName;

@@ -1,20 +1,12 @@
 package org.diploma.personalaccess.entity;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "`index`")
-public class Index implements Serializable {
-
-    @Id
-    @GeneratedValue(generator = "increment")
-    @GenericGenerator(name = "increment", strategy = "increment")
-    private long id;
+@Table(name = "_index")
+public class Index extends BaseEntity {
 
     @Column(name = "name", length = 400)
     private String name;

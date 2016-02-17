@@ -1,20 +1,12 @@
 package org.diploma.personalaccess.entity;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "role")
-public class Role implements Serializable {
-
-    @Id
-    @GeneratedValue(generator = "increment")
-    @GenericGenerator(name = "increment", strategy = "increment")
-    private long id;
+public class Role extends BaseEntity {
 
     @Column(name = "name", length = 50)
     private String name;
@@ -24,14 +16,6 @@ public class Role implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "role")
     private Set<User> users = new HashSet<>();
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;

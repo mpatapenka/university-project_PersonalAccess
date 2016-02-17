@@ -1,5 +1,7 @@
 package org.diploma.personalaccess.entity;
 
+import org.springframework.core.style.ToStringCreator;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -88,6 +90,18 @@ public class User extends BaseEntity {
 
     public void setSubs(Set<User> subs) {
         this.subs = subs;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringCreator(this)
+                .append("id", getId())
+                .append("username", getUsername())
+                .append("password", getPassword())
+                .append("form", getForm())
+                .append("role", getRole())
+                .append("subs", getSubs())
+                .toString();
     }
 
 }

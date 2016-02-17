@@ -1,5 +1,7 @@
 package org.diploma.personalaccess.entity;
 
+import org.springframework.core.style.ToStringCreator;
+
 import javax.persistence.*;
 import java.sql.Date;
 
@@ -85,6 +87,20 @@ public class UserIndex extends BaseEntity {
 
     public void setDocument(Document document) {
         this.document = document;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringCreator(this)
+                .append("id", getId())
+                .append("selfEstimate", getSelfEstimate())
+                .append("leadEstimate", getLeadEstimate())
+                .append("fillDate", getFillDate())
+                .append("description", getDescription())
+                .append("index", getIndex())
+                .append("user", getUser())
+                .append("document", getDocument())
+                .toString();
     }
 
 }

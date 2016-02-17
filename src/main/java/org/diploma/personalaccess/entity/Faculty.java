@@ -1,5 +1,7 @@
 package org.diploma.personalaccess.entity;
 
+import org.springframework.core.style.ToStringCreator;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -39,6 +41,15 @@ public class Faculty extends BaseEntity {
 
     public void setForms(Set<Form> forms) {
         this.forms = forms;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringCreator(this)
+                .append("id", getId())
+                .append("fullName", getFullName())
+                .append("shortName", getShortName())
+                .toString();
     }
 
 }

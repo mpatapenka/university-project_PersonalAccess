@@ -1,5 +1,7 @@
 package org.diploma.personalaccess.entity;
 
+import org.springframework.core.style.ToStringCreator;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -8,14 +10,14 @@ import java.util.Set;
 @Table(name = "form")
 public class Form extends BaseEntity {
 
-    @Column(name = "firstname", length = 50)
+    @Column(name = "first_name", length = 50)
     private String firstName;
 
-    @Column(name = "lastname", length = 50)
+    @Column(name = "last_name", length = 50)
     private String lastName;
 
-    @Column(name = "thirdname", length = 50)
-    private String thirdName;
+    @Column(name = "middle_name", length = 50)
+    private String middleName;
 
     @ManyToOne
     @JoinColumn(name = "unit_id")
@@ -48,12 +50,12 @@ public class Form extends BaseEntity {
         this.lastName = lastName;
     }
 
-    public String getThirdName() {
-        return thirdName;
+    public String getMiddleName() {
+        return middleName;
     }
 
-    public void setThirdName(String thirdName) {
-        this.thirdName = thirdName;
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
     }
 
     public Unit getUnit() {
@@ -88,4 +90,17 @@ public class Form extends BaseEntity {
         this.users = users;
     }
 
+    @Override
+    public String toString() {
+        return new ToStringCreator(this)
+                .append("id", getId())
+                .append("firstName", getFirstName())
+                .append("lastName", getLastName())
+                .append("middleName", getMiddleName())
+                .append("unit", getUnit())
+                .append("faculty", getFaculty())
+                .append("position", getPosition())
+                .toString();
+    }
+    
 }

@@ -1,5 +1,7 @@
 package org.diploma.personalaccess.entity;
 
+import org.springframework.core.style.ToStringCreator;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -83,6 +85,17 @@ public class Index extends BaseEntity {
 
     public void setAvailablePositions(Set<Position> availablePositions) {
         this.availablePositions = availablePositions;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringCreator(this)
+                .append("id", getId())
+                .append("name", getName())
+                .append("estimate", getEstimate())
+                .append("multiplier", getMultiplier())
+                .append("workName", getWorkName())
+                .toString();
     }
 
 }

@@ -1,5 +1,7 @@
 package org.diploma.personalaccess.entity;
 
+import org.springframework.core.style.ToStringCreator;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -30,4 +32,12 @@ public class Unit extends BaseEntity {
         this.forms = forms;
     }
 
+    @Override
+    public String toString() {
+        return new ToStringCreator(this)
+                .append("id", getId())
+                .append("name", getName())
+                .toString();
+    }
+    
 }

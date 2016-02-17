@@ -1,5 +1,7 @@
 package org.diploma.personalaccess.entity;
 
+import org.springframework.core.style.ToStringCreator;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -39,6 +41,15 @@ public class Document extends BaseEntity {
 
     public void setUserIndexes(Set<UserIndex> userIndexes) {
         this.userIndexes = userIndexes;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringCreator(this)
+                .append("id", getId())
+                .append("name", getName())
+                .append("systemName", getSystemName())
+                .toString();
     }
 
 }

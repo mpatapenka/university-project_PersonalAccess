@@ -6,6 +6,11 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Simple JavaBean domain object representing an unit of university.
+ *
+ * @author Maksim Patapenka
+ */
 @Entity
 @Table(name = "unit")
 public class Unit extends BaseEntity {

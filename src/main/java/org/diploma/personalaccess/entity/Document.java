@@ -6,6 +6,11 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Simple JavaBean domain object representing an approve document.
+ *
+ * @author Maksim Patapenka
+ */
 @Entity
 @Table(name = "document")
 public class Document extends BaseEntity {

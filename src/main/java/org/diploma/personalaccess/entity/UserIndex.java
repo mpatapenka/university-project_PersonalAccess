@@ -5,6 +5,11 @@ import org.springframework.core.style.ToStringCreator;
 import javax.persistence.*;
 import java.sql.Date;
 
+/**
+ * Simple JavaBean domain object representing an user work indexes.
+ *
+ * @author Maksim Patapenka
+ */
 @Entity
 @Table(name = "user_index")
 public class UserIndex extends BaseEntity {

@@ -6,6 +6,11 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Simple JavaBean domain object representing an faculty of university.
+ *
+ * @author Maksim Patapenka
+ */
 @Entity
 @Table(name = "faculty")
 public class Faculty extends BaseEntity {

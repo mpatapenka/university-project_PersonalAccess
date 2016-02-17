@@ -6,6 +6,11 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Simple JavaBean domain object representing an form of employee.
+ *
+ * @author Maksim Patapenka
+ */
 @Entity
 @Table(name = "form")
 public class Form extends BaseEntity {

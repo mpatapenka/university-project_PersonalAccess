@@ -6,6 +6,11 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Simple JavaBean domain object representing an user role ('ADMIN', 'USER', etc).
+ *
+ * @author Maksim Patapenka
+ */
 @Entity
 @Table(name = "role")
 public class Role extends BaseEntity {

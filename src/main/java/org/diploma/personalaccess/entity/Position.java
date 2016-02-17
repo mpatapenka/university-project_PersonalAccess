@@ -6,6 +6,11 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Simple JavaBean domain object representing an position of employee in university.
+ *
+ * @author Maksim Patapenka
+ */
 @Entity
 @Table(name = "position")
 public class Position extends BaseEntity {

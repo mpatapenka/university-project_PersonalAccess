@@ -7,6 +7,11 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 
+/**
+ * Simple JavaBean domain object with an id property. Used as base class for all entities
+ *
+ * @author Maksim Patapenka
+ */
 @MappedSuperclass
 public class BaseEntity implements Serializable {
 

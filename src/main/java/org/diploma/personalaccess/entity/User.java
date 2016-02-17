@@ -6,6 +6,11 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Simple JavaBean domain object representing an user.
+ *
+ * @author Maksim Patapenka
+ */
 @Entity
 @Table(name = "user")
 public class User extends BaseEntity {

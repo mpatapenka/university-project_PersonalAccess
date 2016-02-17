@@ -6,6 +6,11 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Simple JavaBean domain object representing an work index of employee.
+ *
+ * @author Maksim Patapenka
+ */
 @Entity
 @Table(name = "_index")
 public class Index extends BaseEntity {

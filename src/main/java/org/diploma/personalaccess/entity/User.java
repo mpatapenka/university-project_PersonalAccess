@@ -1,5 +1,7 @@
 package org.diploma.personalaccess.entity;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.core.style.ToStringCreator;
 
 import javax.persistence.*;
@@ -16,9 +18,13 @@ import java.util.Set;
 public class User extends BaseEntity {
 
     @Column(name = "username", nullable = false, length = 50)
+    @NotEmpty
+    @Length(min = 4, max = 50)
     private String username;
 
     @Column(name = "password", nullable = false, length = 25)
+    @NotEmpty
+    @Length(min = 4, max = 25)
     private String password;
 
     @ManyToOne

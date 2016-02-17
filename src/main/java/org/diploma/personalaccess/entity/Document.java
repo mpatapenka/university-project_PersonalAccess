@@ -1,5 +1,7 @@
 package org.diploma.personalaccess.entity;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.core.style.ToStringCreator;
 
 import javax.persistence.*;
@@ -16,9 +18,12 @@ import java.util.Set;
 public class Document extends BaseEntity {
 
     @Column(name = "name", length = 255)
+    @NotEmpty
+    @Length(max = 255)
     private String name;
 
     @Column(name = "system_name", length = 255)
+    @Length(max = 255)
     private String systemName;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "document")

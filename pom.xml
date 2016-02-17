@@ -96,6 +96,13 @@
             <artifactId>jta</artifactId>
             <version>${jta.version}</version>
         </dependency>
+
+        <!-- Validator -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

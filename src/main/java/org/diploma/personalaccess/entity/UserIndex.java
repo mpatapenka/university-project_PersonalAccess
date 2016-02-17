@@ -1,5 +1,7 @@
 package org.diploma.personalaccess.entity;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.core.style.ToStringCreator;
 
 import javax.persistence.*;
@@ -15,15 +17,20 @@ import java.sql.Date;
 public class UserIndex extends BaseEntity {
 
     @Column(name = "self_estimate")
+    @NotEmpty
     private int selfEstimate;
 
     @Column(name = "lead_estimate")
+    @NotEmpty
     private int leadEstimate;
 
     @Column(name = "fill_date")
+    @NotEmpty
     private Date fillDate;
 
     @Column(name = "description", length = 500)
+    @NotEmpty
+    @Length(max = 500)
     private String description;
 
     @ManyToOne

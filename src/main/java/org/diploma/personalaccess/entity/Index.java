@@ -1,5 +1,7 @@
 package org.diploma.personalaccess.entity;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.core.style.ToStringCreator;
 
 import javax.persistence.*;
@@ -16,15 +18,20 @@ import java.util.Set;
 public class Index extends BaseEntity {
 
     @Column(name = "name", length = 400)
+    @NotEmpty
+    @Length(max = 400)
     private String name;
 
     @Column(name = "estimate")
+    @NotEmpty
     private int estimate;
 
     @Column(name = "multiplier")
     private int multiplier;
 
     @Column(name = "work_name", length = 50)
+    @NotEmpty
+    @Length(max = 50)
     private String workName;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "index")

@@ -1,5 +1,7 @@
 package org.diploma.personalaccess.entity;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.core.style.ToStringCreator;
 
 import javax.persistence.*;
@@ -16,6 +18,8 @@ import java.util.Set;
 public class Unit extends BaseEntity {
 
     @Column(name = "name", length = 100)
+    @NotEmpty
+    @Length(max = 100)
     private String name;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "unit")

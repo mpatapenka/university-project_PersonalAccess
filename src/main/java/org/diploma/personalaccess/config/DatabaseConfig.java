@@ -74,8 +74,8 @@ public class DatabaseConfig {
         final String propertyFile = "hibernate.properties";
 
         try {
-            Properties properties = new Properties();
             InputStream is = getClass().getClassLoader().getResourceAsStream(propertyFile);
+            Properties properties = new Properties();
             properties.load(is);
 
             return properties;

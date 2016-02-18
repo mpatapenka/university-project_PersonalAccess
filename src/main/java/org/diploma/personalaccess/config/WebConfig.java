@@ -5,12 +5,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
@@ -30,7 +32,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
-        registry.addResourceHandler("/favicon.ico").addResourceLocations("/resources/img/favicon.ico");
+        registry.addResourceHandler("/favicon.ico").addResourceLocations("/resources/favicon.ico");
     }
 
     @Bean
@@ -41,6 +43,23 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         resolver.setViewClass(JstlView.class);
 
         return resolver;
+    }
+
+    @Bean
+    public ResourceBundleMessageSource setupResourceBundleMessageSource() {
+        ResourceBundleMessageSource rb = new ResourceBundleMessageSource();
+        rb.setBasename("messages/messages");
+
+        return rb;
+    }
+
+    @Bean
+    public SimpleMappingExceptionResolver setupSimpleMappingExceptionResolver() {
+        SimpleMappingExceptionResolver sm = new SimpleMappingExceptionResolver();
+        sm.setDefaultErrorView("error");
+        sm.setWarnLogCategory("warn");
+
+        return sm;
     }
 
     @Bean

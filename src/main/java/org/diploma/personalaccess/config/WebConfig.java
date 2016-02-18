@@ -13,8 +13,9 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
-import org.springframework.web.servlet.view.JstlView;
+import org.thymeleaf.spring4.SpringTemplateEngine;
+import org.thymeleaf.spring4.view.ThymeleafViewResolver;
+import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import javax.annotation.Resource;
 
@@ -37,34 +38,50 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public InternalResourceViewResolver setupViewResolver() {
-        InternalResourceViewResolver resolver = new InternalResourceViewResolver();
-        resolver.setPrefix("/jsp/");
-        resolver.setSuffix(".jsp");
-        resolver.setViewClass(JstlView.class);
+    public ServletContextTemplateResolver templateResolver() {
+        ServletContextTemplateResolver resolver = new ServletContextTemplateResolver();
+        resolver.setPrefix("/thymeleaf/");
+        resolver.setSuffix(".html");
+        resolver.setTemplateMode("HTML5");
 
         return resolver;
     }
 
     @Bean
-    public ResourceBundleMessageSource setupResourceBundleMessageSource() {
-        ResourceBundleMessageSource rb = new ResourceBundleMessageSource();
-        rb.setBasename("messages/messages");
+    public SpringTemplateEngine templateEngine() {
+        SpringTemplateEngine engine = new SpringTemplateEngine();
+        engine.setTemplateResolver(templateResolver());
 
-        return rb;
+        return engine;
     }
 
     @Bean
-    public SimpleMappingExceptionResolver setupSimpleMappingExceptionResolver() {
-        SimpleMappingExceptionResolver sm = new SimpleMappingExceptionResolver();
-        sm.setDefaultErrorView("error");
-        sm.setWarnLogCategory("warn");
+    public ThymeleafViewResolver viewResolver() {
+        ThymeleafViewResolver resolver = new ThymeleafViewResolver();
+        resolver.setTemplateEngine(templateEngine());
 
-        return sm;
+        return resolver;
     }
 
     @Bean
-    public MultipartResolver setupMultipartResolver() {
+    public ResourceBundleMessageSource resourceBundleMessageSource() {
+        ResourceBundleMessageSource bundle = new ResourceBundleMessageSource();
+        bundle.setBasename("messages/messages");
+
+        return bundle;
+    }
+
+    @Bean
+    public SimpleMappingExceptionResolver exceptionResolver() {
+        SimpleMappingExceptionResolver resolver = new SimpleMappingExceptionResolver();
+        resolver.setDefaultErrorView("error");
+        resolver.setWarnLogCategory("warn");
+
+        return resolver;
+    }
+
+    @Bean
+    public MultipartResolver multipartResolver() {
         final int defaultUploadSizeInMb = 10;
 
         int maxUploadSizeInMb = defaultUploadSizeInMb;

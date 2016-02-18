@@ -30,6 +30,8 @@ public class PersonalAccessServiceImpl implements PersonalAccessService {
         internalIndex.setMultiplier(index.getMultiplier());
         internalIndex.setName(index.getName());
         internalIndex.setWorkName(index.getWorkName());
+        internalIndex.setAvailablePositions(index.getAvailablePositions());
+        internalIndex.setUserIndexes(index.getUserIndexes());
 
         indexRepository.save(internalIndex);
     }

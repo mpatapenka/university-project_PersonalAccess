@@ -10,6 +10,8 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
+
+
     <properties>
         <java.version>1.8</java.version>
         <spring.version>4.2.4.RELEASE</spring.version>
@@ -26,15 +28,50 @@
         <jquery.version>2.2.0</jquery.version>
         <jquery-ui.version>1.11.4</jquery-ui.version>
         <materializecss.version>0.97.0</materializecss.version>
+        <thymeleaf.version>2.1.4.RELEASE</thymeleaf.version>
+        <thymeleaf-extras-springsecurity3.version>2.1.2.RELEASE</thymeleaf-extras-springsecurity3.version>
+        <spring-security.version>4.0.3.RELEASE</spring-security.version>
     </properties>
 
+
+
     <dependencies>
-        <!-- Core -->
+
+        <!-- Spring -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
             <version>${spring.version}</version>
         </dependency>
+
+        <!-- Spring Web -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <!-- Spring Data -->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+            <version>${spring-data-jpa.version}</version>
+        </dependency>
+
+        <!-- Spring Security -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>${spring-security.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${spring-security.version}</version>
+        </dependency>
+
+
 
         <!-- Logging -->
         <dependency>
@@ -43,69 +80,74 @@
             <version>${log4j.version}</version>
         </dependency>
 
-        <!-- Files -->
+
+
+        <!-- Commons IO (file upload lib) -->
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>${commons-io.version}</version>
         </dependency>
+
         <dependency>
             <groupId>commons-fileupload</groupId>
             <artifactId>commons-fileupload</artifactId>
             <version>${commons-fileupload.version}</version>
         </dependency>
 
-        <!-- Web -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
+
+
+        <!-- Servlet, Web, Jstl -->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>${servlet-api.version}</version>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
             <version>${jstl.version}</version>
         </dependency>
 
-        <!-- Database -->
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-jpa</artifactId>
-            <version>${spring-data-jpa.version}</version>
-        </dependency>
+
+
+        <!-- Hibernate -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
             <version>${hibernate.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+
+
+
+        <!-- Database connection -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql-connector-java.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-dbcp2</artifactId>
             <version>${dbcp2.version}</version>
         </dependency>
+
         <dependency>
             <groupId>javax.transaction</groupId>
             <artifactId>jta</artifactId>
             <version>${jta.version}</version>
         </dependency>
 
-        <!-- Validator -->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <version>${hibernate.version}</version>
-        </dependency>
+
 
         <!-- Web Jars -->
         <dependency>
@@ -113,22 +155,49 @@
             <artifactId>jquery</artifactId>
             <version>${jquery.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>jquery-ui</artifactId>
             <version>${jquery-ui.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>materializecss</artifactId>
             <version>${materializecss.version}</version>
         </dependency>
+
+
+
+        <!-- Thymleaf -->
+        <dependency>
+            <groupId>org.thymeleaf</groupId>
+            <artifactId>thymeleaf</artifactId>
+            <version>${thymeleaf.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.thymeleaf</groupId>
+            <artifactId>thymeleaf-spring4</artifactId>
+            <version>${thymeleaf.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-springsecurity3</artifactId>
+            <version>${thymeleaf-extras-springsecurity3.version}</version>
+        </dependency>
+
     </dependencies>
+
+
 
     <build>
         <finalName>PersonalAccess</finalName>
 
         <plugins>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -138,6 +207,7 @@
                     <target>${java.version}</target>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
@@ -145,6 +215,7 @@
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
             </plugin>
+
         </plugins>
     </build>
 

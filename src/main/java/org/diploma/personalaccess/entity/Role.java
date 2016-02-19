@@ -3,6 +3,7 @@ package org.diploma.personalaccess.entity;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.core.style.ToStringCreator;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -15,7 +16,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "role")
-public class Role extends BaseEntity {
+public class Role extends BaseEntity implements GrantedAuthority {
 
     @Column(name = "name", length = 50)
     @NotEmpty
@@ -55,6 +56,11 @@ public class Role extends BaseEntity {
     }
 
     @Override
+    public String getAuthority() {
+        return getCode().toUpperCase();
+    }
+
+    @Override
     public String toString() {
         return new ToStringCreator(this)
                 .append("id", getId())
@@ -62,5 +68,4 @@ public class Role extends BaseEntity {
                 .append("code", getCode())
                 .toString();
     }
-
 }

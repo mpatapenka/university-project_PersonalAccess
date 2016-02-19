@@ -3,8 +3,11 @@ package org.diploma.personalaccess.entity;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.core.style.ToStringCreator;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,7 +18,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "user")
-public class User extends BaseEntity {
+public class User extends BaseEntity implements UserDetails {
 
     @Column(name = "username", nullable = false, length = 50)
     @NotEmpty
@@ -26,6 +29,11 @@ public class User extends BaseEntity {
     @NotEmpty
     @Length(min = 4, max = 25)
     private String password;
+
+    /**
+     * Default: all profiles are active, not implemented in database
+     */
+    private boolean active = true;
 
     @ManyToOne
     @JoinColumn(name = "form_id")
@@ -47,6 +55,7 @@ public class User extends BaseEntity {
     @ManyToMany(mappedBy = "leads")
     private Set<User> subs = new HashSet<>();
 
+    @Override
     public String getUsername() {
         return username;
     }
@@ -55,12 +64,21 @@ public class User extends BaseEntity {
         this.username = username;
     }
 
+    @Override
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public Form getForm() {
@@ -101,6 +119,31 @@ public class User extends BaseEntity {
 
     public void setSubs(Set<User> subs) {
         this.subs = subs;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return isActive();
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return isActive();
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return isActive();
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return isActive();
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
     }
 
     @Override

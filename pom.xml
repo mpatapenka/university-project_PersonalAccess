@@ -31,6 +31,7 @@
         <thymeleaf.version>2.1.4.RELEASE</thymeleaf.version>
         <thymeleaf-extras-springsecurity3.version>2.1.2.RELEASE</thymeleaf-extras-springsecurity3.version>
         <spring-security.version>4.0.3.RELEASE</spring-security.version>
+        <junit.version>4.12</junit.version>
     </properties>
 
 
@@ -81,6 +82,24 @@
                     <artifactId>spring-web</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+
+        <!-- Spring Test -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+
+
+        <!-- Test -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
         </dependency>
 
 

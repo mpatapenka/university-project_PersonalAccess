@@ -1,8 +1,10 @@
 package org.diploma.personalaccess.service;
 
+import org.diploma.personalaccess.entity.Faculty;
 import org.diploma.personalaccess.entity.Index;
 import org.diploma.personalaccess.entity.Position;
 import org.diploma.personalaccess.entity.UserIndex;
+import org.diploma.personalaccess.repository.FacultyRepository;
 import org.diploma.personalaccess.repository.IndexRepository;
 import org.diploma.personalaccess.repository.UserIndexRepository;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,9 @@ public class PersonalAccessServiceImpl implements PersonalAccessService {
 
     @Resource
     private UserIndexRepository userIndexRepository;
+
+    @Resource
+    private FacultyRepository facultyRepository;
 
 
 
@@ -55,7 +60,7 @@ public class PersonalAccessServiceImpl implements PersonalAccessService {
     @Override
     @Transactional
     public List<UserIndex> findUserIndexesByPositionAndPeriod(final Position position, final Date startPeriod, final Date endPeriod) {
-        return userIndexRepository.findByPositionAndFillDateBetweenOrderByIndexId(position, startPeriod, endPeriod);
+        return userIndexRepository.findByUserFormPositionAndFillDateBetweenOrderByIndexId(position, startPeriod, endPeriod);
     }
 
     @Override
@@ -75,6 +80,20 @@ public class PersonalAccessServiceImpl implements PersonalAccessService {
 
             userIndexRepository.save(userIndex);
         }
+    }
+
+
+
+    @Override
+    @Transactional
+    public void saveFaculty(Faculty faculty) {
+        facultyRepository.save(faculty);
+    }
+
+    @Override
+    @Transactional
+    public List<Faculty> findAllFaculties() {
+        return facultyRepository.findAll();
     }
 
 }

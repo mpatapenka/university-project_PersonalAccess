@@ -1,5 +1,6 @@
 package org.diploma.personalaccess.service;
 
+import org.diploma.personalaccess.entity.Faculty;
 import org.diploma.personalaccess.entity.Index;
 import org.diploma.personalaccess.entity.Position;
 import org.diploma.personalaccess.entity.UserIndex;
@@ -22,5 +23,11 @@ public interface PersonalAccessService {
     void saveUserIndexes(List<UserIndex> userIndexes);
 
     void setLeadEstimateUserIndexes(List<UserIndex> rawUserIndexes);
+
+
+
+    void saveFaculty(Faculty faculty);
+
+    List<Faculty> findAllFaculties();
 
 }

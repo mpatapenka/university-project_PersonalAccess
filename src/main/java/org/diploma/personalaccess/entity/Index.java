@@ -27,6 +27,7 @@ public class Index extends BaseEntity {
     private int estimate;
 
     @Column(name = "multiplier")
+    @NotEmpty
     private int multiplier;
 
     @Column(name = "work_name", length = 50)

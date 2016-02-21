@@ -15,8 +15,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
-import org.thymeleaf.spring4.SpringTemplateEngine;
-import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import javax.annotation.Resource;
 
@@ -38,30 +36,11 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public ServletContextTemplateResolver templateResolver() {
-        ServletContextTemplateResolver resolver = new ServletContextTemplateResolver();
-        resolver.setPrefix("/jsp/");
-        resolver.setSuffix(".jsp");
-        resolver.setCharacterEncoding("UTF-8");
-
-        return resolver;
-    }
-
-    @Bean
-    public SpringTemplateEngine templateEngine() {
-        SpringTemplateEngine engine = new SpringTemplateEngine();
-        engine.setTemplateResolver(templateResolver());
-
-        return engine;
-    }
-
-    @Bean
     public InternalResourceViewResolver viewResolver() {
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();
         resolver.setPrefix("/jsp/");
         resolver.setSuffix(".jsp");
         resolver.setViewClass(JstlView.class);
-        resolver.setContentType("text/html; charset=UTF-8");
 
         return resolver;
     }

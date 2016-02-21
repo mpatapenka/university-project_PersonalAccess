@@ -9,14 +9,19 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
+import org.springframework.web.servlet.i18n.CookieLocaleResolver;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
 import javax.annotation.Resource;
+import java.util.Locale;
 
 @Configuration
 @EnableWebMvc
@@ -35,6 +40,11 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/favicon.ico").addResourceLocations("/resources/favicon.ico");
     }
 
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(localeChangeInterceptor());
+    }
+
     @Bean
     public InternalResourceViewResolver viewResolver() {
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();
@@ -46,11 +56,28 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public ResourceBundleMessageSource resourceBundleMessageSource() {
+    public ResourceBundleMessageSource messageSource() {
         ResourceBundleMessageSource bundle = new ResourceBundleMessageSource();
-        bundle.setBasename("messages/messages");
+        bundle.setBasename("localization/messages");
+        bundle.setDefaultEncoding("UTF-8");
 
         return bundle;
+    }
+
+    @Bean
+    public LocaleResolver localeResolver() {
+        CookieLocaleResolver resolver = new CookieLocaleResolver();
+        resolver.setDefaultLocale(Locale.forLanguageTag("ru"));
+
+        return resolver;
+    }
+
+    @Bean
+    public LocaleChangeInterceptor localeChangeInterceptor() {
+        LocaleChangeInterceptor interceptor = new LocaleChangeInterceptor();
+        interceptor.setParamName("lang");
+
+        return interceptor;
     }
 
     @Bean

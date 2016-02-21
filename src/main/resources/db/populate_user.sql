@@ -1,0 +1,1 @@
+INSERT INTO `personal_access_database`.`user` (`username`, `password`, `form_id`, `role_id`) VALUES ('maxim', 'maxim', '1', '2');

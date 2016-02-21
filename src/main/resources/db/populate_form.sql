@@ -1,0 +1,1 @@
+INSERT INTO `personal_access_database`.`form` (`first_name`, `last_name`, `middle_name`, `unit_id`, `faculty_id`, `position_id`) VALUES ('Максим', 'Потапенко', 'Сергеевич', '2', '1', '1');

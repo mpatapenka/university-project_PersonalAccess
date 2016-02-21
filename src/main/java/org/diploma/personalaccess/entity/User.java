@@ -31,6 +31,7 @@ public class User extends BaseEntity implements UserDetails {
     /**
      * Default: all profiles are active, not implemented in database
      */
+    @Transient
     private boolean active = true;
 
     @ManyToOne

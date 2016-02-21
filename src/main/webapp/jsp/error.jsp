@@ -2,9 +2,9 @@
 
 <html>
 <head>
-    <title>Title</title>
+    <title>Error page</title>
 </head>
 <body>
-
+ERROR
 </body>
 </html>

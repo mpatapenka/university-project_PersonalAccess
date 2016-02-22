@@ -23,49 +23,49 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
-                .userDetailsService(userService);
+            .userDetailsService(userService);
     }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
         web
-                .ignoring()
+            .ignoring()
                 .antMatchers("/resources/**");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .exceptionHandling()
-                .accessDeniedPage("/error")
-                .and()
+            .exceptionHandling()
+                .accessDeniedPage("/403")
+            .and()
 
-                .authorizeRequests()
+            .authorizeRequests()
                 .antMatchers("/login**").anonymous()
                 .antMatchers("/").permitAll()
                 .antMatchers("/error**").permitAll()
                 .antMatchers("/dashboard**").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
-                .and()
+            .and()
 
-                .formLogin()
+            .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/j_spring_security_check")
                 .defaultSuccessUrl("/")
                 .failureUrl("/login?error")
                 .usernameParameter("username")
                 .passwordParameter("password")
-                .and()
+            .and()
 
-                .logout()
+            .logout()
                 .logoutUrl("/j_spring_security_logout")
                 .logoutSuccessUrl("/login?logout")
                 .deleteCookies("JSESSIONID")
                 .invalidateHttpSession(true)
-                .and()
+            .and()
 
-                .csrf().disable();
+            .csrf().disable();
     }
 
 }

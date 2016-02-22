@@ -27,7 +27,7 @@
                         <iframe src="http://ghbtns.com/github-btn.html?user=trollsrulls&repo=PersonalAccess-Project&type=watch&count=true&size=large"
                                 allowtransparency="true" frameborder="0" scrolling="0" width="170" height="30"></iframe>
                     </li>
-                    <li><a class="white-text" href="https://www.gstu.by/"><spring:message
+                    <li><a class="white-text" href="https://www.gstu.by/" target="_blank"><spring:message
                             code="footer.site_company"/></a></li>
                 </ul>
             </div>

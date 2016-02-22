@@ -14,8 +14,6 @@
 
     <title><spring:message code="404.page_not_found"/> - <spring:message code="global.app_name"/></title>
 
-    <jsp:include page="fragments/static-content.jsp"/>
-
     <style type="text/css" media="screen">
 
         body {

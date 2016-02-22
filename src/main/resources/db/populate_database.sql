@@ -34,3 +34,4 @@ INSERT INTO `personal_access_database`.`role` (`name`, `code`) VALUES ('Адми
 
 -- Populate table 'user'
 INSERT INTO `personal_access_database`.`user` (`username`, `password`, `form_id`, `role_id`) VALUES ('maxim', 'maxim', '1', '2');
+INSERT INTO `personal_access_database`.`user` (`username`, `password`, `form_id`, `role_id`) VALUES ('user', 'user', '1', '1');

@@ -66,8 +66,10 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Bean
     public LocaleResolver localeResolver() {
+        final Locale russianLocale = new Locale("ru");
+
         CookieLocaleResolver resolver = new CookieLocaleResolver();
-        resolver.setDefaultLocale(Locale.forLanguageTag("ru"));
+        resolver.setDefaultLocale(russianLocale);
 
         return resolver;
     }

@@ -37,7 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .exceptionHandling()
-                .accessDeniedPage("/403")
+                .accessDeniedPage("/error/403")
             .and()
 
             .authorizeRequests()

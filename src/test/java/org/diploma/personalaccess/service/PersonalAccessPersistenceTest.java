@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = DatabaseConfig.class)
 @WebAppConfiguration
-@Transactional
+//@Transactional // Раскомментить
 public class PersonalAccessPersistenceTest {
 
     @Autowired

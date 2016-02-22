@@ -101,20 +101,28 @@
                         <div class="block">
                             <h5>Ваши подчиненные</h5>
                             <p>
-                                <c:if test="${empty subs}">
-                                    У вас нет ни одного подчиненного.
-                                </c:if>
-                                <ul class="collection">
+                                <c:choose>
 
-                                    <c:forEach var="sub" items="${subs}">
-                                        <li class="collection-item avatar">
-                                            <img src="<c:url value='/resources/img/profile/profile-image.png'/>" class="circle">
-                                            <span class="title">${sub.form.firstName} ${sub.form.lastName}</span>
-                                            <p>${sub.form.position.name}</p>
-                                        </li>
-                                    </c:forEach>
+                                    <c:when test="${empty subs}">
+                                        У вас нет ни одного подчиненного.
+                                    </c:when>
 
-                                </ul>
+                                    <c:otherwise>
+                                        <ul class="collection">
+                                            <c:forEach var="sub" items="${subs}">
+                                                <li class="collection-item avatar">
+                                                    <img src="<c:url value='/resources/img/profile/profile-image.png'/>" class="circle">
+                                                    <span class="title">${sub.form.firstName} ${sub.form.lastName}</span>
+                                                    <p>
+                                                        ${sub.form.position.name}<br>
+                                                        ${sub.form.unit.name}
+                                                    </p>
+                                                </li>
+                                            </c:forEach>
+                                        </ul>
+                                    </c:otherwise>
+
+                                </c:choose>
                             </p>
                         </div>
                     </div>

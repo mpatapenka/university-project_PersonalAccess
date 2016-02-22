@@ -25,7 +25,7 @@ import java.util.Locale;
 @Configuration
 @EnableWebMvc
 @PropertySource("classpath:web.properties")
-@ComponentScan("org.diploma.personalaccess")
+@ComponentScan("org.diploma.personalaccess.web")
 public class WebConfig extends WebMvcConfigurerAdapter {
 
     private static final Logger log = Logger.getLogger(WebConfig.class);

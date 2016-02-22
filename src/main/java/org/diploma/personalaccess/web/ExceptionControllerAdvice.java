@@ -1,4 +1,4 @@
-package org.diploma.personalaccess.controller;
+package org.diploma.personalaccess.web;
 
 import org.apache.log4j.Logger;
 import org.springframework.web.bind.annotation.ControllerAdvice;

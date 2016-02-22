@@ -1,4 +1,4 @@
-package org.diploma.personalaccess.controller;
+package org.diploma.personalaccess.web;
 
 import org.diploma.personalaccess.service.PersonalAccessService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface IndexRepository extends JpaRepository<Index, Long> {
 
-    List<Index> findIndexesByAvailablePositions(Position position);
+    List<Index> findByAvailablePositions(Position position);
 
 }

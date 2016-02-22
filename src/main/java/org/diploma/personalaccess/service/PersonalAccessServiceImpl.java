@@ -31,7 +31,7 @@ public class PersonalAccessServiceImpl implements PersonalAccessService {
     @Override
     @Transactional
     public List<Index> findIndexesByPosition(final Position position) {
-        return indexRepository.findIndexesByAvailablePositions(position);
+        return indexRepository.findByAvailablePositions(position);
     }
 
     @Override

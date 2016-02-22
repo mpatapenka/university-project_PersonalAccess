@@ -1,30 +1,27 @@
 package org.diploma.personalaccess.web;
 
-import org.diploma.personalaccess.service.PersonalAccessService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class IndexController {
 
-    @Autowired
-    private PersonalAccessService personalAccessService;
-
-    @RequestMapping(value = {"/", "/dashboard"}, method = RequestMethod.GET)
-    public String getDashboardPage() {
-        return "dashboard";
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String getIndexPage() {
+        return "index";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String getLoginPage() {
-        return "login";
-    }
+    public String getLoginPage(@RequestParam(required = false) String error,
+                               @RequestParam(required = false) String logout,
+                               Model model) {
+        model.addAttribute("isError", error != null);
+        model.addAttribute("isLogout", logout != null);
 
-    @RequestMapping(value = "/error", method = RequestMethod.GET)
-    public String getErrorPage() {
-        return "error";
+        return "login";
     }
 
 }

@@ -31,6 +31,22 @@
             </div>
             <div class="row center">
                 <form method="post" class="col s12" action="<c:url value='/j_spring_security_check'/>">
+                    <c:if test="${isError}">
+                        <div class="row">
+                            <div class="chip">
+                                <spring:message code="login.error"/>
+                                <i class="material-icons">close</i>
+                            </div>
+                        </div>
+                    </c:if>
+                    <c:if test="${isLogout}">
+                        <div class="row">
+                            <div class="chip">
+                                <spring:message code="login.logout"/>
+                                <i class="material-icons">close</i>
+                            </div>
+                        </div>
+                    </c:if>
                     <div class="row">
                         <div class="input-field col s6">
                             <i class="material-icons prefix">account_circle</i>

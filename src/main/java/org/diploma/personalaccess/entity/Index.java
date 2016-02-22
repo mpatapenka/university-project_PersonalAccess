@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.core.style.ToStringCreator;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,10 +25,12 @@ public class Index extends BaseEntity {
 
     @Column(name = "estimate")
     @NotEmpty
+    @Min(0)
     private int estimate;
 
     @Column(name = "multiplier")
     @NotEmpty
+    @Min(1)
     private int multiplier;
 
     @Column(name = "work_name", length = 50)
@@ -38,10 +41,10 @@ public class Index extends BaseEntity {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "index")
     private Set<UserIndex> userIndexes = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "available_index",
-            joinColumns = {@JoinColumn(name = "index_id", nullable = false)},
-            inverseJoinColumns = {@JoinColumn(name = "position_id", nullable = false)})
+            joinColumns = {@JoinColumn(name = "index_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "position_id", referencedColumnName = "id")})
     private Set<Position> availablePositions = new HashSet<>();
 
     public String getName() {

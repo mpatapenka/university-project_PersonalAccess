@@ -1,1 +1,0 @@
-INSERT INTO `personal_access_database`.`faculty` (`full_name`, `short_name`) VALUES ('Факультет автоматизированных и информационных систем', 'ФАИС');

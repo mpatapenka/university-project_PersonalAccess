@@ -25,7 +25,7 @@ public class Position extends BaseEntity {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "position")
     private Set<Form> forms = new HashSet<>();
 
-    @ManyToMany(mappedBy = "availablePositions")
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "availablePositions")
     private Set<Index> availableIndexes = new HashSet<>();
 
     public String getName() {

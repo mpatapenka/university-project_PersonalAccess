@@ -5,6 +5,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.core.style.ToStringCreator;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.sql.Date;
 
 /**
@@ -17,19 +19,18 @@ import java.sql.Date;
 public class UserIndex extends BaseEntity {
 
     @Column(name = "self_estimate")
-    @NotEmpty
+    @Min(0)
     private int selfEstimate;
 
     @Column(name = "lead_estimate")
-    @NotEmpty
+    @Min(0)
     private int leadEstimate;
 
     @Column(name = "fill_date")
-    @NotEmpty
+    @NotNull
     private Date fillDate;
 
     @Column(name = "description", length = 500)
-    @NotEmpty
     @Length(max = 500)
     private String description;
 

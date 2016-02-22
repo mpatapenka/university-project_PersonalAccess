@@ -24,17 +24,14 @@ public class Index extends BaseEntity {
     private String name;
 
     @Column(name = "estimate")
-    @NotEmpty
     @Min(0)
     private int estimate;
 
     @Column(name = "multiplier")
-    @NotEmpty
     @Min(1)
     private int multiplier;
 
     @Column(name = "work_name", length = 50)
-    @NotEmpty
     @Length(max = 50)
     private String workName;
 

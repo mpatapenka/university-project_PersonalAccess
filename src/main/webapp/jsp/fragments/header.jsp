@@ -15,30 +15,42 @@
 
 
             <ul class="right hide-on-med-and-down">
-                <li>
-                    <security:authorize access="isAnonymous()">
+                <security:authorize access="isAnonymous()">
+                    <li>
                         <a href="<c:url value="/login"/>"><spring:message code="control.sign_in"/></a>
-                    </security:authorize>
+                    </li>
+                </security:authorize>
 
-                    <security:authorize access="isAuthenticated()">
+                <security:authorize access="isAuthenticated()">
+                    <li>
+                        <a href="<c:url value="/profile"/>"><spring:message
+                                code="control.profile"/></a>
+                    </li>
+                    <li>
                         <a href="<c:url value="/j_spring_security_logout"/>"><spring:message
                                 code="control.sign_out"/></a>
-                    </security:authorize>
-                </li>
+                    </li>
+                </security:authorize>
             </ul>
 
 
             <ul id="nav-mobile" class="side-nav">
-                <li>
-                    <security:authorize access="isAnonymous()">
+                <security:authorize access="isAnonymous()">
+                    <li>
                         <a href="<c:url value="/login"/>"><spring:message code="control.sign_in"/></a>
-                    </security:authorize>
+                    </li>
+                </security:authorize>
 
-                    <security:authorize access="isAuthenticated()">
+                <security:authorize access="isAuthenticated()">
+                    <li>
+                        <a href="<c:url value="/profile"/>"><spring:message
+                                code="control.profile"/></a>
+                    </li>
+                    <li>
                         <a href="<c:url value="/j_spring_security_logout"/>"><spring:message
                                 code="control.sign_out"/></a>
-                    </security:authorize>
-                </li>
+                    </li>
+                </security:authorize>
             </ul>
             <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
         </div>

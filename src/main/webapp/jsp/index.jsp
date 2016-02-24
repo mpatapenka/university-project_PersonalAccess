@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 
 <!DOCTYPE html>
@@ -11,9 +12,10 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
 
-    <title>Index - Личный кабинет</title>
+    <title><spring:message code="global.app_name"/></title>
 
     <jsp:include page="fragments/static-content.jsp"/>
+
 </head>
 
 <body>
@@ -24,16 +26,15 @@
     <div class="section no-pad-bot" id="index-banner">
         <div class="container">
             <br><br>
-            <h1 class="header center orange-text">Starter Template</h1>
+            <h1 class="header center orange-text">Добро пожаловать</h1>
             <div class="row center">
-                <h5 class="header col s12 light">A modern responsive front-end framework based on Material Design</h5>
+                <h5 class="header col s12 light">Удобный и практичный личный кабинет сотрудников университета</h5>
             </div>
             <div class="row center">
-                <a href="http://materializecss.com/getting-started.html" id="download-button"
-                   class="btn-large waves-effect waves-light orange">Get Started</a>
+                <a href="<c:url value='/login'/>" id="download-button"
+                   class="btn-large waves-effect waves-light orange">Начать использовать</a>
             </div>
             <br><br>
-
         </div>
     </div>
 
@@ -41,49 +42,40 @@
     <div class="container">
         <div class="section">
 
-            <!--   Icon Section   -->
             <div class="row">
                 <div class="col s12 m4">
                     <div class="icon-block">
                         <h2 class="center light-blue-text"><i class="material-icons">flash_on</i></h2>
-                        <h5 class="center">Speeds up development</h5>
+                        <h5 class="center">Быстрый анализ</h5>
 
-                        <p class="light">We did most of the heavy lifting for you to provide a default stylings that
-                            incorporate our custom components. Additionally, we refined animations and transitions to
-                            provide a smoother experience for developers.</p>
+                        <p class="light">Используйте этот инструмент для быстрой оценки себя и ваших подчиненных,
+                            анализируйте и собирайте информацию. Поощрите тех кто набрал высокий рейтинг или сделайте
+                            выговор отстающим.</p>
                     </div>
                 </div>
 
                 <div class="col s12 m4">
                     <div class="icon-block">
                         <h2 class="center light-blue-text"><i class="material-icons">group</i></h2>
-                        <h5 class="center">User Experience Focused</h5>
+                        <h5 class="center">Сосредоточенность на пользователе</h5>
 
-                        <p class="light">By utilizing elements and principles of Material Design, we were able to create a
-                            framework that incorporates components and animations that provide more feedback to users.
-                            Additionally, a single underlying responsive system across all platforms allow for a more
-                            unified user experience.</p>
+                        <p class="light">Личный кабинет предоставляет возможность сотрудникам университета
+                            заниматься учетом своих успехов, а также оценивать успехи своих подчиненных.</p>
                     </div>
                 </div>
 
                 <div class="col s12 m4">
                     <div class="icon-block">
                         <h2 class="center light-blue-text"><i class="material-icons">settings</i></h2>
-                        <h5 class="center">Easy to work with</h5>
+                        <h5 class="center">Простота в использовании</h5>
 
-                        <p class="light">We have provided detailed documentation as well as specific code examples to help
-                            new users get started. We are also always open to feedback and can answer any questions a user
-                            may have about Materialize.</p>
+                        <p class="light">Легкий и удобный дизайн поможет вам освоится в своем кабинете.</p>
                     </div>
                 </div>
             </div>
 
         </div>
         <br><br>
-
-        <div class="section">
-
-        </div>
     </div>
 
     <jsp:include page="fragments/footer.jsp"/>

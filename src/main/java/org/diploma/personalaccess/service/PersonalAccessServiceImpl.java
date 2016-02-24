@@ -37,16 +37,16 @@ public class PersonalAccessServiceImpl implements PersonalAccessService {
     @Override
     @Transactional
     public void saveOrUpdateIndex(final Index index) {
-        Index internalIndex = index.isNew() ? new Index() : indexRepository.findOne(index.getId());
-
-        internalIndex.setEstimate(index.getEstimate());
-        internalIndex.setMultiplier(index.getMultiplier());
-        internalIndex.setName(index.getName());
-        internalIndex.setWorkName(index.getWorkName());
-        internalIndex.setAvailablePositions(index.getAvailablePositions());
-        internalIndex.setUserIndexes(index.getUserIndexes());
-
-        indexRepository.save(internalIndex);
+//        Index internalIndex = index.isNew() ? new Index() : indexRepository.findOne(index.getId());
+//
+//        internalIndex.setEstimate(index.getEstimate());
+//        internalIndex.setMultiplier(index.getMultiplier());
+//        internalIndex.setName(index.getName());
+//        internalIndex.setWorkName(index.getWorkName());
+//        internalIndex.setAvailablePositions(index.getAvailablePositions());
+//        internalIndex.setUserIndexes(index.getUserIndexes());
+//
+//        indexRepository.save(internalIndex);
     }
 
     @Override

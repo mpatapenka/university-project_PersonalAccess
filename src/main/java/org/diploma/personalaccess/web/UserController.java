@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.security.Principal;
-import java.util.Set;
 
 @Controller
 @RequestMapping("/user")
@@ -23,22 +22,8 @@ public class UserController {
         String username = principal.getName();
         User user = (User) userService.loadUserByUsername(username);
 
-        String userFullName = user.getForm().getFirstName() + " " + user.getForm().getLastName();
-        String positionName = user.getForm().getPosition().getName();
-        String userFulledName = user.getForm().getLastName() + " " + user.getForm().getFirstName() + " "
-                + user.getForm().getMiddleName();
-        String unitName = user.getForm().getUnit().getName();
-        String facultyFullName = user.getForm().getFaculty().getFullName();
-        String facultyShortName = user.getForm().getFaculty().getShortName();
-        Set<User> subordinates = user.getSubs();
-
-        model.addAttribute("userFullName", userFullName);
-        model.addAttribute("positionName", positionName);
-        model.addAttribute("userFulledName", userFulledName);
-        model.addAttribute("unitName", unitName);
-        model.addAttribute("facultyFullName", facultyFullName);
-        model.addAttribute("facultyShortName", facultyShortName);
-        model.addAttribute("subs", subordinates);
+        model.addAttribute("uForm", user.getForm());
+        model.addAttribute("subs", user.getSubs());
 
         return "profile";
     }

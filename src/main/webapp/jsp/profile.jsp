@@ -37,8 +37,8 @@
                              class="circle user-img responsive-img">
 
                         <div class="block">
-                            <h5 class="center flow-text blue-text text-darken2">${userFullName}</h5>
-                            <p class="center">${positionName}</p>
+                            <h5 class="center flow-text blue-text text-darken2">${uForm.firstName} ${uForm.lastName}</h5>
+                            <p class="center">${uForm.position.name}</p>
                         </div>
 
                         <hr>
@@ -70,7 +70,7 @@
                         <h4 class="left-align"><i class="mdi-action-group-work"></i> Личная информация</h4>
                         <div class="block">
 
-                            <h5>${userFulledName}</h5>
+                            <h5>${uForm.lastName} ${uForm.firstName} ${uForm.middleName}</h5>
                             <p class="helping-text"><i class="mdi-maps-place indigo-text"></i> Гомель <i
                                     class="mdi-action-today indigo-text"></i> 23 Февраля 2016 </p>
                             <p>Какого-то рода личная информация, которая может вестись в виде заметок с привязкой
@@ -82,19 +82,19 @@
                             <h5>Должность</h5>
                             <p class="helping-text"><i class="mdi-maps-place indigo-text"></i> Гомель <i
                                     class="mdi-action-today indigo-text"></i> 24 Февраля 2016</p>
-                            <p>Был принят на должность - ${positionName}.</p>
+                            <p>Был принят на должность - ${uForm.position.name}.</p>
                         </div>
                         <div class="block">
                             <h5>Подразделение</h5>
                             <p class="helping-text"><i class="mdi-maps-place indigo-text"></i> ГГТУ им. П.О. Сухого <i
                                     class="mdi-action-today indigo-text"></i> 25 Февраля 2016</p>
-                            <p>Был зачислен в подразделение - ${unitName}.</p>
+                            <p>Был зачислен в подразделение - ${uForm.unit.name}.</p>
                         </div>
                         <div class="block">
                             <h5>Факультет</h5>
                             <p class="helping-text"><i class="mdi-maps-place indigo-text"></i> ГГТУ им. П.О. Сухого <i
                                     class="mdi-action-today indigo-text"></i> 25 Февраля 2016</p>
-                            <p>Был привязан к факультету - ${facultyShortName}. Полное название - ${facultyFullName}</p>
+                            <p>Был привязан к факультету - ${uForm.faculty.shortName}. Полное название - ${uForm.faculty.fullName}</p>
                         </div>
 
                         <h4 class="left-align"><i class="mdi-social-school"></i> Штат</h4>
@@ -114,8 +114,8 @@
                                                     <img src="<c:url value='/resources/img/profile/profile-image.png'/>" class="circle">
                                                     <span class="title">${sub.form.firstName} ${sub.form.lastName}</span>
                                                     <p>
-                                                        ${sub.form.position.name}<br>
-                                                        ${sub.form.unit.name}
+                                                        Должность - ${sub.form.position.name}<br>
+                                                        Подразделение - ${sub.form.unit.name}
                                                     </p>
                                                 </li>
                                             </c:forEach>

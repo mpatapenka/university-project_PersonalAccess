@@ -21,6 +21,12 @@
                     </li>
                 </security:authorize>
 
+                <security:authorize access="hasRole('ROLE_ADMIN')">
+                    <li>
+                        <a href="<c:url value="/admin/dashboard"/>"><spring:message code="control.admin_dashboard"/></a>
+                    </li>
+                </security:authorize>
+
                 <security:authorize access="isAuthenticated()">
                     <li>
                         <a href="<c:url value="/user/profile"/>"><spring:message
@@ -38,6 +44,12 @@
                 <security:authorize access="isAnonymous()">
                     <li>
                         <a href="<c:url value="/login"/>"><spring:message code="control.sign_in"/></a>
+                    </li>
+                </security:authorize>
+
+                <security:authorize access="hasRole('ROLE_ADMIN')">
+                    <li>
+                        <a href="<c:url value="/admin/dashboard"/>"><spring:message code="control.admin_dashboard"/></a>
                     </li>
                 </security:authorize>
 

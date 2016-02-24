@@ -11,3 +11,8 @@
 $(document).ready(function () {
     $('input#input_text, textarea#textarea1').characterCounter();
 });
+
+// Instantiate dropdowns
+$(document).ready(function () {
+    $('select').material_select();
+});

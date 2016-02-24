@@ -18,13 +18,13 @@ import static org.junit.Assert.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = DatabaseConfig.class)
 @WebAppConfiguration
+@Transactional
 public class PersonalAccessPersistenceTest {
 
     @Autowired
     private IndexRepository indexRepository;
 
     @Test
-    @Transactional
     public void testThatIndexCanBeSaveAndGetWithActualValues() {
         /* Data for testing index repository */
         final String name = "Test index";

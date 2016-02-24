@@ -23,6 +23,8 @@ INSERT INTO `personal_access_database`.`position` (`name`) VALUES ('Прорек
 
 -- Populate table 'form'
 INSERT INTO `personal_access_database`.`form` (`first_name`, `last_name`, `middle_name`, `unit_id`, `faculty_id`, `position_id`) VALUES ('Максим', 'Потапенко', 'Сергеевич', '2', '1', '1');
+INSERT INTO `personal_access_database`.`form` (`first_name`, `last_name`, `middle_name`, `unit_id`, `faculty_id`, `position_id`) VALUES ('Михаил', 'Астапенко', 'Семенович', '4', '1', '2');
+INSERT INTO `personal_access_database`.`form` (`first_name`, `last_name`, `middle_name`, `unit_id`, `faculty_id`, `position_id`) VALUES ('Игорь', 'Заримов', 'Игнатьевич', '6', '1', '1');
 
 
 
@@ -35,3 +37,14 @@ INSERT INTO `personal_access_database`.`role` (`name`, `code`) VALUES ('Адми
 -- Populate table 'user'
 INSERT INTO `personal_access_database`.`user` (`username`, `password`, `form_id`, `role_id`) VALUES ('maxim', 'maxim', '1', '2');
 INSERT INTO `personal_access_database`.`user` (`username`, `password`, `form_id`, `role_id`) VALUES ('user', 'user', '1', '1');
+INSERT INTO `personal_access_database`.`user` (`username`, `password`, `form_id`, `role_id`) VALUES ('mihail', 'mihail', '2', '1');
+INSERT INTO `personal_access_database`.`user` (`username`, `password`, `form_id`, `role_id`) VALUES ('ihar', 'ihar', '3', '1');
+
+
+
+-- Populate table 'dependency'
+INSERT INTO `personal_access_database`.`dependency` (`user_lead_id`, `user_sub_id`) VALUES ('1', '2');
+INSERT INTO `personal_access_database`.`dependency` (`user_lead_id`, `user_sub_id`) VALUES ('1', '3');
+INSERT INTO `personal_access_database`.`dependency` (`user_lead_id`, `user_sub_id`) VALUES ('1', '4');
+INSERT INTO `personal_access_database`.`dependency` (`user_lead_id`, `user_sub_id`) VALUES ('2', '3');
+INSERT INTO `personal_access_database`.`dependency` (`user_lead_id`, `user_sub_id`) VALUES ('2', '4');

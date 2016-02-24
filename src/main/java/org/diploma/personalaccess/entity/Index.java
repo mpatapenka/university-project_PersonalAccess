@@ -38,7 +38,7 @@ public class Index extends BaseEntity {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "index")
     private Set<UserIndex> userIndexes = new HashSet<>();
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name = "available_index",
             joinColumns = {@JoinColumn(name = "index_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "position_id", referencedColumnName = "id")})

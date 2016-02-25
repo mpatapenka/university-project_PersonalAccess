@@ -4,7 +4,6 @@ import org.diploma.personalaccess.entity.Index;
 import org.diploma.personalaccess.repository.IndexRepository;
 import org.diploma.personalaccess.service.IndexService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,6 +32,12 @@ public class IndexServiceImpl implements IndexService {
     @Transactional
     public List<Index> findAllIndexes() {
         return indexRepository.findAll();
+    }
+
+    @Override
+    @Transactional
+    public Index findIndexById(long id) {
+        return indexRepository.findOne(id);
     }
 
 }

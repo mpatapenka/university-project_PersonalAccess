@@ -10,4 +10,6 @@ public interface IndexService {
 
     List<Index> findAllIndexes();
 
+    Index findIndexById(long id);
+
 }

@@ -98,7 +98,7 @@
                                     <option value="${pos.id}">${pos.name}</option>
                                 </c:forEach>
                             </select>
-                            <label>Доступные должности</label>
+                            <label for="selected-poses">Доступные должности</label>
                         </div>
                     </div>
                 </form>

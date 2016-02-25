@@ -36,6 +36,8 @@ function addNewIndex() {
 function openClearForm() {
     $('#index-form')[0].reset();
     $("input").next("label").removeClass("active");
+    $("#selected-poses").val([]);
+    $('select').material_select();
     $('#add-index').openModal();
 }
 

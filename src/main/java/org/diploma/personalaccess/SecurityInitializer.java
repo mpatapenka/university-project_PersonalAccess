@@ -6,5 +6,4 @@ import org.springframework.security.web.context.AbstractSecurityWebApplicationIn
  * Empty class for loading security filter into context
  */
 public class SecurityInitializer extends AbstractSecurityWebApplicationInitializer {
-
 }

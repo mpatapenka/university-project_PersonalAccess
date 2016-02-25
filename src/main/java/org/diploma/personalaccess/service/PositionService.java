@@ -6,6 +6,8 @@ import java.util.List;
 
 /**
  * Service for working with positions and depend on it items
+ *
+ * @author Maksim Patapenka
  */
 public interface PositionService {
 

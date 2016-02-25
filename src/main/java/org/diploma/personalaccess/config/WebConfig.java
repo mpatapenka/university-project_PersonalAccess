@@ -24,6 +24,8 @@ import java.util.Locale;
 
 /**
  * Spring web configuration
+ *
+ * @author Maksim Patapenka
  */
 @Configuration
 @EnableWebMvc

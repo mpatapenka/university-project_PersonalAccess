@@ -22,6 +22,8 @@ import java.util.Properties;
 
 /**
  * Database configuration, also instantiating Hibernate parameters
+ *
+ * @author Maksim Patapenka
  */
 @Configuration
 @EnableTransactionManagement

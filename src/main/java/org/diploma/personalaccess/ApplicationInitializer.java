@@ -12,6 +12,8 @@ import javax.servlet.ServletRegistration;
 
 /**
  * With helps this class application set up a root context
+ *
+ * @author Maksim Patapenka
  */
 public class ApplicationInitializer implements WebApplicationInitializer {
 

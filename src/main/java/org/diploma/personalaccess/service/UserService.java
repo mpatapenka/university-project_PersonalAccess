@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * UserDetailsService internal implementation. Service retrieve user from
  * application database
+ *
+ * @author Maksim Patapenka
  */
 @Service
 @Transactional(readOnly = true)

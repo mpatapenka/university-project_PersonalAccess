@@ -13,6 +13,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
  * Spring Security configuration. Used UserDetailsService implementation for application database
+ *
+ * @author Maksim Patapenka
  */
 @Configuration
 @EnableWebSecurity

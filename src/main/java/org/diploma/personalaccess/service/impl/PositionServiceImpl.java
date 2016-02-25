@@ -11,6 +11,8 @@ import java.util.List;
 
 /**
  * Position service default implementation
+ *
+ * @author Maksim Patapenka
  */
 @Service
 public class PositionServiceImpl implements PositionService {

@@ -1,5 +1,6 @@
 package org.diploma.personalaccess.entity;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.core.style.ToStringCreator;
@@ -39,6 +40,22 @@ public class Unit extends BaseEntity {
 
     public void setForms(Set<Form> forms) {
         this.forms = forms;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Unit unit = (Unit) o;
+        return new EqualsBuilder()
+                .append(name, unit.name)
+                .isEquals();
     }
 
     @Override

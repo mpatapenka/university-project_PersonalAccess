@@ -1,5 +1,6 @@
 package org.diploma.personalaccess.entity;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.core.style.ToStringCreator;
@@ -90,6 +91,25 @@ public class Index extends BaseEntity {
 
     public void setAvailablePositions(Set<Position> availablePositions) {
         this.availablePositions = availablePositions;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Index index = (Index) o;
+        return new EqualsBuilder()
+                .append(estimate, index.estimate)
+                .append(multiplier, index.multiplier)
+                .append(name, index.name)
+                .append(workName, index.workName)
+                .isEquals();
     }
 
     @Override

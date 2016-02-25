@@ -1,5 +1,6 @@
 package org.diploma.personalaccess.entity;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.core.style.ToStringCreator;
@@ -100,6 +101,28 @@ public class UserIndex extends BaseEntity {
 
     public void setDocument(Document document) {
         this.document = document;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        UserIndex userIndex = (UserIndex) o;
+        return new EqualsBuilder()
+                .append(selfEstimate, userIndex.selfEstimate)
+                .append(leadEstimate, userIndex.leadEstimate)
+                .append(fillDate, userIndex.fillDate)
+                .append(description, userIndex.description)
+                .append(index, userIndex.index)
+                .append(user, userIndex.user)
+                .append(document, userIndex.document)
+                .isEquals();
     }
 
     @Override

@@ -1,5 +1,6 @@
 package org.diploma.personalaccess.entity;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.core.style.ToStringCreator;
@@ -58,6 +59,23 @@ public class Role extends BaseEntity implements GrantedAuthority {
     @Override
     public String getAuthority() {
         return getCode().toUpperCase();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Role role = (Role) o;
+        return new EqualsBuilder()
+                .append(name, role.name)
+                .append(code, role.code)
+                .isEquals();
     }
 
     @Override

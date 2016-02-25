@@ -9,3 +9,9 @@
 .modal.bottom-sheet {
     max-height: 70%;
 }
+
+.secondary-content-down {
+    position: absolute;
+    bottom: 5px;
+    right: 16px
+}

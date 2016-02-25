@@ -7,6 +7,7 @@ import org.diploma.personalaccess.service.PositionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -35,18 +36,19 @@ public class AdminController {
 
 
     @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
-    public String getDashboardPage() {
+    public String getDashboardPage(Model model) {
+        List<Index> allIndexes = indexService.findAllIndexes();
+
+        model.addAttribute("indexes", allIndexes);
+
         return "admin";
     }
 
     @ResponseBody
     @RequestMapping(value = "/dashboard/new", method = RequestMethod.POST)
-    public String addNewIndex(/*BindingResult bindingResult, */Index index) {
-        //if (!bindingResult.hasErrors()) {
-            indexService.saveOrUpdateIndex(index);
-            return "";
-        //}
-        //return "error";
+    public String addNewIndex(Index index) {
+        indexService.saveOrUpdateIndex(index);
+        return "";
     }
 
 }

@@ -15,15 +15,24 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
+/**
+ * Tests for index repository
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = DatabaseConfig.class)
 @WebAppConfiguration
 @Transactional
 public class PersonalAccessPersistenceTest {
 
+    /**
+     * Index repository bean
+     */
     @Autowired
     private IndexRepository indexRepository;
 
+    /**
+     * Complex test
+     */
     @Test
     public void testThatIndexCanBeSaveAndGetWithActualValues() {
         /* Data for testing index repository */

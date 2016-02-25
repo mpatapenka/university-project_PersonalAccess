@@ -1,20 +1,23 @@
 package org.diploma.personalaccess.web;
 
 import org.diploma.personalaccess.entity.Index;
-import org.diploma.personalaccess.entity.Position;
 import org.diploma.personalaccess.service.IndexService;
 import org.diploma.personalaccess.service.PositionService;
+import org.diploma.personalaccess.util.Parser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.List;
-
+/**
+ * That secured area only fo admins
+ *
+ * @author Maksim Patapenka
+ */
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 @Controller
 @RequestMapping("/admin")
@@ -28,27 +31,29 @@ public class AdminController {
 
 
 
-    @ModelAttribute("positions")
-    public List<Position> loadAllowedPositions() {
-        return positionService.findAll();
-    }
-
-
-
     @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
     public String getDashboardPage(Model model) {
-        List<Index> allIndexes = indexService.findAllIndexes();
-
-        model.addAttribute("indexes", allIndexes);
+        model.addAttribute("indexes", indexService.findAllIndexes());
+        model.addAttribute("positions", positionService.findAll());
 
         return "admin";
     }
 
     @ResponseBody
-    @RequestMapping(value = "/dashboard/new", method = RequestMethod.POST)
-    public String addNewIndex(Index index) {
+    @RequestMapping(value = "/dashboard/save", method = RequestMethod.POST)
+    public String saveIndex(@RequestBody String data) {
+        Index index = Parser.convertJsonStringToObject(data, Index.class);
         indexService.saveOrUpdateIndex(index);
-        return "";
+
+        return "success";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/dashboard/get", method = RequestMethod.GET, params = "id",
+            produces = "text/plain; charset=utf-8")
+    public String getIndex(long id) {
+        Index index = indexService.findIndexById(id);
+        return Parser.convertObjectToJsonString(index);
     }
 
 }

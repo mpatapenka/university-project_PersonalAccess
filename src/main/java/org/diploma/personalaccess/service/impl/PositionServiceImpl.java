@@ -9,9 +9,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * Position service default implementation
+ */
 @Service
 public class PositionServiceImpl implements PositionService {
 
+    /**
+     * Position repository bean
+     */
     @Autowired
     private PositionRepository positionRepository;
 

@@ -4,8 +4,16 @@ import org.diploma.personalaccess.entity.Position;
 
 import java.util.List;
 
+/**
+ * Service for working with positions and depend on it items
+ */
 public interface PositionService {
 
+    /**
+     * Get all positions from database
+     *
+     * @return all positions from database
+     */
     List<Position> findAll();
 
 }

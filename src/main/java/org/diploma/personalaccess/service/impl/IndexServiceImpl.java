@@ -40,4 +40,10 @@ public class IndexServiceImpl implements IndexService {
         return indexRepository.findOne(id);
     }
 
+    @Override
+    @Transactional
+    public void deleteIndex(long id) {
+        indexRepository.delete(id);
+    }
+
 }

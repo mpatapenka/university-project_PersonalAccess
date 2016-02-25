@@ -12,4 +12,6 @@ public interface IndexService {
 
     Index findIndexById(long id);
 
+    void deleteIndex(long id);
+
 }

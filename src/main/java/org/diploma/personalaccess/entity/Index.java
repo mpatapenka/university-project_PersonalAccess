@@ -37,7 +37,7 @@ public class Index extends BaseEntity {
     private String workName;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "index")
-    private Set<UserIndex> userIndexes = new HashSet<>();
+    private transient Set<UserIndex> userIndexes = new HashSet<>();
 
     @ManyToMany
     @JoinTable(name = "available_index",

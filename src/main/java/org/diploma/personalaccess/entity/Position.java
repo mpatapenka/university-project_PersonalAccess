@@ -24,10 +24,10 @@ public class Position extends BaseEntity {
     private String name;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "position")
-    private Set<Form> forms = new HashSet<>();
+    private transient Set<Form> forms = new HashSet<>();
 
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "availablePositions")
-    private Set<Index> availableIndexes = new HashSet<>();
+    private transient Set<Index> availableIndexes = new HashSet<>();
 
     public String getName() {
         return name;

@@ -22,14 +22,23 @@ import org.springframework.web.servlet.view.JstlView;
 import javax.annotation.Resource;
 import java.util.Locale;
 
+/**
+ * Spring web configuration
+ */
 @Configuration
 @EnableWebMvc
 @PropertySource("classpath:web.properties")
 @ComponentScan("org.diploma.personalaccess")
 public class WebConfig extends WebMvcConfigurerAdapter {
 
+    /**
+     * Logger Log4j
+     */
     private static final Logger log = Logger.getLogger(WebConfig.class);
 
+    /**
+     * Properties file holder. Configured by @PropertySource
+     */
     @Resource
     private Environment env;
 
@@ -83,6 +92,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Bean
     public MultipartResolver multipartResolver() {
+        /* Default max upload file size */
         final int defaultUploadSizeInMb = 10;
 
         int maxUploadSizeInMb = defaultUploadSizeInMb;

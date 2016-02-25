@@ -20,15 +20,24 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+/**
+ * Database configuration, also instantiating Hibernate parameters
+ */
 @Configuration
-@EnableJpaRepositories("org.diploma.personalaccess.repository")
 @EnableTransactionManagement
+@EnableJpaRepositories("org.diploma.personalaccess.repository")
 @PropertySource("classpath:db.properties")
 @ComponentScan("org.diploma.personalaccess")
 public class DatabaseConfig {
 
+    /**
+     * Logger Log4j
+     */
     private static final Logger log = Logger.getLogger(DatabaseConfig.class);
 
+    /**
+     * Properties file holder. Configured by @PropertySource
+     */
     @Resource
     private Environment env;
 

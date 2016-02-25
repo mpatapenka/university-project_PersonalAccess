@@ -11,12 +11,18 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+/**
+ * Spring Security configuration. Used UserDetailsService implementation for application database
+ */
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @ComponentScan("org.diploma.personalaccess.service")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    /**
+     * Bean for working with application database
+     */
     @Autowired
     private UserDetailsService userService;
 

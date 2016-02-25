@@ -10,6 +10,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.security.Principal;
 
+/**
+ * Controller which handle requests only from /user**
+ *
+ * @author Maksim Patapenka
+ */
 @Controller
 @RequestMapping("/user")
 public class UserController {

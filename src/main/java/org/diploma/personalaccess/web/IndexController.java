@@ -8,6 +8,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 
+/**
+ * Main controller of application. Entry point
+ *
+ * @author Maksim Patapenka
+ */
 @Controller
 public class IndexController {
 

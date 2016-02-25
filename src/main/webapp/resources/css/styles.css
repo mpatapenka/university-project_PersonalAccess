@@ -5,3 +5,7 @@
     z-index: 9;
     margin-bottom: 50px;
 }
+
+.modal.bottom-sheet {
+    max-height: 70%;
+}

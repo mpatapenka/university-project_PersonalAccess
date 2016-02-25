@@ -26,11 +26,22 @@
     <div class="container">
         <div class="section content">
 
-
+            <h4>Набор показателей</h4>
 
             <c:forEach var="index" items="${indexes}">
 
-
+                <ul class="collection">
+                    <li class="collection-item avatar">
+                        <i class="material-icons circle green">insert_chart</i>
+                        <span class="title truncate">${index.name}</span>
+                        <p>Доступные должности<br>
+                            <c:forEach var="availPos" items="${index}">
+                                ${availPos.name}
+                            </c:forEach>
+                        </p>
+                        <a href="#" class="secondary-content"><i class="material-icons">open_in_new</i></a>
+                    </li>
+                </ul>
 
             </c:forEach>
 

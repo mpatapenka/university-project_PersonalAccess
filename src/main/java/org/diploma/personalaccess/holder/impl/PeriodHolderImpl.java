@@ -1,8 +1,8 @@
-package org.diploma.personalaccess.service.holder.impl;
+package org.diploma.personalaccess.holder.impl;
 
 import org.apache.log4j.Logger;
 import org.diploma.personalaccess.bean.Period;
-import org.diploma.personalaccess.service.holder.PeriodHolder;
+import org.diploma.personalaccess.holder.PeriodHolder;
 import org.diploma.personalaccess.util.Parser;
 import org.springframework.stereotype.Component;
 

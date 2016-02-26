@@ -1,7 +1,7 @@
 package org.diploma.personalaccess.web;
 
 import org.diploma.personalaccess.entity.User;
-import org.diploma.personalaccess.service.holder.PeriodHolder;
+import org.diploma.personalaccess.holder.PeriodHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;

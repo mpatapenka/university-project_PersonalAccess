@@ -1,4 +1,4 @@
-package org.diploma.personalaccess.service.holder;
+package org.diploma.personalaccess.holder;
 
 import org.diploma.personalaccess.bean.Period;
 

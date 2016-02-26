@@ -1,8 +1,8 @@
 package org.diploma.personalaccess.config;
 
 import org.apache.log4j.Logger;
-import org.diploma.personalaccess.service.holder.PeriodHolder;
-import org.diploma.personalaccess.service.holder.impl.PeriodHolderImpl;
+import org.diploma.personalaccess.holder.PeriodHolder;
+import org.diploma.personalaccess.holder.impl.PeriodHolderImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

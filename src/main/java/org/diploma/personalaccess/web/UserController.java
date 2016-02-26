@@ -1,6 +1,7 @@
 package org.diploma.personalaccess.web;
 
 import org.diploma.personalaccess.entity.User;
+import org.diploma.personalaccess.service.holder.PeriodHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,9 @@ public class UserController {
 
     @Autowired
     private UserDetailsService userService;
+
+    @Autowired
+    private PeriodHolder periodHolder;
 
 
 
@@ -46,6 +50,7 @@ public class UserController {
         User user = getUserBySecurityInfo(principal);
 
         model.addAttribute("availIndexes", user.getForm().getPosition().getAvailableIndexes());
+        model.addAttribute("period", periodHolder.getCurrentPeriod());
 
         return "dashboard";
     }

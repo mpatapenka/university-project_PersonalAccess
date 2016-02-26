@@ -26,7 +26,7 @@
     <div class="container">
         <div class="section">
 
-            <h5>Вам необходимо заполнить показатели за текущий период (--период--)</h5>
+            <h5>Вам необходимо заполнить показатели за текущий период (${period.dateString})</h5>
 
             <c:forEach var="userIndex" items="${userIndexes}">
 

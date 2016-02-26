@@ -1,29 +1,39 @@
 package org.diploma.personalaccess.bean;
 
+import org.springframework.core.style.ToStringCreator;
+
 import java.sql.Date;
-import java.util.Calendar;
 
 /**
  * Simple bean object representing an period.
  *
  * @author Maksim Patapenka
  */
-public class Period {
+public class Period implements Comparable<Period> {
 
-    private int number;
+    /**
+     * Period start day. As default it should be 'zero'
+     */
     private int startDay;
+
+    /**
+     * Period start month.
+     */
     private int startMonth;
+
+    /**
+     * Period end day. If now end of month make sure you have correct last day
+     * of month. '30' or '31', don't remember about february '28' or '29' days.
+     * It may be configured for PeriodHolder by property file
+     */
     private int endDay;
+
+    /**
+     * Period end month
+     */
     private int endMonth;
-    private String name;
 
-    public int getNumber() {
-        return number;
-    }
 
-    public void setNumber(int number) {
-        this.number = number;
-    }
 
     public int getStartDay() {
         return startDay;
@@ -57,20 +67,31 @@ public class Period {
         this.endMonth = endMonth;
     }
 
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public Date getStartDateForYear(int year) {
-        return Date.valueOf(year + ":" + getStartMonth() + ":" + getStartDay());
+        return Date.valueOf(year + "-" + getStartMonth() + "-" + getStartDay());
     }
 
     public Date getEndDateForYear(int year) {
-        return Date.valueOf(year + ":" + getEndMonth() + ":" + getEndDay());
+        return Date.valueOf(year + "-" + getEndMonth() + "-" + getEndDay());
+    }
+
+
+
+    @Override
+    public int compareTo(Period o) {
+        return Integer.compare(this.startMonth, o.startMonth);
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringCreator(this)
+                .append("startDay", startDay)
+                .append("startMonth", startMonth)
+                .append("endDay", endDay)
+                .append("endMonth", endMonth)
+                .toString();
     }
 
 }

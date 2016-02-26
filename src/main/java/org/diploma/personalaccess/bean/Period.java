@@ -2,6 +2,7 @@ package org.diploma.personalaccess.bean;
 
 import org.springframework.core.style.ToStringCreator;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -11,7 +12,7 @@ import java.util.Calendar;
  *
  * @author Maksim Patapenka
  */
-public class Period implements Comparable<Period> {
+public class Period implements Serializable, Comparable<Period> {
 
     /**
      * Period start day. As default it should be 'zero'

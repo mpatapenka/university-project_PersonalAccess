@@ -8,6 +8,11 @@ import org.springframework.stereotype.Repository;
 import java.sql.Date;
 import java.util.List;
 
+/**
+ * Simple realization JPA repository for JavaBean UserIndex
+ *
+ * @author Maksim Patapenka
+ */
 @Repository
 public interface UserIndexRepository extends JpaRepository<UserIndex, Long> {
 

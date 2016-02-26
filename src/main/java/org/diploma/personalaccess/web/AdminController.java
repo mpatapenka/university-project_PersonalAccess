@@ -56,4 +56,12 @@ public class AdminController {
         return Parser.convertObjectToJsonString(index);
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/dashboard/delete", method = RequestMethod.POST, params = "id")
+    public String deleteIndex(long id) {
+        indexService.deleteIndex(id);
+
+        return "success";
+    }
+
 }

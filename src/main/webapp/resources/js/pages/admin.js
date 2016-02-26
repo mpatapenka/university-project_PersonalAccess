@@ -72,3 +72,7 @@ function loadIndex(id) {
         }
     });
 }
+
+function deleteSubmitModal() {
+
+}

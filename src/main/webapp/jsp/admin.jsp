@@ -42,7 +42,7 @@
                         <a href="JavaScript:loadIndex(${index.id})"
                            class="secondary-content"><i class="material-icons">open_in_new</i></a>
                         <a href="JavaScript:deleteIndex(${index.id}"
-                           class="secondary-content-down hide-on-small-only">
+                           class="secondary-content-down">
                             <i class="material-icons">delete</i></a>
                     </li>
                 </ul>

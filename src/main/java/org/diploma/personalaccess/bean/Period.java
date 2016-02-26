@@ -79,11 +79,20 @@ public class Period implements Comparable<Period> {
         return Date.valueOf(year + "-" + getEndMonth() + "-" + getEndDay());
     }
 
+    public Date getCurrentStartDate() {
+        int thisYear = Calendar.getInstance().get(Calendar.YEAR);
+        return getStartDateForYear(thisYear);
+    }
+
+    public Date getCurrentEndDate() {
+        int thisYear = Calendar.getInstance().get(Calendar.YEAR);
+        return getEndDateForYear(thisYear);
+    }
+
     public String getDateString() {
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
-        int thisYear = Calendar.getInstance().get(Calendar.YEAR);
-        return formatter.format(getStartDateForYear(thisYear)) + " - "
-                + formatter.format(getEndDateForYear(thisYear));
+        return formatter.format(getCurrentStartDate()) + " - "
+                + formatter.format(getCurrentEndDate());
     }
 
 

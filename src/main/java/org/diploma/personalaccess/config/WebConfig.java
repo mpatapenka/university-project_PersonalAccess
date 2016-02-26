@@ -1,6 +1,8 @@
 package org.diploma.personalaccess.config;
 
 import org.apache.log4j.Logger;
+import org.diploma.personalaccess.service.holder.PeriodHolder;
+import org.diploma.personalaccess.service.holder.impl.PeriodHolderImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -112,6 +114,11 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         resolver.setMaxUploadSize(maxUploadSize);
 
         return resolver;
+    }
+
+    @Bean
+    public PeriodHolder periodHolder() {
+        return new PeriodHolderImpl();
     }
 
 }

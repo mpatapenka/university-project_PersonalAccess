@@ -3,6 +3,8 @@ package org.diploma.personalaccess.bean;
 import org.springframework.core.style.ToStringCreator;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 /**
  * Simple bean object representing an period.
@@ -75,6 +77,13 @@ public class Period implements Comparable<Period> {
 
     public Date getEndDateForYear(int year) {
         return Date.valueOf(year + "-" + getEndMonth() + "-" + getEndDay());
+    }
+
+    public String getDateString() {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+        int thisYear = Calendar.getInstance().get(Calendar.YEAR);
+        return formatter.format(getStartDateForYear(thisYear)) + " - "
+                + formatter.format(getEndDateForYear(thisYear));
     }
 
 

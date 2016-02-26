@@ -22,10 +22,18 @@ public class UserController {
     @Autowired
     private UserDetailsService userService;
 
+
+
+    private User getUserBySecurityInfo(Principal principal) {
+        String username = principal.getName();
+        return (User) userService.loadUserByUsername(username);
+    }
+
+
+
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
     public String getProfilePage(Model model, Principal principal) {
-        String username = principal.getName();
-        User user = (User) userService.loadUserByUsername(username);
+        User user = getUserBySecurityInfo(principal);
 
         model.addAttribute("uForm", user.getForm());
         model.addAttribute("subs", user.getSubs());
@@ -34,7 +42,11 @@ public class UserController {
     }
 
     @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
-    public String getDashboardPage() {
+    public String getDashboardPage(Model model, Principal principal) {
+        User user = getUserBySecurityInfo(principal);
+
+        model.addAttribute("availIndexes", user.getForm().getPosition().getAvailableIndexes());
+
         return "dashboard";
     }
 

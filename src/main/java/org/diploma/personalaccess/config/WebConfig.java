@@ -46,6 +46,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Resource
     private Environment env;
 
+
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");

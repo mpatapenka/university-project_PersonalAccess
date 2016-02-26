@@ -3,7 +3,7 @@ package org.diploma.personalaccess.holder.impl;
 import org.apache.log4j.Logger;
 import org.diploma.personalaccess.bean.Period;
 import org.diploma.personalaccess.holder.PeriodHolder;
-import org.diploma.personalaccess.util.Parser;
+import org.diploma.personalaccess.util.PeriodParser;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -67,7 +67,7 @@ public class PeriodHolderImpl implements PeriodHolder {
             for (int i = 0; i < periodsCount; i++) {
                 String key = createPeriodKey(i);
                 String periodData = properties.getProperty(key);
-                Period period = Parser.convertPeriodDataStringToPeriod(periodData);
+                Period period = PeriodParser.convertPeriodDataStringToPeriod(periodData);
                 entries.add(period);
             }
 

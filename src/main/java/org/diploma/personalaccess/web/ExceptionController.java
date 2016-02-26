@@ -7,10 +7,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.security.Principal;
 
+/**
+ * Controller which handle errors and show it on page
+ *
+ * @author Maksim Patapenka
+ */
 @Controller
 @RequestMapping("/error")
 public class ExceptionController {
 
+    /**
+     * Logger Log4j
+     */
     private static final Logger log = Logger.getLogger(ExceptionController.class);
 
     @RequestMapping(value = "/403", method = RequestMethod.GET)

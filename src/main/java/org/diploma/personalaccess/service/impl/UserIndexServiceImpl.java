@@ -24,6 +24,8 @@ public class UserIndexServiceImpl implements UserIndexService {
     @Autowired
     private UserIndexRepository userIndexRepository;
 
+
+
     @Override
     public List<UserIndex> getAllUserIndexesByCurrentPeriod(User user, Period period) {
         return null;

@@ -31,6 +31,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
+
+
     /**
      * Load user from database by username with helps user repository
      *

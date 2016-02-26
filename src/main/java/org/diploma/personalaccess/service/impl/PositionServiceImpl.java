@@ -23,6 +23,8 @@ public class PositionServiceImpl implements PositionService {
     @Autowired
     private PositionRepository positionRepository;
 
+
+
     @Override
     @Transactional
     public List<Position> findAll() {

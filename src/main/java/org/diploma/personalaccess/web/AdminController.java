@@ -3,7 +3,7 @@ package org.diploma.personalaccess.web;
 import org.diploma.personalaccess.entity.Index;
 import org.diploma.personalaccess.service.IndexService;
 import org.diploma.personalaccess.service.PositionService;
-import org.diploma.personalaccess.util.Parser;
+import org.diploma.personalaccess.util.JsonParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -42,7 +42,7 @@ public class AdminController {
     @ResponseBody
     @RequestMapping(value = "/dashboard/save", method = RequestMethod.POST)
     public String saveIndex(@RequestBody String data) {
-        Index index = Parser.convertJsonStringToObject(data, Index.class);
+        Index index = JsonParser.convertJsonStringToObject(data, Index.class);
         indexService.saveOrUpdateIndex(index);
 
         return "success";
@@ -53,7 +53,7 @@ public class AdminController {
             produces = "text/plain; charset=utf-8")
     public String getIndex(long id) {
         Index index = indexService.findIndexById(id);
-        return Parser.convertObjectToJsonString(index);
+        return JsonParser.convertObjectToJsonString(index);
     }
 
     @ResponseBody

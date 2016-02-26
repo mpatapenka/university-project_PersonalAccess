@@ -1,4 +1,4 @@
-package org.diploma.personalaccess.service;
+package org.diploma.personalaccess.service.impl;
 
 import org.apache.log4j.Logger;
 import org.diploma.personalaccess.entity.User;
@@ -18,12 +18,12 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional(readOnly = true)
-public class UserService implements UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService {
 
     /**
      * Logger Log4j
      */
-    private static final Logger log = Logger.getLogger(UserService.class);
+    private static final Logger log = Logger.getLogger(UserDetailsServiceImpl.class);
 
     /**
      * User repository bean

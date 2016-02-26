@@ -9,11 +9,21 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * Index service default implementation
+ *
+ * @author Maksim Patapenka
+ */
 @Service
 public class IndexServiceImpl implements IndexService {
 
+    /**
+     * Index repository bean
+     */
     @Autowired
     private IndexRepository indexRepository;
+
+
 
     @Override
     @Transactional

@@ -15,6 +15,11 @@
 
 
             <ul class="right hide-on-med-and-down">
+                <li>
+                    <a href="<c:url value="/"/>"><spring:message
+                            code="control.main_page"/></a>
+                </li>
+
                 <security:authorize access="isAnonymous()">
                     <li>
                         <a href="<c:url value="/login"/>"><spring:message code="control.sign_in"/></a>
@@ -28,10 +33,6 @@
                 </security:authorize>
 
                 <security:authorize access="isAuthenticated()">
-                    <li>
-                        <a href="<c:url value="/"/>"><spring:message
-                                code="control.main_page"/></a>
-                    </li>
                     <li>
                         <a href="<c:url value="/user/profile"/>"><spring:message
                                 code="control.profile"/></a>
@@ -45,6 +46,11 @@
 
 
             <ul id="nav-mobile" class="side-nav">
+                <li>
+                    <a href="<c:url value="/"/>"><spring:message
+                            code="control.main_page"/></a>
+                </li>
+
                 <security:authorize access="isAnonymous()">
                     <li>
                         <a href="<c:url value="/login"/>"><spring:message code="control.sign_in"/></a>
@@ -58,10 +64,6 @@
                 </security:authorize>
 
                 <security:authorize access="isAuthenticated()">
-                    <li>
-                        <a href="<c:url value="/"/>"><spring:message
-                                code="control.main_page"/></a>
-                    </li>
                     <li>
                         <a href="<c:url value="/user/profile"/>"><spring:message
                                 code="control.profile"/></a>

@@ -22,10 +22,26 @@ public interface PeriodHolder {
     Period getPeriodByDate(Date date);
 
     /**
+     * Return period specified by current date
+     *
+     * @return current period
+     */
+    Period getCurrentPeriod();
+
+    /**
      * Get all periods, specified by configuration
      *
      * @return all periods
      */
     List<Period> getAllPeriods();
+
+    /**
+     * Get periods name code. It's equivalent of name, but it
+     * code used like a message code from resource bundle.
+     * It's need for language translator
+     *
+     * @return periods name code
+     */
+    String getPeriodsNameCode();
 
 }

@@ -41,9 +41,9 @@
                         </p>
                         <a href="JavaScript:loadIndex(${index.id})"
                            class="secondary-content"><i class="material-icons">open_in_new</i></a>
-                        <a href="JavaScript:deleteIndex(${index.id}"
-                           class="secondary-content-down">
-                            <i class="material-icons">delete</i></a>
+
+                        <a href="JavaScript:openDeleteModal(${index.id})"
+                           class="secondary-content-down"><i class="material-icons">delete</i></a>
                     </li>
                 </ul>
 
@@ -60,6 +60,8 @@
 
 
     <!-- Modals -->
+
+    <!-- Add/edit modal -->
     <div id="add-index" class="modal bottom-sheet">
         <div class="modal-content">
             <h4>Добавление/изменение показателя</h4>
@@ -107,6 +109,19 @@
 
         <div class="modal-footer">
             <a id="add-index-btn" class=" modal-action modal-close waves-effect waves-green btn-flat">Сохранить</a>
+        </div>
+    </div>
+
+    <!-- Delete modal -->
+    <div id="delete-index" class="modal bottom-sheet">
+        <div class="modal-content">
+            <h4>Вы действительно хотите удалить показатель?</h4>
+            <input type="hidden" id="delete-candidate-id" value="">
+        </div>
+
+        <div class="modal-footer">
+            <a href="JavaScript:deleteIndex();" class=" modal-action modal-close waves-effect waves-red btn-flat">Удалить</a>
+            <a class="modal-action modal-close waves-effect waves-orange btn-flat">Отмена</a>
         </div>
     </div>
 

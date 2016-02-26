@@ -73,6 +73,24 @@ function loadIndex(id) {
     });
 }
 
-function deleteSubmitModal() {
+function openDeleteModal(id) {
+    $("#delete-candidate-id").val(id);
+    $("#delete-index").openModal();
+}
 
+function deleteIndex() {
+    var id = $("#delete-candidate-id").val();
+    $.ajax({
+        url: "/admin/dashboard/delete?id=" + id,
+        type: "post",
+        success: function (result) {
+            console.log("success: " + result);
+            $("#delete-candidate-id").val("");
+            location.reload();
+        },
+        error: function (error) {
+            console.log("error: " + error);
+            Materialize.toast('Ошибка удаления показателя!', 4000);
+        }
+    });
 }

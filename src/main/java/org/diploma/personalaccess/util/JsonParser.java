@@ -1,6 +1,7 @@
 package org.diploma.personalaccess.util;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.apache.log4j.Logger;
 
 import java.io.UnsupportedEncodingException;
@@ -21,7 +22,14 @@ public final class JsonParser {
     /**
      * Common json converter (from google library)
      */
-    private static final Gson GSON = new Gson();
+    private static Gson GSON;
+
+    static {
+        final GsonBuilder builder = new GsonBuilder();
+        builder.excludeFieldsWithoutExposeAnnotation();
+
+        GSON = builder.create();
+    }
 
 
 

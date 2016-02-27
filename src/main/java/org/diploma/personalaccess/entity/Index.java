@@ -1,5 +1,6 @@
 package org.diploma.personalaccess.entity;
 
+import com.google.gson.annotations.Expose;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -19,26 +20,31 @@ import java.util.Set;
 @Table(name = "_index")
 public class Index extends BaseEntity {
 
+    @Expose
     @Column(name = "name", length = 400)
     @NotEmpty
     @Length(max = 400)
     private String name;
 
+    @Expose
     @Column(name = "estimate")
     @Min(0)
     private int estimate;
 
+    @Expose
     @Column(name = "multiplier")
     @Min(1)
     private int multiplier;
 
+    @Expose
     @Column(name = "work_name", length = 50)
     @Length(max = 50)
     private String workName;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "index")
-    private transient Set<UserIndex> userIndexes = new HashSet<>();
+    private Set<UserIndex> userIndexes = new HashSet<>();
 
+    @Expose
     @ManyToMany
     @JoinTable(name = "available_index",
             joinColumns = {@JoinColumn(name = "index_id", referencedColumnName = "id")},

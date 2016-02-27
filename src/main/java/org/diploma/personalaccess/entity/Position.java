@@ -1,5 +1,6 @@
 package org.diploma.personalaccess.entity;
 
+import com.google.gson.annotations.Expose;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -18,16 +19,17 @@ import java.util.Set;
 @Table(name = "position")
 public class Position extends BaseEntity {
 
+    @Expose
     @Column(name = "name", nullable = false, length = 255)
     @NotEmpty
     @Length(max = 255)
     private String name;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "position")
-    private transient Set<Form> forms = new HashSet<>();
+    private Set<Form> forms = new HashSet<>();
 
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "availablePositions")
-    private transient Set<Index> availableIndexes = new HashSet<>();
+    private Set<Index> availableIndexes = new HashSet<>();
 
     public String getName() {
         return name;

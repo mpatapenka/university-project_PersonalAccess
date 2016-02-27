@@ -1,5 +1,6 @@
 package org.diploma.personalaccess.entity;
 
+import com.google.gson.annotations.Expose;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -16,6 +17,7 @@ import java.io.Serializable;
 @MappedSuperclass
 public class BaseEntity implements Serializable {
 
+    @Expose
     @Id
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")

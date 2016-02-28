@@ -51,4 +51,12 @@ public interface PeriodHolder {
      */
     List<Integer> getAvailableYears();
 
+    /**
+     * Get period by id (sequence number)
+     *
+     * @param id id (sequence number)
+     * @return period
+     */
+    Period getPeriodById(long id);
+
 }

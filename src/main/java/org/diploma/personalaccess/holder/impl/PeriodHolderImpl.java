@@ -159,4 +159,9 @@ public class PeriodHolderImpl implements PeriodHolder {
         return years;
     }
 
+    @Override
+    public Period getPeriodById(long id) {
+        return entries.get((int) id);
+    }
+
 }

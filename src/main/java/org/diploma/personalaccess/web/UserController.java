@@ -110,7 +110,8 @@ public class UserController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/subs", method = RequestMethod.GET, params = "search")
+    @RequestMapping(value = "/subs", method = RequestMethod.GET, params = "search",
+            produces = "text/plain; charset=utf-8")
     public String getSubordinateIndexes(long userId, long periodNum, int year) {
         Period period = periodHolder.getPeriodById(periodNum);
         List<UserIndex> subIndexes = userIndexService.getAllUserIndexesBySpecifiedPeriod(userId,

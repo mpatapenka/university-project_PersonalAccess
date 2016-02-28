@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import org.apache.log4j.Logger;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Type;
 import java.net.URLDecoder;
 
 /**
@@ -34,24 +35,29 @@ public final class JsonParser {
 
 
     /**
-     * Converter from url encoded string to object
+     * Converter from url encoded string to object by class
      *
      * @param data url-encoded json string
      * @param clazz class for converting
      * @param <T> supported type
-     * @return object by specified type
+     * @return object by specified class
      */
     public static <T> T convertJsonStringToObject(String data, Class<T> clazz) {
-        try {
-            data = URLDecoder.decode(data, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            String msg = "Input data can not converted to target encoding 'UTF-8'.";
-            log.debug("Input data: " + data, e);
-            log.error(msg, e);
-            throw new IllegalArgumentException(msg, e);
-        }
-        data = data.substring(0, data.length() - 1);
+        data = prepareRawJsonDataString(data);
         return GSON.fromJson(data, clazz);
+    }
+
+    /**
+     * Converter from url encoded string to object by type
+     *
+     * @param data url-encoded json string
+     * @param type type of convert object
+     * @param <T> supported type
+     * @return object by specified type
+     */
+    public static <T> T convertJsonStringToObject(String data, Type type) {
+        data = prepareRawJsonDataString(data);
+        return GSON.fromJson(data, type);
     }
 
     /**
@@ -62,6 +68,26 @@ public final class JsonParser {
      */
     public static String convertObjectToJsonString(Object object) {
         return GSON.toJson(object);
+    }
+
+
+
+    /**
+     * Prepare data from request to normal view
+     *
+     * @param rawData raw json data string
+     * @return clear json string
+     */
+    private static String prepareRawJsonDataString(String rawData) {
+        try {
+            rawData = URLDecoder.decode(rawData, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            String msg = "Input rawData can not converted to target encoding 'UTF-8'.";
+            log.debug("Input rawData: " + rawData, e);
+            log.error(msg, e);
+            throw new IllegalArgumentException(msg, e);
+        }
+        return rawData.substring(0, rawData.length() - 1);
     }
 
 

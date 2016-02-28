@@ -34,6 +34,10 @@
 
                 <security:authorize access="isAuthenticated()">
                     <li>
+                        <a href="<c:url value="/user/subs"/>"><spring:message
+                                code="control.subs"/></a>
+                    </li>
+                    <li>
                         <a href="<c:url value="/user/profile"/>"><spring:message
                                 code="control.profile"/></a>
                     </li>
@@ -64,6 +68,10 @@
                 </security:authorize>
 
                 <security:authorize access="isAuthenticated()">
+                    <li>
+                        <a href="<c:url value="/user/subs"/>"><spring:message
+                                code="control.subs"/></a>
+                    </li>
                     <li>
                         <a href="<c:url value="/user/profile"/>"><spring:message
                                 code="control.profile"/></a>

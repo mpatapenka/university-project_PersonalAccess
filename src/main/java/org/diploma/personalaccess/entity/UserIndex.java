@@ -9,6 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 /**
  * Simple JavaBean domain object representing an user work indexes.
@@ -107,6 +108,11 @@ public class UserIndex extends BaseEntity {
 
     public void setDocument(Document document) {
         this.document = document;
+    }
+
+    public String getFormatFillDate() {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+        return formatter.format(getFillDate());
     }
 
     @Override

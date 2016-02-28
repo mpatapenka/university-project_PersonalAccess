@@ -36,7 +36,7 @@ import java.util.Set;
 public class UserController {
 
     @Autowired
-    private UserDetailsService userService;
+    private UserDetailsService userDetailsService;
 
     @Autowired
     private UserIndexService userIndexService;
@@ -48,7 +48,7 @@ public class UserController {
 
     private User getUserBySecurityInfo(Principal principal) {
         String username = principal.getName();
-        return (User) userService.loadUserByUsername(username);
+        return (User) userDetailsService.loadUserByUsername(username);
     }
 
 
@@ -70,7 +70,8 @@ public class UserController {
         boolean isFilled = userIndexService.isUserIndexesAvailableForPeriod(user, period);
 
         List<UserIndex> userIndexes = isFilled
-                ? userIndexService.getAllUserIndexesByCurrentPeriod(user, period)
+                ? userIndexService.getAllUserIndexesBySpecifiedPeriod(user,
+                period.getCurrentStartDate(), period.getCurrentEndDate())
                 : new ArrayList<>();
         Set<Index> availIndexes = !isFilled
                 ? user.getForm().getPosition().getAvailableIndexes()
@@ -106,6 +107,16 @@ public class UserController {
         model.addAttribute("availYears", periodHolder.getAvailableYears());
 
         return "subordinate";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/subs", method = RequestMethod.GET, params = "search")
+    public String getSubordinateIndexes(long userId, long periodNum, int year) {
+        Period period = periodHolder.getPeriodById(periodNum);
+        List<UserIndex> subIndexes = userIndexService.getAllUserIndexesBySpecifiedPeriod(userId,
+                period.getStartDateForYear(year), period.getEndDateForYear(year));
+
+        return JsonParser.convertObjectToJsonString(subIndexes);
     }
 
 }

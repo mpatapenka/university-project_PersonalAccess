@@ -28,9 +28,8 @@
 
             <h4>Набор показателей</h4>
 
-            <c:forEach var="index" items="${indexes}">
-
-                <ul class="collection dismissable">
+            <ul class="collection">
+                <c:forEach var="index" items="${indexes}">
                     <li class="collection-item avatar">
                         <i class="material-icons circle green">insert_chart</i>
                         <span class="title truncate">${index.name}</span>
@@ -45,9 +44,8 @@
                         <a href="JavaScript:openDeleteModal(${index.id})"
                            class="secondary-content-down"><i class="material-icons">delete</i></a>
                     </li>
-                </ul>
-
-            </c:forEach>
+                </c:forEach>
+            </ul>
 
         </div>
     </div>

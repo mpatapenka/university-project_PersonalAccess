@@ -5,6 +5,7 @@ import org.diploma.personalaccess.bean.Period;
 import org.diploma.personalaccess.entity.User;
 import org.diploma.personalaccess.entity.UserIndex;
 import org.diploma.personalaccess.repository.UserIndexRepository;
+import org.diploma.personalaccess.repository.UserRepository;
 import org.diploma.personalaccess.service.UserIndexService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,13 +29,25 @@ public class UserIndexServiceImpl implements UserIndexService {
     @Autowired
     private UserIndexRepository userIndexRepository;
 
+    /**
+     * User repository bean
+     */
+    @Autowired
+    private UserRepository userRepository;
+
 
 
     @Override
     @Transactional
-    public List<UserIndex> getAllUserIndexesByCurrentPeriod(User user, Period period) {
-        return userIndexRepository.findByUserAndFillDateBetween(user,
-                period.getCurrentStartDate(), period.getCurrentEndDate());
+    public List<UserIndex> getAllUserIndexesBySpecifiedPeriod(User user, Date start, Date end) {
+        return userIndexRepository.findByUserAndFillDateBetween(user, start, end);
+    }
+
+    @Override
+    @Transactional
+    public List<UserIndex> getAllUserIndexesBySpecifiedPeriod(long userId, Date start, Date end) {
+        User user = userRepository.findOne(userId);
+        return getAllUserIndexesBySpecifiedPeriod(user, start, end);
     }
 
     @Override
@@ -55,9 +68,13 @@ public class UserIndexServiceImpl implements UserIndexService {
             String docName = userIndex.getDocument().getName();
             if (!docName.isEmpty()) {
                 userIndex.getDocument().setSystemName(generateUniqueSystemName(docName));
-            } else {
-                userIndex.setDocument(null);
             }
+            /*
+             * Add else block and set document to 'null' in it
+             * Now it's working without else because upload documents is
+             * unsupported operation
+             */
+            userIndex.setDocument(null);
 
             userIndex.setUser(user);
             userIndex.setFillDate(date);

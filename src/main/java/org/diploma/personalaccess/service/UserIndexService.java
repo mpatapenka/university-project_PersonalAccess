@@ -4,6 +4,7 @@ import org.diploma.personalaccess.bean.Period;
 import org.diploma.personalaccess.entity.User;
 import org.diploma.personalaccess.entity.UserIndex;
 
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -14,13 +15,24 @@ import java.util.List;
 public interface UserIndexService {
 
     /**
-     * Get all filled user indexes for current period of current year
+     * Get all filled user indexes for period
      *
      * @param user user
-     * @param period period
+     * @param start start date of period
+     * @param end end date of period
      * @return list of user indexes
      */
-    List<UserIndex> getAllUserIndexesByCurrentPeriod(User user, Period period);
+    List<UserIndex> getAllUserIndexesBySpecifiedPeriod(User user, Date start, Date end);
+
+    /**
+     * Get all filled user indexes for period
+     *
+     * @param userId id of user
+     * @param start start date of period
+     * @param end end date of period
+     * @return list of user indexes
+     */
+    List<UserIndex> getAllUserIndexesBySpecifiedPeriod(long userId, Date start, Date end);
 
     /**
      * Checking user indexes available for specified period

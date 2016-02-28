@@ -30,6 +30,45 @@
                 <c:when test="${isFilled}">
                     <h5>Показатели за текущий период (${period.dateString}) заполнены</h5>
 
+                    <ul class="collection">
+                        <c:forEach var="uIndex" items="${userIndexes}">
+                            <li class="collection-item avatar">
+                                <i class="material-icons circle orange">assignment</i>
+                                <span class="title truncate">${uIndex.index.name}</span>
+                                <p>Ваша оценка: ${uIndex.selfEstimate}<br>
+                                    Дата заполнения: ${uIndex.formatFillDate}
+                                </p>
+                                <a href="JavaScript:$('#additional-modal-${uIndex.id}').openModal();"
+                                   class="secondary-content"><i class="material-icons">chat_bubble_outline</i></a>
+
+                                <!-- Additional info modal -->
+                                <div id="additional-modal-${uIndex.id}" class="modal bottom-sheet">
+                                    <div class="modal-content">
+                                        <h4>Дополнительная информация</h4>
+
+                                        <hr>
+
+                                        <h5>${uIndex.index.name}</h5><br>
+                                        <p>Максимальная оценка ${uIndex.index.estimate} за каждые ${uIndex.index.multiplier} ${uIndex.index.workName}</p>
+
+                                        <c:if test="${not empty uIndex.description}">
+                                            <br>
+                                            <p>Описание проделанной работы: ${uIndex.description}</p>
+                                        </c:if>
+
+                                        <c:if test="${not empty uIndex.document}">
+                                            <br>
+                                            <p>Скачать прикрепленный документ: <a href="#">${uIndex.document.name}</a></p>
+                                        </c:if>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <a class=" modal-action modal-close waves-effect waves-red btn-flat">Закрыть</a>
+                                    </div>
+                                </div>
+                            </li>
+                        </c:forEach>
+                    </ul>
                 </c:when>
 
                 <c:otherwise>

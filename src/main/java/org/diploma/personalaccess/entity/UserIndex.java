@@ -1,8 +1,8 @@
 package org.diploma.personalaccess.entity;
 
+import com.google.gson.annotations.Expose;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.core.style.ToStringCreator;
 
 import javax.persistence.*;
@@ -19,22 +19,27 @@ import java.sql.Date;
 @Table(name = "user_index")
 public class UserIndex extends BaseEntity {
 
+    @Expose
     @Column(name = "self_estimate")
     @Min(0)
     private int selfEstimate;
 
+    @Expose
     @Column(name = "lead_estimate")
     @Min(0)
     private int leadEstimate;
 
+    @Expose(deserialize = false)
     @Column(name = "fill_date")
     @NotNull
     private Date fillDate;
 
+    @Expose
     @Column(name = "description", length = 500)
     @Length(max = 500)
     private String description;
 
+    @Expose
     @ManyToOne
     @JoinColumn(name = "index_id")
     private Index index;
@@ -43,7 +48,8 @@ public class UserIndex extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
+    @Expose
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "document_id")
     private Document document;
 

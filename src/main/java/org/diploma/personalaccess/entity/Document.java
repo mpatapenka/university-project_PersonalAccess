@@ -1,5 +1,6 @@
 package org.diploma.personalaccess.entity;
 
+import com.google.gson.annotations.Expose;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -18,6 +19,7 @@ import java.util.Set;
 @Table(name = "document")
 public class Document extends BaseEntity {
 
+    @Expose
     @Column(name = "name", length = 255)
     @NotEmpty
     @Length(max = 255)

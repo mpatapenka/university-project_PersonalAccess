@@ -96,4 +96,16 @@ public class UserController {
         return "success";
     }
 
+    @RequestMapping(value = "/subs", method = RequestMethod.GET)
+    public String getSubordinatePage(Model model, Principal principal) {
+        User user = getUserBySecurityInfo(principal);
+
+        model.addAttribute("subs", user.getSubs());
+        model.addAttribute("periods", periodHolder.getAllPeriods());
+        model.addAttribute("periodNameCode", periodHolder.getPeriodsNameCode());
+        model.addAttribute("availYears", periodHolder.getAvailableYears());
+
+        return "subordinate";
+    }
+
 }

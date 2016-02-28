@@ -35,6 +35,16 @@ public class PeriodHolderImpl implements PeriodHolder {
     private static final String DEFAULT_PERIOD_COUNT = "4";
 
     /**
+     * Default start year
+     */
+    private static final String DEFAULT_START_YEAR = "2015";
+
+    /**
+     * Default end year
+     */
+    private static final String DEFAULT_END_YEAR = "2025";
+
+    /**
      * Logger Log4j
      */
     private static final Logger log = Logger.getLogger(PeriodHolderImpl.class);
@@ -51,10 +61,16 @@ public class PeriodHolderImpl implements PeriodHolder {
      */
     private String periodNameCode;
 
+    /**
+     * Available years
+     */
+    private List<Integer> years;
+
 
 
     public PeriodHolderImpl() {
         entries = new ArrayList<>();
+        years = new ArrayList<>();
 
         try {
             InputStream is = getClass().getClassLoader().getResourceAsStream(HOLDER_CONFIG_FILE);
@@ -72,6 +88,13 @@ public class PeriodHolderImpl implements PeriodHolder {
             }
 
             Collections.sort(entries);
+
+            final int startYear = Integer.parseInt(properties.getProperty("startYear", DEFAULT_START_YEAR));
+            final int endYear = Integer.parseInt(properties.getProperty("endYear", DEFAULT_END_YEAR));
+
+            for (int i = startYear; i <= endYear; i++) {
+                years.add(i);
+            }
 
         } catch (IOException e) {
             String msg = "Can not find property file '" + HOLDER_CONFIG_FILE + "' in classpath.";
@@ -129,6 +152,11 @@ public class PeriodHolderImpl implements PeriodHolder {
     @Override
     public String getPeriodsNameCode() {
         return periodNameCode;
+    }
+
+    @Override
+    public List<Integer> getAvailableYears() {
+        return years;
     }
 
 }

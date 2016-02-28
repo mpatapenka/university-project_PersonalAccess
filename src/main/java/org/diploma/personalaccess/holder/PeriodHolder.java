@@ -44,4 +44,11 @@ public interface PeriodHolder {
      */
     String getPeriodsNameCode();
 
+    /**
+     * Get all available years
+     *
+     * @return list of integer (years)
+     */
+    List<Integer> getAvailableYears();
+
 }

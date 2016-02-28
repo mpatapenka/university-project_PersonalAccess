@@ -15,7 +15,7 @@ import java.util.Calendar;
 public class Period implements Serializable, Comparable<Period> {
 
     /**
-     * Period start day. As default it should be 'zero'
+     * Period start day. As default it should be 'one'
      */
     private int startDay;
 
@@ -94,6 +94,16 @@ public class Period implements Serializable, Comparable<Period> {
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
         return formatter.format(getCurrentStartDate()) + " - "
                 + formatter.format(getCurrentEndDate());
+    }
+
+    public String getStart() {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM");
+        return formatter.format(getCurrentStartDate());
+    }
+
+    public String getEnd() {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM");
+        return formatter.format(getCurrentEndDate());
     }
 
 

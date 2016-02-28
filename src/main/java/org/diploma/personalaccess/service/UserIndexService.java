@@ -22,4 +22,21 @@ public interface UserIndexService {
      */
     List<UserIndex> getAllUserIndexesByCurrentPeriod(User user, Period period);
 
+    /**
+     * Checking user indexes available for specified period
+     *
+     * @param user specified user
+     * @param period specified period
+     * @return true - if user already fill indexes for specified period,
+     * false - another one
+     */
+    boolean isUserIndexesAvailableForPeriod(User user, Period period);
+
+    /**
+     * Save all user indexes
+     *
+     * @param userIndexes user indexes
+     */
+    void publishAllUserIndexes(List<UserIndex> userIndexes, User user);
+
 }

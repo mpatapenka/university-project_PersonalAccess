@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -32,15 +31,17 @@ public class UserIndexServiceImpl implements UserIndexService {
 
 
     @Override
+    @Transactional
     public List<UserIndex> getAllUserIndexesByCurrentPeriod(User user, Period period) {
-        // TODO: implement this
-        return new ArrayList<>();
+        return userIndexRepository.findByUserAndFillDateBetween(user,
+                period.getCurrentStartDate(), period.getCurrentEndDate());
     }
 
     @Override
+    @Transactional
     public boolean isUserIndexesAvailableForPeriod(User user, Period period) {
-        // TODO: implement this
-        return false;
+        return userIndexRepository.countByUserAndFillDateBetween(user,
+                period.getCurrentStartDate(), period.getCurrentEndDate()) > 0;
     }
 
     @Override

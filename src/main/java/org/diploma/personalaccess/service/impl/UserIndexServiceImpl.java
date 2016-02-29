@@ -1,6 +1,7 @@
 package org.diploma.personalaccess.service.impl;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.log4j.Logger;
 import org.diploma.personalaccess.bean.Period;
 import org.diploma.personalaccess.entity.User;
 import org.diploma.personalaccess.entity.UserIndex;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 /**
  * UserIndex service default implementation
@@ -22,6 +24,11 @@ import java.util.List;
  */
 @Service
 public class UserIndexServiceImpl implements UserIndexService {
+
+    /**
+     * Logger Log4j
+     */
+    private static final Logger log = Logger.getLogger(UserIndexServiceImpl.class);
 
     /**
      * UserIndex repository bean
@@ -81,6 +88,33 @@ public class UserIndexServiceImpl implements UserIndexService {
 
             userIndexRepository.save(userIndex);
         }
+    }
+
+    @Override
+    @Transactional
+    public void publishLeadEstimates(Map<Long, Integer> userIndexIdMarkDependency, User user) {
+        for (Map.Entry<Long, Integer> entry : userIndexIdMarkDependency.entrySet()) {
+            UserIndex userIndex = userIndexRepository.findOne(entry.getKey());
+
+            /* If user is not a lead for current subordinate, then throw exception and rollback transaction */
+            if (!userIndex.getUser().getLeads().contains(user)) {
+                String msg = "User with username '" + user.getUsername() + "' trying to set estimate for incorrect" +
+                        "subordinate (username of sub '" + userIndex.getUser().getUsername() + "'.";
+                log.warn(msg);
+                throw new IllegalArgumentException(msg);
+
+            }
+
+            userIndex.setLeadEstimate(entry.getValue());
+        }
+    }
+
+    @Override
+    @Transactional
+    public boolean isLeadSubmitAllEstimatesForUser(long userId, Date start, Date end) {
+        User user = userRepository.findOne(userId);
+        return userIndexRepository.countByUserAndFillDateBetween(user, start, end) > 0
+                && userIndexRepository.countByUserAndFillDateBetweenAndLeadEstimate(user, start, end, 0) == 0;
     }
 
 

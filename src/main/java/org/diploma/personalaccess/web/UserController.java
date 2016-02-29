@@ -20,10 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.lang.reflect.Type;
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Controller which handle requests only from /user**
@@ -116,8 +113,30 @@ public class UserController {
         Period period = periodHolder.getPeriodById(periodNum);
         List<UserIndex> subIndexes = userIndexService.getAllUserIndexesBySpecifiedPeriod(userId,
                 period.getStartDateForYear(year), period.getEndDateForYear(year));
+        boolean isSubmitted = userIndexService.isLeadSubmitAllEstimatesForUser(userId,
+                period.getStartDateForYear(year), period.getEndDateForYear(year));
 
-        return JsonParser.convertObjectToJsonString(subIndexes);
+        Map<String, Object> entries = new HashMap<>();
+        entries.put("isSubmitted", isSubmitted);
+        entries.put("subIndexes", subIndexes);
+
+        return JsonParser.convertObjectToJsonString(entries);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/subs", method = RequestMethod.POST, params = "publish")
+    public String publishSubordinateIndexes(@RequestBody String data, Principal principal) {
+        User user = getUserBySecurityInfo(principal);
+        Type mapType = new TypeToken<Map<Long, Integer>>() { }.getType();
+        Map<Long, Integer> entries = JsonParser.convertJsonStringToObject(data, mapType);
+        userIndexService.publishLeadEstimates(entries, user);
+
+        return "success";
+    }
+
+    @RequestMapping(value = "/report", method = RequestMethod.GET)
+    public String getReportPage(Model model, Principal principal) {
+        return "report";
     }
 
 }

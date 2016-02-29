@@ -36,4 +36,16 @@ public interface UserIndexRepository extends JpaRepository<UserIndex, Long> {
      */
     Long countByUserAndFillDateBetween(User user, Date startPeriod, Date endPeriod);
 
+    /**
+     * Count of user indexes by specified user, period and specified lead estimate
+     *
+     * @param user specified user
+     * @param start start period date
+     * @param end end period date
+     * @param leadEstimate lead estimate for search (if you want find not
+     *                     filled user indexes by lead, you have to use value '0' (zero)
+     * @return count of user indexes
+     */
+    Long countByUserAndFillDateBetweenAndLeadEstimate(User user, Date start, Date end, int leadEstimate);
+
 }

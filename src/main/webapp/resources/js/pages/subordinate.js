@@ -1,4 +1,5 @@
 ;$("#search-btn").click(search);
+$("#publish-btn").click(publish);
 
 function search() {
     var period = $("#period").val();
@@ -33,6 +34,19 @@ function search() {
             content += "</ul>"
 
             $("#card-container").append(content);
+
+            var btnBox = $("#float-box");
+            btnBox.addClass("click-to-toggle");
+            btnBox.empty();
+
+            var btnContent = "<a class='btn-floating btn-large red'><i class='large mdi-navigation-menu'></i></a>";
+            btnContent += "<ul><li>";
+            btnContent += "<a class='btn-floating cyan darken-3' id='search-btn'><i class='material-icons'>youtube_searched_for</i></a>";
+            btnContent += "</li><li>";
+            btnContent += "<a class='btn-floating green' id='publish-btn'><i class='material-icons'>publish</i></a>";
+            btnContent += "</li></ul>";
+
+            btnBox.append(btnContent);
         },
         error: function (error) {
             console.log("error: " + error);
@@ -41,6 +55,28 @@ function search() {
     });
 }
 
+function publish() {
+    var error = false;
+
+    var leadEstimates = {};
+    $("input[name='leadEstimate']").each(function () {
+        $(this).removeClass("invalid");
+        if (!jQuery.isNumeric($(this).val())) {
+            errors = true;
+            $(this).addClass("invalid");
+        }
+        leadEstimates[$(this).attr("id")] = $(this).val();
+    });
+
+    if (errors) {
+        Materialize.toast("Заполните необходимые поля", 4000);
+        return;
+    }
+
+
+}
+
+
 function createItemContext(index) {
     var card = "<li class='collection-item avatar'><i class='material-icons circle green'>"
         + "insert_chart</i><span class='title truncate'>";
@@ -48,6 +84,7 @@ function createItemContext(index) {
     card += "</span>";
     card += "<p>Оценка подчиненного: " + index.selfEstimate + "<br>";
     card += "Дата заполнения: " + index.fillDate + "</p>";
+    card += "<p>Ваша оценка:<br><input id=" + index.id + " name='leadEstimate' type='umber' class='validate'></p>"
     card += "<a href='JavaScript:$(\"#additional-modal-" + index.id + "\").openModal();' class='secondary-content'>"
         + "<i class='material-icons'>chat_bubble_outline</i></a>";
     card += "<div id='additional-modal-"+ index.id +"' class='modal bottom-sheet'>";

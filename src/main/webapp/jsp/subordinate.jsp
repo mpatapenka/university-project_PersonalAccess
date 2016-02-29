@@ -65,7 +65,7 @@
                         <!-- Place cards here -->
                     </div>
 
-                    <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+                    <div id="float-box" class="fixed-action-btn" style="bottom: 45px; right: 24px;">
                         <a class="btn-floating btn-large waves-effect waves-light cyan darken-3" id="search-btn">
                             <i class="material-icons">youtube_searched_for</i></a>
                     </div>

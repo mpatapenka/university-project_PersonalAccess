@@ -39,7 +39,6 @@ function publishAll() {
         if (selfEstimates.hasOwnProperty(key)) {
             var userIndex = {};
             userIndex["selfEstimate"] = selfEstimates[key];
-            userIndex["leadEstimate"] = 0;
             userIndex["description"] = descriptions[key];
             userIndex["index"] = {
                 "id": key

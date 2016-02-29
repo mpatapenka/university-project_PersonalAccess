@@ -202,6 +202,7 @@ CREATE TABLE IF NOT EXISTS `personal_access_database`.`user_index` (
   `lead_estimate` INT NULL DEFAULT NULL COMMENT 'Оценка руководителя',
   `fill_date` DATE NULL DEFAULT NULL COMMENT 'Дата заполнения показателя',
   `description` LONGTEXT NULL DEFAULT NULL COMMENT 'Краткое описание о проделанной работе',
+  `is_complete` TINYINT(1) NULL DEFAULT 0 COMMENT 'Поле указывает на завершенность заполнения индекса',
   `document_id` BIGINT(20) NULL DEFAULT NULL COMMENT 'Код подтверждающего документа',
   PRIMARY KEY (`id`)  COMMENT '',
   INDEX `fk_user_index_document1_idx` (`document_id` ASC)  COMMENT '',

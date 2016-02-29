@@ -34,6 +34,10 @@
 
                 <security:authorize access="isAuthenticated()">
                     <li>
+                        <a class="dropdown-button" href="#" data-activates="reports-drops1"><spring:message
+                                code="control.reports"/><i class="material-icons right">arrow_drop_down</i></a>
+                    </li>
+                    <li>
                         <a href="<c:url value="/user/subs"/>"><spring:message
                                 code="control.subs"/></a>
                     </li>
@@ -69,6 +73,10 @@
 
                 <security:authorize access="isAuthenticated()">
                     <li>
+                        <a class="dropdown-button" href="#" data-activates="reports-drops2"><spring:message
+                                code="control.reports"/><i class="material-icons right">arrow_drop_down</i></a>
+                    </li>
+                    <li>
                         <a href="<c:url value="/user/subs"/>"><spring:message
                                 code="control.subs"/></a>
                     </li>
@@ -86,3 +94,16 @@
         </div>
     </div>
 </nav>
+
+<security:authorize access="isAuthenticated()">
+    <ul id="reports-drops1" class="dropdown-content">
+        <li><a href="<c:url value="/user/report/employees"/>">Сотрудники</a></li>
+        <li><a href="<c:url value="/user/report/indexes"/>">Показатели</a></li>
+        <li><a href="<c:url value="/user/report/ranges"/>">Ранжирование</a></li>
+    </ul>
+    <ul id="reports-drops2" class="dropdown-content">
+        <li><a href="<c:url value="/user/report/employees"/>">Сотрудники</a></li>
+        <li><a href="<c:url value="/user/report/indexes"/>">Показатели</a></li>
+        <li><a href="<c:url value="/user/report/ranges"/>">Ранжирование</a></li>
+    </ul>
+</security:authorize>

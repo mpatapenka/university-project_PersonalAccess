@@ -1,21 +1,10 @@
-// Instantiate side navigation bar
-;(function ($) {
-    $(function () {
-
-        $('.button-collapse').sideNav();
-
-    }); // end of document ready
-})(jQuery); // end of jQuery name space
-
-
 // Instantiate character counter
-$(document).ready(function () {
+;$(document).ready(function () {
+    $('.button-collapse').sideNav();
+    $(".dropdown-button").dropdown();
+
     $('input#input_text, textarea#textarea1').characterCounter();
-});
 
-
-// Instantiate dropdowns
-$(document).ready(function () {
     $('select').material_select();
 });
 

@@ -41,6 +41,10 @@ public class UserIndex extends BaseEntity {
     private String description;
 
     @Expose
+    @Column(name = "is_complete")
+    private boolean isComplete;
+
+    @Expose
     @ManyToOne
     @JoinColumn(name = "index_id")
     private Index index;
@@ -84,6 +88,14 @@ public class UserIndex extends BaseEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public boolean isComplete() {
+        return isComplete;
+    }
+
+    public void setComplete(boolean complete) {
+        isComplete = complete;
     }
 
     public Index getIndex() {

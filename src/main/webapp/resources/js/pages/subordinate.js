@@ -28,13 +28,6 @@ function search() {
             var parsedResult = JSON.parse(result);
             var isSubmitted = parsedResult.isSubmitted;
             var indexes = parsedResult.subIndexes;
-            var content = "<ul class='collection'>";
-            for (var i = 0; i < indexes.length; i++) {
-                content += isSubmitted ? createSubmittedItemContext : createItemContext(indexes[i]);
-            }
-            content += "</ul>"
-
-            $("#card-container").append(content);
 
             var btnBox = $("#float-box");
             if (isSubmitted) {
@@ -42,6 +35,20 @@ function search() {
             } else {
                 createFloatBtnBoxWithButtons(btnBox);
             }
+
+            if (!isSubmitted && indexes.length == 0) {
+                $("#card-container").append("<h5>Пользователь еще не заполнил показатели за этот период</h5>");
+                createFloatBtnBox(btnBox);
+                return;
+            }
+
+            var content = "<ul class='collection'>";
+            for (var i = 0; i < indexes.length; i++) {
+                content += isSubmitted ? createSubmittedItemContext(indexes[i]) : createItemContext(indexes[i]);
+            }
+            content += "</ul>"
+
+            $("#card-container").append(content);
         },
         error: function (error) {
             console.log("error: " + error);
@@ -57,21 +64,23 @@ function publish() {
     $("input[name='leadEstimate']").each(function () {
         $(this).removeClass("invalid");
         if (!jQuery.isNumeric($(this).val())) {
-            errors = true;
+            error = true;
             $(this).addClass("invalid");
         }
         leadEstimates[$(this).attr("id")] = $(this).val();
     });
 
-    if (errors) {
+    if (error) {
         Materialize.toast("Заполните необходимые поля", 4000);
         return;
     }
 
+    var jsonLeadEstimates = JSON.stringify(leadEstimates);
+
     $.ajax({
-        url: "/user/subs?publish",
+        url: "/user/subs/publish",
         type: "post",
-        data: leadEstimates,
+        data: jsonLeadEstimates,
         success: function (result) {
             console.log("success: " + result);
 
@@ -93,15 +102,15 @@ function createItemContext(index) {
         + "insert_chart</i><span class='title truncate'>";
     card += index.index.name;
     card += "</span>";
-    card += "<p>Оценка подчиненного: " + index.selfEstimate + "<br>";
-    card += "Дата заполнения: " + index.fillDate + "</p>";
-    card += "<p>Ваша оценка:<br><input id=" + index.id + " name='leadEstimate' type='umber' class='validate'></p>"
+    card += "<p>Ваша оценка:<br><input id=" + index.id + " name='leadEstimate' type='number' class='validate'></p>"
     card += "<a href='JavaScript:$(\"#additional-modal-" + index.id + "\").openModal();' class='secondary-content'>"
         + "<i class='material-icons'>chat_bubble_outline</i></a>";
     card += "<div id='additional-modal-"+ index.id +"' class='modal bottom-sheet'>";
     card += "<div class='modal-content'><h4>Дополнительная информация</h4><hr>";
     card += "<h5>" + index.index.name + "</h5><br>";
     card += "<p>Максимальная оценка " + index.index.estimate + " за каждые " + index.index.multiplier + " " + index.index.workName + "</p>";
+    card += "<p>Оценка подчиненного: " + index.selfEstimate + "<br>";
+    card += "Дата заполнения: " + index.fillDate + "</p>";
 
     if (index.description !== null && index.description !== undefined) {
         card += "<br><p>Описание проделанной работы: " + index.description + "</p>";
@@ -124,9 +133,9 @@ function createSubmittedItemContext(index) {
         + "insert_chart</i><span class='title truncate'>";
     card += index.index.name;
     card += "</span>";
+    card += "<p>Ваша оценка: " + index.leadEstimate + "</p>";
     card += "<p>Оценка подчиненного: " + index.selfEstimate + "<br>";
     card += "Дата заполнения: " + index.fillDate + "</p>";
-    card += "<p>Ваша оценка:<br>" + index.leadEstimate + "</p>"
     card += "<a href='JavaScript:$(\"#additional-modal-" + index.id + "\").openModal();' class='secondary-content'>"
         + "<i class='material-icons'>chat_bubble_outline</i></a>";
     card += "<div id='additional-modal-"+ index.id +"' class='modal bottom-sheet'>";
@@ -152,13 +161,14 @@ function createSubmittedItemContext(index) {
 
 function createFloatBtnBoxWithButtons(box) {
     box.addClass("click-to-toggle");
+    box.removeClass("active");
     box.empty();
 
     var btnContent = "<a class='btn-floating btn-large red'><i class='large mdi-navigation-menu'></i></a>";
     btnContent += "<ul><li>";
-    btnContent += "<a class='btn-floating cyan darken-3' id='search-btn'><i class='material-icons'>youtube_searched_for</i></a>";
+    btnContent += "<a class='btn-floating cyan darken-3' id='search-btn' href='JavaScript:search();'><i class='material-icons'>youtube_searched_for</i></a>";
     btnContent += "</li><li>";
-    btnContent += "<a class='btn-floating green' id='publish-btn'><i class='material-icons'>publish</i></a>";
+    btnContent += "<a class='btn-floating green' id='publish-btn' href='JavaScript:publish();'><i class='material-icons'>publish</i></a>";
     btnContent += "</li></ul>";
 
     box.append(btnContent);
@@ -168,8 +178,8 @@ function createFloatBtnBox(box) {
     box.removeClass("click-to-toggle");
     box.empty();
 
-    var btnContent = "<a class='btn-floating btn-large waves-effect waves-light cyan darken-3' id='search-btn'>"
+    var btnContent = "<a class='btn-floating btn-large waves-effect waves-light cyan darken-3' id='search-btn' href='JavaScript:search();'>"
         + "<i class='material-icons'>youtube_searched_for</i></a>";
 
-    btnBox.append(btnContent);
+    box.append(btnContent);
 }

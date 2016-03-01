@@ -124,7 +124,7 @@ public class UserController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/subs", method = RequestMethod.POST, params = "publish")
+    @RequestMapping(value = "/subs/publish", method = RequestMethod.POST)
     public String publishSubordinateIndexes(@RequestBody String data, Principal principal) {
         User user = getUserBySecurityInfo(principal);
         Type mapType = new TypeToken<Map<Long, Integer>>() { }.getType();

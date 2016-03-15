@@ -23,12 +23,12 @@ public class UserIndex extends BaseEntity {
     @Expose
     @Column(name = "self_estimate")
     @Min(0)
-    private int selfEstimate;
+    private double selfEstimate;
 
     @Expose(deserialize = false)
     @Column(name = "lead_estimate")
     @Min(0)
-    private int leadEstimate;
+    private double leadEstimate;
 
     @Expose(deserialize = false)
     @Column(name = "fill_date")
@@ -58,19 +58,19 @@ public class UserIndex extends BaseEntity {
     @JoinColumn(name = "document_id")
     private Document document;
 
-    public int getSelfEstimate() {
+    public double getSelfEstimate() {
         return selfEstimate;
     }
 
-    public void setSelfEstimate(int selfEstimate) {
+    public void setSelfEstimate(double selfEstimate) {
         this.selfEstimate = selfEstimate;
     }
 
-    public int getLeadEstimate() {
+    public double getLeadEstimate() {
         return leadEstimate;
     }
 
-    public void setLeadEstimate(int leadEstimate) {
+    public void setLeadEstimate(double leadEstimate) {
         this.leadEstimate = leadEstimate;
     }
 

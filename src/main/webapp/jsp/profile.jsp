@@ -15,18 +15,15 @@
     <title><spring:message code="global.app_name"/> - <spring:message code="profile.page_name"/></title>
 
     <jsp:include page="fragments/static-content.jsp"/>
-
 </head>
 
 <body>
-
     <jsp:include page="fragments/header.jsp"/>
 
 
     <div class="container">
         <div class="section content">
             <div class="row">
-
                 <div class="col s12 m12">
                     <div class="col s12 m4 left-side">
                         <img src="<c:url value='/resources/img/profile/profile-image.png'/>"
@@ -70,34 +67,33 @@
                                 по дате и месту.</p>
                         </div>
 
-                        <h4 class="left-align"><i class="mdi-social-school"></i> Информация с места работы</h4>
+                        <h4 class="left-align"><i class="mdi-social-school"></i> <spring:message code="profile.work_info"/></h4>
                         <div class="block">
-                            <h5>Должность</h5>
-                            <p class="helping-text"><i class="mdi-maps-place indigo-text"></i> Гомель <i
+                            <h5><spring:message code="profile.position"/></h5>
+                            <p class="helping-text"><i class="mdi-maps-place indigo-text"></i> <spring:message code="global.location.gomel"/> <i
                                     class="mdi-action-today indigo-text"></i> 24 Февраля 2016</p>
                             <p>Был принят на должность - ${uForm.position.name}.</p>
                         </div>
                         <div class="block">
-                            <h5>Подразделение</h5>
-                            <p class="helping-text"><i class="mdi-maps-place indigo-text"></i> ГГТУ им. П.О. Сухого <i
-                                    class="mdi-action-today indigo-text"></i> 25 Февраля 2016</p>
+                            <h5><spring:message code="profile.unit"/></h5>
+                            <p class="helping-text"><i class="mdi-maps-place indigo-text"></i> <spring:message code="global.location.gstu"/>
+                                <i class="mdi-action-today indigo-text"></i> 25 Февраля 2016</p>
                             <p>Был зачислен в подразделение - ${uForm.unit.name}.</p>
                         </div>
                         <div class="block">
-                            <h5>Факультет</h5>
-                            <p class="helping-text"><i class="mdi-maps-place indigo-text"></i> ГГТУ им. П.О. Сухого <i
-                                    class="mdi-action-today indigo-text"></i> 25 Февраля 2016</p>
+                            <h5><spring:message code="profile.faculty"/></h5>
+                            <p class="helping-text"><i class="mdi-maps-place indigo-text"></i> <spring:message code="global.location.gstu"/>
+                                <i class="mdi-action-today indigo-text"></i> 25 Февраля 2016</p>
                             <p>Был привязан к факультету - ${uForm.faculty.shortName}. Полное название - ${uForm.faculty.fullName}</p>
                         </div>
 
                         <h4 class="left-align"><i class="mdi-social-school"></i> Штат</h4>
                         <div class="block">
-                            <h5>Ваши подчиненные</h5>
+                            <h5><spring:message code="profile.subs"/></h5>
                             <p>
                                 <c:choose>
-
                                     <c:when test="${empty subs}">
-                                        У вас нет ни одного подчиненного.
+                                        <spring:message code="profile.no_subs_msg"/>
                                     </c:when>
 
                                     <c:otherwise>
@@ -107,30 +103,25 @@
                                                     <img src="<c:url value='/resources/img/profile/profile-image.png'/>" class="circle">
                                                     <span class="title">${sub.form.firstName} ${sub.form.lastName}</span>
                                                     <p>
-                                                        Должность - ${sub.form.position.name}<br>
-                                                        Подразделение - ${sub.form.unit.name}
+                                                        <spring:message code="profile.position"/> - ${sub.form.position.name}<br>
+                                                        <spring:message code="profile.unit"/> - ${sub.form.unit.name}
                                                     </p>
                                                 </li>
                                             </c:forEach>
                                         </ul>
                                     </c:otherwise>
-
                                 </c:choose>
                             </p>
                         </div>
                     </div>
                 </div>
-
             </div>
-
         </div>
-
     </div>
 
 
     <jsp:include page="fragments/footer.jsp"/>
     <jsp:include page="fragments/static-content-js.jsp"/>
-
 </body>
 
 </html>

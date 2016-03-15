@@ -12,7 +12,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
 
-    <title><spring:message code="global.app_name"/> - <spring:message code="profile.page_name"/></title>
+    <title><spring:message code="profile.page_name"/> - <spring:message code="global.app_name"/></title>
 
     <jsp:include page="fragments/static-content.jsp"/>
 </head>

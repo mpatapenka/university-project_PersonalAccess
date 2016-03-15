@@ -35,7 +35,6 @@ public class AdminController {
     public String getDashboardPage(Model model) {
         model.addAttribute("indexes", indexService.findAllIndexes());
         model.addAttribute("positions", positionService.findAll());
-
         return "admin";
     }
 
@@ -44,8 +43,7 @@ public class AdminController {
     public String saveIndex(@RequestBody String data) {
         Index index = JsonParser.convertJsonStringToObject(data, Index.class);
         indexService.saveOrUpdateIndex(index);
-
-        return "success";
+        return "Index '" + index.getName() + "' was saved.";
     }
 
     @ResponseBody
@@ -57,11 +55,10 @@ public class AdminController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/dashboard/delete", method = RequestMethod.POST, params = "id")
+    @RequestMapping(value = "/dashboard/delete", method = RequestMethod.POST)
     public String deleteIndex(long id) {
         indexService.deleteIndex(id);
-
-        return "success";
+        return "Index with id='" + id + "' was deleted.";
     }
 
 }

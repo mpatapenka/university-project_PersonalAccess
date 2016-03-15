@@ -1,7 +1,15 @@
-;$("#add-index-btn").click(addNewIndex);
+;
+$("#add-index-btn").click(saveIndex);
+$("#delete-index-btn").click(deleteIndex);
+$("#show-add-modal-btn").click(showAddModal);
 
 
-function addNewIndex() {
+
+function saveIndex() {
+    if (!emptyValidator()) {
+        return;
+    }
+
     var form = $("#index-form");
     var selectedPoses = $("#selected-poses").val();
 
@@ -13,41 +21,64 @@ function addNewIndex() {
     });
 
     var index = form.serializeObject();
+    // Delete index if not exist. That need for use one method for add and edit index
     !index.id && delete index.id;
     index.availablePositions = poses;
 
-    var jsonIndex = JSON.stringify(index);
+    // Little trick for send percent sign by request
+    var jsonIndex = JSON.stringify(index).replace(/\%/g, "%25");
 
     $.ajax({
         url: form.attr("action"),
         type: form.attr("method"),
         data: jsonIndex,
         success: function (result) {
-            console.log("success: " + result);
+            console.log("Save index success: " + result);
             location.reload();
         },
         error: function (error) {
-            console.log("error: " + error);
-            location.reload();
+            console.log("Save index error: " + error);
+            Materialize.toast("Server error when u try to save the index!", 4000);
         }
     });
 }
 
-function openClearForm() {
-    $('#index-form')[0].reset();
-    $("input").next("label").removeClass("active");
+function deleteIndex() {
+    var form = $("#delete-form");
+    $.ajax({
+        url: form.attr("action"),
+        type: form.attr("method"),
+        data: form.serialize(),
+        success: function (result) {
+            console.log("Delete index success: " + result);
+            location.reload();
+        },
+        error: function (error) {
+            console.log("Delete index error: " + error);
+            Materialize.toast("Server error when u try to delete index!", 4000);
+        }
+    });
+}
+
+
+
+function showAddModal() {
+    $("#addModalHeader").html($("#addIndexHeader").html());
+    $("#index-form")[0].reset();
+    $("input,textarea").next("label").removeClass("active");
     $("#selected-poses").val([]);
-    $('select').material_select();
+    $("select").material_select();
     $('#add-index').openModal();
 }
 
-function loadIndex(id) {
+function showEditModal(id) {
+    $("#addModalHeader").html($("#editIndexHeader").html());
     $.ajax({
         url: "/admin/dashboard/get?id=" + id,
         type: "get",
         contentType: "text/plain; charset=UTF-8",
         success: function (result) {
-            console.log("success: " + result);
+            console.log("Show edit modal success.");
 
             var obj = JSON.parse(result);
             $("#form-id").val(obj.id);
@@ -61,36 +92,19 @@ function loadIndex(id) {
                 selected.push(entry.id);
             });
             $("#selected-poses").val(selected);
-            $('select').material_select();
+            $("select").material_select();
 
-            $("input[type!=checkbox]").next("label").addClass("active");
-            $('#add-index').openModal();
+            $("textarea,input[type!=checkbox]").next("label").addClass("active");
+            $("#add-index").openModal();
         },
         error: function (error) {
-            console.log("error: " + error);
-            Materialize.toast('Ошибка загрузки показателя!', 4000);
+            console.log("Show edit modal error: " + error);
+            Materialize.toast("Server error when u try to get available Index for edit!", 4000);
         }
     });
 }
 
-function openDeleteModal(id) {
+function showDeleteModal(id) {
     $("#delete-candidate-id").val(id);
     $("#delete-index").openModal();
-}
-
-function deleteIndex() {
-    var id = $("#delete-candidate-id").val();
-    $.ajax({
-        url: "/admin/dashboard/delete?id=" + id,
-        type: "post",
-        success: function (result) {
-            console.log("success: " + result);
-            $("#delete-candidate-id").val("");
-            location.reload();
-        },
-        error: function (error) {
-            console.log("error: " + error);
-            Materialize.toast('Ошибка удаления показателя!', 4000);
-        }
-    });
 }

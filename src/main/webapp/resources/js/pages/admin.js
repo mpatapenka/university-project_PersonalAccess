@@ -26,7 +26,7 @@ function saveIndex() {
     index.availablePositions = poses;
 
     // Little trick for send percent sign by request
-    var jsonIndex = JSON.stringify(index).replace(/\%/g, "%25");
+    var jsonIndex = JSON.stringify(index).replace(/%/g, "%25");
 
     $.ajax({
         url: form.attr("action"),

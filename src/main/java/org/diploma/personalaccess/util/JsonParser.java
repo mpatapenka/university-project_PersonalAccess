@@ -81,13 +81,13 @@ public final class JsonParser {
     private static String prepareRawJsonDataString(String rawData) {
         try {
             rawData = URLDecoder.decode(rawData, "UTF-8");
+            return rawData.substring(0, rawData.length() - 1);
         } catch (UnsupportedEncodingException e) {
             String msg = "Input rawData can not converted to target encoding 'UTF-8'.";
             log.debug("Input rawData: " + rawData, e);
             log.error(msg, e);
             throw new IllegalArgumentException(msg, e);
         }
-        return rawData.substring(0, rawData.length() - 1);
     }
 
 

@@ -10,6 +10,10 @@ function saveIndex() {
         return;
     }
 
+    if (!numberBiggerThenZeroValidator()) {
+        return;
+    }
+
     var form = $("#index-form");
     var selectedPoses = $("#selected-poses").val();
 

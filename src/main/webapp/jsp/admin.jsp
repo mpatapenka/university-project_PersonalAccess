@@ -96,11 +96,11 @@
                 </div>
                 <div class="row">
                     <div class="input-field col s12 m6">
-                        <input id="estimate" type="number" step="0.01" name="estimate" class="validate">
+                        <input id="estimate" type="number" step="0.01" min="0" name="estimate" class="validate">
                         <label for="estimate"><spring:message code="forms.estimate"/></label>
                     </div>
                     <div class="input-field col s12 m6">
-                        <input id="multiplier" type="number" name="multiplier" class="validate">
+                        <input id="multiplier" type="number" name="multiplier" min="0" class="validate">
                         <label for="multiplier"><spring:message code="forms.work_unit"/></label>
                     </div>
                 </div>

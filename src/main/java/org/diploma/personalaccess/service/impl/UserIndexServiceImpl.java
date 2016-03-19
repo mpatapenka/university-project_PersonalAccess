@@ -3,6 +3,7 @@ package org.diploma.personalaccess.service.impl;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.log4j.Logger;
 import org.diploma.personalaccess.bean.Period;
+import org.diploma.personalaccess.entity.Index;
 import org.diploma.personalaccess.entity.User;
 import org.diploma.personalaccess.entity.UserIndex;
 import org.diploma.personalaccess.repository.UserIndexRepository;
@@ -46,21 +47,40 @@ public class UserIndexServiceImpl implements UserIndexService {
 
     @Override
     @Transactional
-    public List<UserIndex> getAllUserIndexesBySpecifiedPeriod(User user, Date start, Date end) {
-        return userIndexRepository.findByUserAndFillDateBetween(user, start, end);
-    }
-
-    @Override
-    @Transactional
     public List<UserIndex> getAllUserIndexesBySpecifiedPeriod(long userId, Date start, Date end) {
+        List<UserIndex> userIndexes = userIndexRepository.findByUserIdAndFillDateBetween(userId, start, end);
+        if (!userIndexes.isEmpty()) {
+            return userIndexes;
+        }
+
         User user = userRepository.findOne(userId);
-        return getAllUserIndexesBySpecifiedPeriod(user, start, end);
+        Calendar calendar = Calendar.getInstance();
+        Date date = new Date(calendar.getTime().getTime());
+
+        /* Create and push empty user indexes */
+        for (Index index : user.getForm().getPosition().getAvailableIndexes()) {
+            UserIndex userIndex = new UserIndex();
+            userIndex.setFillDate(date);
+            userIndex.setUser(user);
+            userIndex.setDocument(null);
+            userIndex.setComplete(false);
+            userIndex.setDescription(null);
+            userIndex.setIndex(index);
+            userIndex.setLeadEstimate(0);
+            userIndex.setSelfEstimate(0);
+
+            index.getUserIndexes().add(userIndex);
+
+            userIndexRepository.save(userIndex);
+        }
+
+        return userIndexRepository.findByUserIdAndFillDateBetween(userId, start, end);
     }
 
     @Override
     @Transactional
     public boolean isUserIndexesAvailableForPeriod(User user, Period period) {
-        return userIndexRepository.countByUserAndFillDateBetween(user,
+        return userIndexRepository.countByUserAndFillDateBetween(user.getId(),
                 period.getCurrentStartDate(), period.getCurrentEndDate()) > 0;
     }
 
@@ -92,6 +112,18 @@ public class UserIndexServiceImpl implements UserIndexService {
 
     @Override
     @Transactional
+    public void setUpAllEstimates(List<UserIndex> userIndexes, User user) {
+        Calendar calendar = Calendar.getInstance();
+        Date date = new Date(calendar.getTime().getTime());
+        for (UserIndex userIndex : userIndexes) {
+            UserIndex oldUserIndex = userIndexRepository.findOne(userIndex.getId());
+            oldUserIndex.setFillDate(date);
+            oldUserIndex.setSelfEstimate(userIndex.getSelfEstimate());
+        }
+    }
+
+    @Override
+    @Transactional
     public void publishLeadEstimates(Map<Long, Integer> userIndexIdMarkDependency, User user) {
         for (Map.Entry<Long, Integer> entry : userIndexIdMarkDependency.entrySet()) {
             UserIndex userIndex = userIndexRepository.findOne(entry.getKey());
@@ -113,7 +145,7 @@ public class UserIndexServiceImpl implements UserIndexService {
     @Transactional
     public boolean isLeadSubmitAllEstimatesForUser(long userId, Date start, Date end) {
         User user = userRepository.findOne(userId);
-        return userIndexRepository.countByUserAndFillDateBetween(user, start, end) > 0
+        return userIndexRepository.countByUserAndFillDateBetween(userId, start, end) > 0
                 && userIndexRepository.countByUserAndFillDateBetweenAndLeadEstimate(user, start, end, 0) == 0;
     }
 

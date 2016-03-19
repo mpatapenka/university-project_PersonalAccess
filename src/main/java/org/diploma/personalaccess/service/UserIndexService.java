@@ -18,16 +18,6 @@ public interface UserIndexService {
     /**
      * Get all filled user indexes for period
      *
-     * @param user user
-     * @param start start date of period
-     * @param end end date of period
-     * @return list of user indexes
-     */
-    List<UserIndex> getAllUserIndexesBySpecifiedPeriod(User user, Date start, Date end);
-
-    /**
-     * Get all filled user indexes for period
-     *
      * @param userId id of user
      * @param start start date of period
      * @param end end date of period
@@ -51,6 +41,14 @@ public interface UserIndexService {
      * @param userIndexes user indexes
      */
     void publishAllUserIndexes(List<UserIndex> userIndexes, User user);
+
+    /**
+     * Save all self estimates to UserIndex'es
+     *
+     * @param userIndexes user indexes list with self estimates
+     * @param user specified user
+     */
+    void setUpAllEstimates(List<UserIndex> userIndexes, User user);
 
     /**
      * Setup new lead estimates to user index

@@ -59,12 +59,12 @@
                         </div>
                     </div>
 
-                    <button type="reset" class="btn-large waves-effect waves-light blue col s12 m5">
-                        <spring:message code="control.reset"/></button>
-                    <div class="col s12 m2">&nbsp;</div>
                     <button type="submit" onclick="return emptyValidator();"
                             class="btn-large waves-effect waves-light green col s12 m5">
-                            <spring:message code="control.sign_in"/></button>
+                        <spring:message code="control.sign_in"/></button>
+                    <div class="col s12 m2">&nbsp;</div>
+                    <button type="reset" class="btn-large waves-effect waves-light blue col s12 m5">
+                        <spring:message code="control.reset"/></button>
                 </form>
             </div>
             <br>

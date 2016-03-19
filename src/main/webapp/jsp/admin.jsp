@@ -125,7 +125,7 @@
         <div class="modal-footer">
             <a id="add-index-btn" class="waves-effect waves-green btn-flat">
                 <spring:message code="forms.save"/></a>
-            <a class=" modal-action modal-close waves-effect waves-red btn-flat">
+            <a class="modal-action modal-close waves-effect waves-red btn-flat">
                 <spring:message code="forms.cancel"/></a>
         </div>
     </div>

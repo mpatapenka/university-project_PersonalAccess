@@ -7,7 +7,6 @@ import org.springframework.core.style.ToStringCreator;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 
@@ -32,7 +31,6 @@ public class UserIndex extends BaseEntity {
 
     @Expose(deserialize = false)
     @Column(name = "fill_date")
-    @NotNull
     private Date fillDate;
 
     @Expose

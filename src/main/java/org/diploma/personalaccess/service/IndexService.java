@@ -23,7 +23,7 @@ public interface IndexService {
      *
      * @return list of available indexes
      */
-    List<Index> findAllIndexes();
+    List<Index> findAll();
 
     /**
      * Find index by 'id'

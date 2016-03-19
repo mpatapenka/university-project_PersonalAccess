@@ -61,6 +61,9 @@ public class UserIndex extends BaseEntity {
     }
 
     public void setSelfEstimate(double selfEstimate) {
+        if (index != null && (selfEstimate < 0 || selfEstimate > index.getEstimate())) {
+            throw new IllegalArgumentException("Self estimate out of bound.");
+        }
         this.selfEstimate = selfEstimate;
     }
 

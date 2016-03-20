@@ -23,7 +23,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.sql.Date;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -109,8 +108,7 @@ public class UserIndexServiceImpl implements UserIndexService {
     @Override
     @Transactional
     public void setUpAllEstimates(List<UserIndex> userIndexes, User user) {
-        Calendar calendar = Calendar.getInstance();
-        Date date = new Date(calendar.getTime().getTime());
+        Date date = DateUtils.today();
         for (UserIndex userIndex : userIndexes) {
             UserIndex oldUserIndex = userIndexRepository.findOne(userIndex.getId());
             oldUserIndex.setFillDate(date);

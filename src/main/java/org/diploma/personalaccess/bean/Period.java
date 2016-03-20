@@ -1,11 +1,11 @@
 package org.diploma.personalaccess.bean;
 
+import org.diploma.personalaccess.util.DateUtils;
 import org.springframework.core.style.ToStringCreator;
 
 import java.io.Serializable;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 /**
  * Simple bean object representing an period.
@@ -81,13 +81,11 @@ public class Period implements Serializable, Comparable<Period> {
     }
 
     public Date getCurrentStartDate() {
-        int thisYear = Calendar.getInstance().get(Calendar.YEAR);
-        return getStartDateForYear(thisYear);
+        return getStartDateForYear(DateUtils.currentYear());
     }
 
     public Date getCurrentEndDate() {
-        int thisYear = Calendar.getInstance().get(Calendar.YEAR);
-        return getEndDateForYear(thisYear);
+        return getEndDateForYear(DateUtils.currentYear());
     }
 
     public String getDateString() {

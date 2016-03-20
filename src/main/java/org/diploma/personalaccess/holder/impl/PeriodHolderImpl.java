@@ -3,6 +3,7 @@ package org.diploma.personalaccess.holder.impl;
 import org.apache.log4j.Logger;
 import org.diploma.personalaccess.bean.Period;
 import org.diploma.personalaccess.holder.PeriodHolder;
+import org.diploma.personalaccess.util.DateUtils;
 import org.diploma.personalaccess.util.PeriodParser;
 import org.springframework.stereotype.Component;
 
@@ -117,9 +118,7 @@ public class PeriodHolderImpl implements PeriodHolder {
 
     @Override
     public Period getPeriodByDate(Date date) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        int year = calendar.get(Calendar.YEAR);
+        int year = DateUtils.getYearByDate(date);
 
         for (Period period : entries) {
             Date start = period.getStartDateForYear(year);
@@ -139,9 +138,7 @@ public class PeriodHolderImpl implements PeriodHolder {
 
     @Override
     public Period getCurrentPeriod() {
-        Calendar calendar = Calendar.getInstance();
-        Date today = new Date(calendar.getTime().getTime());
-        return getPeriodByDate(today);
+        return getPeriodByDate(DateUtils.today());
     }
 
     @Override

@@ -12,4 +12,14 @@ public final class DateUtils {
         return new Date(calendar.getTime().getTime());
     }
 
+    public static int currentYear() {
+        return Calendar.getInstance().get(Calendar.YEAR);
+    }
+
+    public static int getYearByDate(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar.get(Calendar.YEAR);
+    }
+
 }

@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Type;
 import java.security.Principal;
 import java.util.HashMap;
@@ -102,6 +103,11 @@ public class UserController {
                                                 @RequestParam(required = false) MultipartFile document) {
         userIndexService.uploadAdditionalInfo(id, description, document);
         return "";
+    }
+
+    @RequestMapping(value = "/dashboard/download", method = RequestMethod.POST, params = {"id"})
+    public void downloadAdditionalUserIndexInfo(@RequestParam int id, HttpServletResponse response) {
+        userIndexService.downloadAdditionalInfo(id, response);
     }
 
     @RequestMapping(value = "/subs", method = RequestMethod.GET)

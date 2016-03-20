@@ -13,6 +13,8 @@ import org.diploma.personalaccess.repository.DocumentRepository;
 import org.diploma.personalaccess.repository.UserIndexRepository;
 import org.diploma.personalaccess.repository.UserRepository;
 import org.diploma.personalaccess.service.UserIndexService;
+import org.diploma.personalaccess.util.DateUtils;
+import org.diploma.personalaccess.util.ServiceUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +26,8 @@ import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * UserIndex service default implementation
@@ -72,27 +76,26 @@ public class UserIndexServiceImpl implements UserIndexService {
     @Override
     @Transactional
     public List<UserIndex> getAllUserIndexesBySpecifiedPeriod(long userId, Date start, Date end) {
+        User user = userRepository.findOne(userId);
+
+        Set<Index> availIndexes = user.getForm().getPosition().getAvailableIndexes();
         List<UserIndex> userIndexes = userIndexRepository.findByUserIdAndFillDateBetween(userId, start, end);
-        if (!userIndexes.isEmpty()) {
+        if (userIndexes.size() == availIndexes.size()) {
             return userIndexes;
         }
 
-        User user = userRepository.findOne(userId);
-        Calendar calendar = Calendar.getInstance();
-        Date date = new Date(calendar.getTime().getTime());
+        Date date = DateUtils.today();
+        Set<Index> needToAdd = availIndexes;
+
+        if (!userIndexes.isEmpty()) {
+            /* Save all index elements from each UserIndex to new Set */
+            Set<Index> existIndexes = userIndexes.stream().map(UserIndex::getIndex).collect(Collectors.toSet());
+            needToAdd = ServiceUtils.subtract(availIndexes, existIndexes);
+        }
 
         /* Create and push empty user indexes */
-        for (Index index : user.getForm().getPosition().getAvailableIndexes()) {
-            UserIndex userIndex = new UserIndex();
-            userIndex.setFillDate(date);
-            userIndex.setUser(user);
-            userIndex.setDocument(null);
-            userIndex.setComplete(false);
-            userIndex.setDescription(null);
-            userIndex.setIndex(index);
-            userIndex.setLeadEstimate(0);
-            userIndex.setSelfEstimate(0);
-
+        for (Index index : needToAdd) {
+            UserIndex userIndex = ServiceUtils.createUserIndexStub(date, user, index);
             index.getUserIndexes().add(userIndex);
 
             userIndexRepository.save(userIndex);
@@ -124,7 +127,9 @@ public class UserIndexServiceImpl implements UserIndexService {
             return;
         }
 
-        long oldDocId = userIndex.getDocument().getId();
+        /* Check for previous document */
+        boolean isOldDocExist = userIndex.getDocument() != null;
+        long oldDocId = isOldDocExist ? userIndex.getDocument().getId() : -1;
 
         String fileName = doc.getOriginalFilename();
         String systemFileName = generateUniqueSystemName(fileName);
@@ -145,11 +150,13 @@ public class UserIndexServiceImpl implements UserIndexService {
             throw new IllegalArgumentException(msg, e);
         }
 
-        /* Delete old file */
-        Document oldDoc = documentRepository.findOne(oldDocId);
-        File file = new File(WebConfig.STORAGE_PATH + oldDoc.getSystemName());
-        if (file.delete()) {
-            documentRepository.delete(oldDocId);
+        /* Delete old doc file if it's exists */
+        if (isOldDocExist) {
+            Document oldDoc = documentRepository.findOne(oldDocId);
+            File file = new File(WebConfig.STORAGE_PATH + oldDoc.getSystemName());
+            if (file.delete()) {
+                documentRepository.delete(oldDocId);
+            }
         }
     }
 

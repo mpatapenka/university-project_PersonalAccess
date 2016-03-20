@@ -29,7 +29,7 @@ public class Document extends BaseEntity {
     @Length(max = 255)
     private String systemName;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "document")
+    @OneToMany(mappedBy = "document")
     private Set<UserIndex> userIndexes = new HashSet<>();
 
     public String getName() {

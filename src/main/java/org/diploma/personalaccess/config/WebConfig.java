@@ -46,6 +46,11 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Resource
     private Environment env;
 
+    /**
+     * Path to file storage
+     */
+    public static String STORAGE_PATH;
+
 
 
     @Override
@@ -114,6 +119,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
         CommonsMultipartResolver resolver = new CommonsMultipartResolver();
         resolver.setMaxUploadSize(maxUploadSize);
+
+        STORAGE_PATH = env.getRequiredProperty("files.dir");
 
         return resolver;
     }

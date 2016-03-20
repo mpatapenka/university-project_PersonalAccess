@@ -105,7 +105,7 @@ public class UserController {
         return "";
     }
 
-    @RequestMapping(value = "/dashboard/download", method = RequestMethod.POST, params = {"id"})
+    @RequestMapping(value = "/dashboard/download", method = RequestMethod.GET, params = {"id"})
     public void downloadAdditionalUserIndexInfo(@RequestParam int id, HttpServletResponse response) {
         userIndexService.downloadAdditionalInfo(id, response);
     }

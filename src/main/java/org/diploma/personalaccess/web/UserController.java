@@ -1,8 +1,8 @@
 package org.diploma.personalaccess.web;
 
 import com.google.gson.reflect.TypeToken;
+import org.apache.log4j.Logger;
 import org.diploma.personalaccess.bean.Period;
-import org.diploma.personalaccess.entity.Index;
 import org.diploma.personalaccess.entity.User;
 import org.diploma.personalaccess.entity.UserIndex;
 import org.diploma.personalaccess.holder.PeriodHolder;
@@ -13,14 +13,14 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.lang.reflect.Type;
 import java.security.Principal;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Controller which handle requests only from /user**
@@ -31,6 +31,11 @@ import java.util.*;
 @Controller
 @RequestMapping("/user")
 public class UserController {
+
+    /**
+     * Logger Log4j
+     */
+    private static final Logger log = Logger.getLogger(UserController.class);
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -64,34 +69,39 @@ public class UserController {
     public String getDashboardPage(Model model, Principal principal) {
         User user = getUserBySecurityInfo(principal);
         Period period = periodHolder.getCurrentPeriod();
-        boolean isFilled = userIndexService.isUserIndexesAvailableForPeriod(user, period);
+        List<UserIndex> userIndexes = userIndexService.getAllUserIndexesBySpecifiedPeriod(user.getId(),
+                period.getCurrentStartDate(), period.getCurrentEndDate());
 
-        List<UserIndex> userIndexes = isFilled
-                ? userIndexService.getAllUserIndexesBySpecifiedPeriod(user,
-                period.getCurrentStartDate(), period.getCurrentEndDate())
-                : new ArrayList<>();
-        Set<Index> availIndexes = !isFilled
-                ? user.getForm().getPosition().getAvailableIndexes()
-                : new HashSet<>();
-
-        model.addAttribute("isFilled", isFilled);
         model.addAttribute("period", period);
         model.addAttribute("userIndexes", userIndexes);
-        model.addAttribute("availIndexes", availIndexes);
 
         return "dashboard";
     }
 
     @ResponseBody
-    @RequestMapping(value = "/dashboard/publish", method = RequestMethod.POST)
+    @RequestMapping(value = "/dashboard/estimates", method = RequestMethod.POST)
     public String publishAllIndexes(@RequestBody String data, Principal principal) {
         User user = getUserBySecurityInfo(principal);
         Type listType = new TypeToken<List<UserIndex>>() { }.getType();
         List<UserIndex> userIndexes = JsonParser.convertJsonStringToObject(data, listType);
 
-        userIndexService.publishAllUserIndexes(userIndexes, user);
+        try {
+            userIndexService.setUpAllEstimates(userIndexes, user);
+            log.debug("'" + userIndexes.size() + "' user index self estimates was updated.");
+            /* Empty string it's valid answer from server, when it parse client application */
+            return "";
+        } catch (IllegalArgumentException e) {
+            log.error("Error while processing estimates of user '" + user.getUsername() + "'.", e);
+            return e.getMessage();
+        }
+    }
 
-        return "success";
+    @ResponseBody
+    @RequestMapping(value = "/dashboard/additional", method = RequestMethod.POST)
+    public String uploadAdditionalUserIndexInfo(long id, String description,
+                                                @RequestParam(required = false) MultipartFile document) {
+        userIndexService.uploadAdditionalInfo(id, description, document);
+        return "";
     }
 
     @RequestMapping(value = "/subs", method = RequestMethod.GET)

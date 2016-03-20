@@ -1,8 +1,11 @@
 package org.diploma.personalaccess.service.impl;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.diploma.personalaccess.bean.Period;
+import org.diploma.personalaccess.config.WebConfig;
+import org.diploma.personalaccess.entity.Document;
 import org.diploma.personalaccess.entity.Index;
 import org.diploma.personalaccess.entity.User;
 import org.diploma.personalaccess.entity.UserIndex;
@@ -12,7 +15,10 @@ import org.diploma.personalaccess.service.UserIndexService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
@@ -43,7 +49,16 @@ public class UserIndexServiceImpl implements UserIndexService {
     @Autowired
     private UserRepository userRepository;
 
-
+    /**
+     * Generate unique file name, which depend on current
+     * time in milliseconds
+     *
+     * @param name original filename
+     * @return unique file name for file system
+     */
+    private static String generateUniqueSystemName(String name) {
+        return DigestUtils.sha256Hex(name) + System.currentTimeMillis();
+    }
 
     @Override
     @Transactional
@@ -119,6 +134,37 @@ public class UserIndexServiceImpl implements UserIndexService {
             UserIndex oldUserIndex = userIndexRepository.findOne(userIndex.getId());
             oldUserIndex.setFillDate(date);
             oldUserIndex.setSelfEstimate(userIndex.getSelfEstimate());
+            oldUserIndex.setComplete(true);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void uploadAdditionalInfo(long userIndexId, String description, MultipartFile doc) {
+        UserIndex userIndex = userIndexRepository.findOne(userIndexId);
+        userIndex.setDescription(description);
+
+        if (doc.getSize() == 0) {
+            return;
+        }
+
+        String fileName = doc.getOriginalFilename();
+        String systemFileName = generateUniqueSystemName(fileName);
+
+        Document document = new Document();
+        document.setName(fileName);
+        document.setSystemName(systemFileName);
+        document.getUserIndexes().add(userIndex);
+
+        userIndex.setDocument(document);
+
+        try {
+            File file = new File(WebConfig.STORAGE_PATH + systemFileName);
+            FileUtils.writeByteArrayToFile(file, doc.getBytes());
+        } catch (IOException e) {
+            String msg = "File '" + fileName + "' don't upload to server.";
+            log.error(msg, e);
+            throw new IllegalArgumentException(msg, e);
         }
     }
 
@@ -147,19 +193,6 @@ public class UserIndexServiceImpl implements UserIndexService {
         User user = userRepository.findOne(userId);
         return userIndexRepository.countByUserAndFillDateBetween(userId, start, end) > 0
                 && userIndexRepository.countByUserAndFillDateBetweenAndLeadEstimate(user, start, end, 0) == 0;
-    }
-
-
-
-    /**
-     * Generate unique file name, which depend on current
-     * time in milliseconds
-     *
-     * @param name original filename
-     * @return unique file name for file system
-     */
-    private static String generateUniqueSystemName(String name) {
-        return DigestUtils.sha256Hex(name) + System.currentTimeMillis();
     }
 
 }

@@ -3,6 +3,7 @@ package org.diploma.personalaccess.service;
 import org.diploma.personalaccess.bean.Period;
 import org.diploma.personalaccess.entity.User;
 import org.diploma.personalaccess.entity.UserIndex;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Date;
 import java.util.List;
@@ -49,6 +50,15 @@ public interface UserIndexService {
      * @param user specified user
      */
     void setUpAllEstimates(List<UserIndex> userIndexes, User user);
+
+    /**
+     * Upload additional information about user index
+     *
+     * @param userIndexId user index ID
+     * @param description description of complete work
+     * @param doc approve document
+     */
+    void uploadAdditionalInfo(long userIndexId, String description, MultipartFile doc);
 
     /**
      * Setup new lead estimates to user index

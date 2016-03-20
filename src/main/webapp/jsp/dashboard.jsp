@@ -86,13 +86,27 @@
                                                         <input id="${uIndex.id}" type="file" name="document"/>
                                                     </div>
                                                     <div class="file-path-wrapper">
-                                                        <input id="${uIndex.id}" class="file-path" type="text" name="document-name"/>
+                                                        <c:set var="fileName" value=""/>
+                                                        <c:set var="linkToFile" value="#"/>
+                                                        <c:set var="linkMode" value="hide"/>
+
+                                                        <c:if test="${not empty uIndex.document}">
+                                                            <c:set var="fileName" value="${uIndex.document.name}"/>
+                                                            <c:url var="fileUrl" value="/user/dashboard/download?id=${uIndex.document.id}"/>
+                                                            <c:set var="linkToFile" value="${fileUrl}"/>
+                                                            <c:set var="linkMode" value=""/>
+                                                        </c:if>
+                                                        <input id="${uIndex.id}" class="file-path" type="text" name="document-name" value="${fileName}"/>
                                                     </div>
                                                 </div>
                                             </div>
                                         </form>
 
-                                        <a href="#" class="btn right">Скачать</a><br>
+                                        <div id="download-btn-area-${uIndex.id}" class="${linkMode}">
+                                            <a id="download-link-${uIndex.id}" href="${linkToFile}" class="btn right waves-effect waves-light">
+                                                <spring:message code="control.download"/>
+                                            </a><br>
+                                        </div>
                                     </div>
 
                                     <div class="modal-footer">

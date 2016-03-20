@@ -91,6 +91,8 @@
                                                 </div>
                                             </div>
                                         </form>
+
+                                        <a href="#" class="btn right">Скачать</a><br>
                                     </div>
 
                                     <div class="modal-footer">

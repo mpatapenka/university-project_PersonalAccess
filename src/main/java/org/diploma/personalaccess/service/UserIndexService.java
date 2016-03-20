@@ -1,10 +1,10 @@
 package org.diploma.personalaccess.service;
 
-import org.diploma.personalaccess.bean.Period;
 import org.diploma.personalaccess.entity.User;
 import org.diploma.personalaccess.entity.UserIndex;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.sql.Date;
 import java.util.List;
 import java.util.Map;
@@ -27,23 +27,6 @@ public interface UserIndexService {
     List<UserIndex> getAllUserIndexesBySpecifiedPeriod(long userId, Date start, Date end);
 
     /**
-     * Checking user indexes available for specified period
-     *
-     * @param user specified user
-     * @param period specified period
-     * @return true - if user already fill indexes for specified period,
-     * false - another one
-     */
-    boolean isUserIndexesAvailableForPeriod(User user, Period period);
-
-    /**
-     * Save all user indexes
-     *
-     * @param userIndexes user indexes
-     */
-    void publishAllUserIndexes(List<UserIndex> userIndexes, User user);
-
-    /**
      * Save all self estimates to UserIndex'es
      *
      * @param userIndexes user indexes list with self estimates
@@ -59,6 +42,14 @@ public interface UserIndexService {
      * @param doc approve document
      */
     void uploadAdditionalInfo(long userIndexId, String description, MultipartFile doc);
+
+    /**
+     * Download additional info (approve file)
+     *
+     * @param docId id of document
+     * @param response response for write to it
+     */
+    void downloadAdditionalInfo(long docId, HttpServletResponse response);
 
     /**
      * Setup new lead estimates to user index

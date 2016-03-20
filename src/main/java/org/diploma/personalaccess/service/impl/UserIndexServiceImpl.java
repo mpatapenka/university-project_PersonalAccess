@@ -87,6 +87,8 @@ public class UserIndexServiceImpl implements UserIndexService {
         Date date = DateUtils.today();
         Set<Index> needToAdd = availIndexes;
 
+        // TODO: Update UserIndexes when index was transferred to other group (need delete appropriate UserIndex)
+
         if (!userIndexes.isEmpty()) {
             /* Save all index elements from each UserIndex to new Set */
             Set<Index> existIndexes = userIndexes.stream().map(UserIndex::getIndex).collect(Collectors.toSet());

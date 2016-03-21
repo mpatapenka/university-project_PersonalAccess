@@ -21,6 +21,12 @@ import java.util.*;
 public class PeriodHolderImpl implements PeriodHolder {
 
     /**
+     * Logger Log4j
+     */
+    private static final Logger log = Logger.getLogger(PeriodHolderImpl.class);
+
+
+    /**
      * Default filename of property file
      */
     private static final String HOLDER_CONFIG_FILE = "periods.properties";
@@ -45,12 +51,6 @@ public class PeriodHolderImpl implements PeriodHolder {
      */
     private static final String DEFAULT_END_YEAR = "2025";
 
-    /**
-     * Logger Log4j
-     */
-    private static final Logger log = Logger.getLogger(PeriodHolderImpl.class);
-
-
 
     /**
      * List which contains all period. In memory holder
@@ -66,7 +66,6 @@ public class PeriodHolderImpl implements PeriodHolder {
      * Available years
      */
     private List<Integer> years;
-
 
 
     public PeriodHolderImpl() {
@@ -115,7 +114,6 @@ public class PeriodHolderImpl implements PeriodHolder {
     }
 
 
-
     @Override
     public Period getPeriodByDate(Date date) {
         int year = DateUtils.getYearByDate(date);
@@ -159,6 +157,17 @@ public class PeriodHolderImpl implements PeriodHolder {
     @Override
     public Period getPeriodById(long id) {
         return entries.get((int) id);
+    }
+
+    @Override
+    public long getIdOfPeriod(Period period) {
+        for (int i = 0; i < entries.size(); i++) {
+            Period entry = entries.get(i);
+            if (entry.equals(period)) {
+                return i;
+            }
+        }
+        throw new IllegalArgumentException("Unsupported period '" + period + "'!");
     }
 
 }

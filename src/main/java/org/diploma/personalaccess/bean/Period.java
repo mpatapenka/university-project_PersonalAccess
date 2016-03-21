@@ -15,6 +15,17 @@ import java.text.SimpleDateFormat;
 public class Period implements Serializable, Comparable<Period> {
 
     /**
+     * Day.Month.Year formatter
+     */
+    private static final SimpleDateFormat D_M_Y_FORMATTER = new SimpleDateFormat("dd.MM.yyyy");
+
+    /**
+     * Day.Month formatter
+     */
+    private static final SimpleDateFormat D_M_FORMATTER = new SimpleDateFormat("dd.MM");
+
+
+    /**
      * Period start day. As default it should be 'one'
      */
     private int startDay;
@@ -35,7 +46,6 @@ public class Period implements Serializable, Comparable<Period> {
      * Period end month
      */
     private int endMonth;
-
 
 
     public int getStartDay() {
@@ -71,7 +81,6 @@ public class Period implements Serializable, Comparable<Period> {
     }
 
 
-
     public Date getStartDateForYear(int year) {
         return Date.valueOf(year + "-" + getStartMonth() + "-" + getStartDay());
     }
@@ -89,21 +98,17 @@ public class Period implements Serializable, Comparable<Period> {
     }
 
     public String getDateString() {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
-        return formatter.format(getCurrentStartDate()) + " - "
-                + formatter.format(getCurrentEndDate());
+        return D_M_Y_FORMATTER.format(getCurrentStartDate()) + " - "
+                + D_M_Y_FORMATTER.format(getCurrentEndDate());
     }
 
     public String getStart() {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM");
-        return formatter.format(getCurrentStartDate());
+        return D_M_FORMATTER.format(getCurrentStartDate());
     }
 
     public String getEnd() {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM");
-        return formatter.format(getCurrentEndDate());
+        return D_M_FORMATTER.format(getCurrentEndDate());
     }
-
 
 
     @Override

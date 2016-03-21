@@ -1,5 +1,7 @@
 package org.diploma.personalaccess.bean;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.diploma.personalaccess.util.DateUtils;
 import org.springframework.core.style.ToStringCreator;
 
@@ -110,6 +112,35 @@ public class Period implements Serializable, Comparable<Period> {
         return D_M_FORMATTER.format(getCurrentEndDate());
     }
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (!(o instanceof Period)) {
+            return false;
+        }
+
+        Period period = (Period) o;
+        return new EqualsBuilder()
+                .append(startDay, period.startDay)
+                .append(startMonth, period.startMonth)
+                .append(endDay, period.endDay)
+                .append(endMonth, period.endMonth)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(startDay)
+                .append(startMonth)
+                .append(endDay)
+                .append(endMonth)
+                .toHashCode();
+    }
 
     @Override
     public int compareTo(Period o) {

@@ -134,6 +134,8 @@
     <div id="fieldMissingError" class="hide"><spring:message code="dashboard.message.fill_up_fields"/></div>
     <div id="unsupportedMarkError" class="hide"><spring:message code="dashboard.message.unsupported_mark"/></div>
 
+    <form id="sendEstimateForm" class="hide" method="post" action="<c:url value="/user/dashboard/estimates"/>"></form>
+
 
     <jsp:include page="fragments/footer.jsp"/>
     <jsp:include page="fragments/static-content-js.jsp"/>

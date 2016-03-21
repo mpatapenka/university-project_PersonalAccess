@@ -78,6 +78,8 @@
     <div id="addIndexHeader" class="hide"><spring:message code="admin.header.add_new_index"/></div>
     <div id="editIndexHeader" class="hide"><spring:message code="admin.header.edit_index"/></div>
 
+    <form id="getIndexForm" class="hide" method="get" action="<c:url value="/admin/dashboard/get"/>"></form>
+
 
 
     <!-- Modals -->

@@ -77,12 +77,10 @@ function showAddModal() {
 function showEditModal(id) {
     $("#addModalHeader").html($("#editIndexHeader").html());
     $.ajax({
-        url: "/admin/dashboard/get?id=" + id,
-        type: "get",
+        url: $("#getIndexForm").attr("action") + "?id=" + id,
+        type: $("#getIndexForm").attr("method"),
         contentType: "text/plain; charset=UTF-8",
         success: function (result) {
-            console.log("Show edit modal success.");
-
             var obj = JSON.parse(result);
             $("#form-id").val(obj.id);
             $("#name").val(obj.name);

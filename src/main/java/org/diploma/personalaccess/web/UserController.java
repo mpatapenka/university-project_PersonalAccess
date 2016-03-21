@@ -38,6 +38,7 @@ public class UserController {
      */
     private static final Logger log = Logger.getLogger(UserController.class);
 
+
     @Autowired
     private UserDetailsService userDetailsService;
 
@@ -48,12 +49,10 @@ public class UserController {
     private PeriodHolder periodHolder;
 
 
-
     private User getUserBySecurityInfo(Principal principal) {
         String username = principal.getName();
         return (User) userDetailsService.loadUserByUsername(username);
     }
-
 
 
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
@@ -70,10 +69,13 @@ public class UserController {
     public String getDashboardPage(Model model, Principal principal) {
         User user = getUserBySecurityInfo(principal);
         Period period = periodHolder.getCurrentPeriod();
-        List<UserIndex> userIndexes = userIndexService.getAllUserIndexesBySpecifiedPeriod(user.getId(),
+        List<UserIndex> userIndexes = userIndexService.getAllUserIndexesBySpecifiedPeriod(user,
                 period.getCurrentStartDate(), period.getCurrentEndDate());
 
         model.addAttribute("period", period);
+        model.addAttribute("periodNameCode", periodHolder.getPeriodsNameCode());
+        model.addAttribute("periods", periodHolder.getAllPeriods());
+        model.addAttribute("availYears", periodHolder.getAvailableYears());
         model.addAttribute("userIndexes", userIndexes);
 
         return "dashboard";
@@ -127,7 +129,7 @@ public class UserController {
             produces = "text/plain; charset=utf-8")
     public String getSubordinateIndexes(long userId, long periodNum, int year) {
         Period period = periodHolder.getPeriodById(periodNum);
-        List<UserIndex> subIndexes = userIndexService.getAllUserIndexesBySpecifiedPeriod(userId,
+        List<UserIndex> subIndexes = userIndexService.getAllUserIndexesBySpecifiedPeriod(new User(),
                 period.getStartDateForYear(year), period.getEndDateForYear(year));
         boolean isSubmitted = userIndexService.isLeadSubmitAllEstimatesForUser(userId,
                 period.getStartDateForYear(year), period.getEndDateForYear(year));

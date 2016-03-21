@@ -24,7 +24,6 @@ public class PositionServiceImpl implements PositionService {
     private PositionRepository positionRepository;
 
 
-
     @Override
     @Transactional
     public List<Position> findAll() {

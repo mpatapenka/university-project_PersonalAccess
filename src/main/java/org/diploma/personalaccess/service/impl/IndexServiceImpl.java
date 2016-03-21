@@ -24,7 +24,6 @@ public class IndexServiceImpl implements IndexService {
     private IndexRepository indexRepository;
 
 
-
     @Override
     @Transactional
     public void saveOrUpdateIndex(final Index index) {

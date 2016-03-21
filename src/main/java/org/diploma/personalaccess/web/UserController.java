@@ -7,6 +7,7 @@ import org.diploma.personalaccess.entity.User;
 import org.diploma.personalaccess.entity.UserIndex;
 import org.diploma.personalaccess.holder.PeriodHolder;
 import org.diploma.personalaccess.service.UserIndexService;
+import org.diploma.personalaccess.util.DateUtils;
 import org.diploma.personalaccess.util.JsonParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -39,16 +40,31 @@ public class UserController {
     private static final Logger log = Logger.getLogger(UserController.class);
 
 
+    /**
+     * User details service bean
+     */
     @Autowired
     private UserDetailsService userDetailsService;
 
+    /**
+     * User index service bean
+     */
     @Autowired
     private UserIndexService userIndexService;
 
+    /**
+     * Period holder bean
+     */
     @Autowired
     private PeriodHolder periodHolder;
 
 
+    /**
+     * Get user object by 'Principal' parameter (username)
+     *
+     * @param principal Principal object
+     * @return User object
+     */
     private User getUserBySecurityInfo(Principal principal) {
         String username = principal.getName();
         return (User) userDetailsService.loadUserByUsername(username);
@@ -66,17 +82,28 @@ public class UserController {
     }
 
     @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
-    public String getDashboardPage(Model model, Principal principal) {
+    public String getDashboardPage(Model model, Principal principal,
+                                   @RequestParam(required = false) Long periodId,
+                                   @RequestParam(required = false) Integer year) {
+        Period currentPeriod = periodHolder.getCurrentPeriod();
+        boolean isEdit = (periodId == null && year == null)
+                || (periodId != null && periodId == periodHolder.getIdOfPeriod(currentPeriod)
+                && year != null && year == DateUtils.currentYear());
+
         User user = getUserBySecurityInfo(principal);
-        Period period = periodHolder.getCurrentPeriod();
-        List<UserIndex> userIndexes = userIndexService.getAllUserIndexesBySpecifiedPeriod(user,
-                period.getCurrentStartDate(), period.getCurrentEndDate());
+        Period period = isEdit ? currentPeriod : periodHolder.getPeriodById(periodId);
+        int yearValue = isEdit ? DateUtils.currentYear() : year;
+        List<UserIndex> userIndexes = userIndexService.getAllUserIndexesBySpecifiedPeriod(user, period,
+                yearValue, currentPeriod);
 
         model.addAttribute("period", period);
         model.addAttribute("periodNameCode", periodHolder.getPeriodsNameCode());
         model.addAttribute("periods", periodHolder.getAllPeriods());
         model.addAttribute("availYears", periodHolder.getAvailableYears());
         model.addAttribute("userIndexes", userIndexes);
+        model.addAttribute("isEdit", isEdit);
+        model.addAttribute("selectedPeriodId", periodId);
+        model.addAttribute("selectedYear", year);
 
         return "dashboard";
     }
@@ -130,7 +157,7 @@ public class UserController {
     public String getSubordinateIndexes(long userId, long periodNum, int year) {
         Period period = periodHolder.getPeriodById(periodNum);
         List<UserIndex> subIndexes = userIndexService.getAllUserIndexesBySpecifiedPeriod(new User(),
-                period.getStartDateForYear(year), period.getEndDateForYear(year));
+                period, year, period);
         boolean isSubmitted = userIndexService.isLeadSubmitAllEstimatesForUser(userId,
                 period.getStartDateForYear(year), period.getEndDateForYear(year));
 

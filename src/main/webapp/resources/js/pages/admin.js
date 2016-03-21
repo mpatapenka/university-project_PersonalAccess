@@ -4,13 +4,8 @@ $("#delete-index-btn").click(deleteIndex);
 $("#show-add-modal-btn").click(showAddModal);
 
 
-
 function saveIndex() {
-    if (!emptyValidator()) {
-        return;
-    }
-
-    if (!numberBiggerThenZeroValidator()) {
+    if (!emptyValidator() && !numberBiggerThenZeroValidator()) {
         return;
     }
 
@@ -18,7 +13,7 @@ function saveIndex() {
     var selectedPoses = $("#selected-poses").val();
 
     var poses = [];
-    $.each(selectedPoses, function(index, value) {
+    $.each(selectedPoses, function (index, value) {
         poses.push({
             id: value
         });
@@ -64,7 +59,6 @@ function deleteIndex() {
 }
 
 
-
 function showAddModal() {
     $("#addModalHeader").html($("#addIndexHeader").html());
     $("#index-form")[0].reset();
@@ -77,12 +71,10 @@ function showAddModal() {
 function showEditModal(id) {
     $("#addModalHeader").html($("#editIndexHeader").html());
     $.ajax({
-        url: "/admin/dashboard/get?id=" + id,
-        type: "get",
+        url: $("#getIndexForm").attr("action") + "?id=" + id,
+        type: $("#getIndexForm").attr("method"),
         contentType: "text/plain; charset=UTF-8",
         success: function (result) {
-            console.log("Show edit modal success.");
-
             var obj = JSON.parse(result);
             $("#form-id").val(obj.id);
             $("#name").val(obj.name);

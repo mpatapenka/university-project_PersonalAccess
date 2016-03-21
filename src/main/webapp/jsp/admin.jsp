@@ -66,18 +66,17 @@
     </div>
 
 
-
     <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
         <a id="show-add-modal-btn" class="btn-floating btn-large waves-effect waves-light red">
             <i class="material-icons">add</i></a>
     </div>
 
 
-
     <!-- Hidden bundled values -->
     <div id="addIndexHeader" class="hide"><spring:message code="admin.header.add_new_index"/></div>
     <div id="editIndexHeader" class="hide"><spring:message code="admin.header.edit_index"/></div>
 
+    <form id="getIndexForm" class="hide" method="get" action="<c:url value="/admin/dashboard/get"/>"></form>
 
 
     <!-- Modals -->
@@ -129,7 +128,6 @@
                 <spring:message code="forms.cancel"/></a>
         </div>
     </div>
-
 
     <!-- Delete modal -->
     <div id="delete-index" class="modal bottom-sheet">

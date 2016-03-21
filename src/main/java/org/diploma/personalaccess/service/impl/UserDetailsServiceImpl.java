@@ -25,12 +25,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
      */
     private static final Logger log = Logger.getLogger(UserDetailsServiceImpl.class);
 
+
     /**
      * User repository bean
      */
     @Autowired
     private UserRepository userRepository;
-
 
 
     /**

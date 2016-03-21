@@ -70,6 +70,8 @@
         <!-- Google lib -->
         <gson.version>2.5</gson.version>
 
+        <maven-compiler-plugin.version>3.3</maven-compiler-plugin.version>
+        <maven-surefire-plugin.version>2.9</maven-surefire-plugin.version>
     </properties>
 
 
@@ -216,6 +218,12 @@
             <version>${jta.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>${h2.version}</version>
+        </dependency>
+
 
 
         <!-- Apache Commons -->
@@ -252,7 +260,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.3</version>
+                <version>${maven-compiler-plugin.version}</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>

@@ -76,12 +76,16 @@ public class UserIndexServiceImpl implements UserIndexService {
 
     @Override
     @Transactional
-    public List<UserIndex> getAllUserIndexesBySpecifiedPeriod(User user, Period period, int year) {
+    public List<UserIndex> getAllUserIndexesBySpecifiedPeriod(User user, Period period, int year, Period current) {
         Date start = period.getStartDateForYear(year);
         Date end = period.getEndDateForYear(year);
 
-        Set<Index> availIndexes = user.getForm().getPosition().getAvailableIndexes();
         List<UserIndex> userIndexes = userIndexRepository.findByUserIdAndFillDateBetween(user.getId(), start, end);
+        if (!period.equals(current)) {
+            return userIndexes;
+        }
+
+        Set<Index> availIndexes = user.getForm().getPosition().getAvailableIndexes();
         if (userIndexes.size() == availIndexes.size()) {
             return userIndexes;
         }

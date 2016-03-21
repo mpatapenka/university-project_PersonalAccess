@@ -1,71 +1,95 @@
-;$("#publish-button").click(publishAll);
+;$("#publish-button").click(setupUserIndexEstimates);
 
 
-function publishAll() {
-    var errors = false;
-
-    var selfEstimates = {};
-    $("input[name='selfEstimate']").each(function () {
-        $(this).removeClass("invalid");
-        if (!jQuery.isNumeric($(this).val())) {
-            errors = true;
-            $(this).addClass("invalid");
-        }
-        selfEstimates[$(this).attr("id")] = $(this).val();
-    });
-
-    if (errors) {
-        Materialize.toast("Заполните необходимые поля", 4000);
+function setupUserIndexEstimates() {
+    if (!emptyValidator()) {
+        Materialize.toast($("#fieldMissingError").html(), 4000);
         return;
     }
 
-    var descriptions = {};
-    $("textarea[name='description']").each(function () {
-        descriptions[$(this).attr("id")] = $(this).val();
-    });
+    if (!estimateValidator()) {
+        Materialize.toast($("#unsupportedMarkError").html(), 4000);
+        return;
+    }
 
-    var documents = {};
-    $("input[name='document']").each(function () {
-        documents[$(this).attr("id")] = $(this).val();
-    });
-
-    var documentNames = {};
-    $("input[name='document-name']").each(function () {
-        documentNames[$(this).attr("id")] = $(this).val();
+    var selfEstimates = {};
+    $("input[name='selfEstimate']").each(function () {
+        selfEstimates[$(this).attr("id")] = $(this).val();
     });
 
     var userIndexes = [];
     for (var key in selfEstimates) {
         if (selfEstimates.hasOwnProperty(key)) {
             var userIndex = {};
+            userIndex["id"] = key;
             userIndex["selfEstimate"] = selfEstimates[key];
-            userIndex["description"] = descriptions[key];
-            userIndex["index"] = {
-                "id": key
-            };
-            userIndex["document"] = {
-                "name": documentNames[key]
-            };
 
             userIndexes.push(userIndex);
         }
     }
 
-    var jsonUserIndexes = JSON.stringify(userIndexes);
+    var jsonUserIndexes = convertToJsonForTransfer(userIndexes);
 
     $.ajax({
-        url: "/user/dashboard/publish",
+        url: "/user/dashboard/estimates",
         type: "post",
         data: jsonUserIndexes,
         success: function (result) {
-            console.log("success: " + result);
-
-            if (result === "success") {
+            if (!result) {
+                console.log("Save user index estimates success.");
                 location.reload();
+            } else {
+                console.log("Server error: " + result);
+                Materialize.toast("Server error, validation not complete!");
             }
         },
         error: function (error) {
-            console.log("error: " + error);
+            console.log("Save user index estimates error: " + error);
+            Materialize.toast("Server error when u try to save user index estimates!", 4000);
         }
     });
+}
+
+function updateAdditionalInfo(id) {
+    var form = $("#additional-form-" + id);
+    var formData = new FormData(form[0]);
+    $.ajax({
+        url: form.attr("action"),
+        type: form.attr("method"),
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function (result) {
+            if (!result) {
+                location.reload();
+            } else {
+                console.log("Server error: " + result);
+                Materialize.toast("Server error when u try to save additional info of user index!", 4000);
+            }
+        },
+        error: function (error) {
+            console.log("Update additional info of user index error: " + error);
+            Materialize.toast("Server error when u try to save additional info of user index!", 4000);
+        }
+    });
+}
+
+
+function estimateValidator() {
+    var isValid = true;
+    $("input[name='selfEstimate']").each(function () {
+        $(this).removeClass("invalid");
+        $(this).removeClass("valid");
+
+        var value = $(this).val();
+        if (!jQuery.isNumeric(value)
+            || parseFloat(value) < parseFloat($(this).attr("min"))
+            || parseFloat(value) > parseFloat($(this).attr("max"))) {
+            isValid = false;
+            $(this).addClass("invalid");
+        } else {
+            $(this).addClass("valid");
+        }
+    });
+    return isValid;
 }

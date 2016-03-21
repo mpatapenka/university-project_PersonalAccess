@@ -40,7 +40,7 @@ public class IndexServiceImpl implements IndexService {
 
     @Override
     @Transactional
-    public List<Index> findAllIndexes() {
+    public List<Index> findAll() {
         return indexRepository.findAll();
     }
 

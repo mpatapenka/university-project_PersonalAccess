@@ -1,9 +1,10 @@
 package org.diploma.personalaccess.service;
 
-import org.diploma.personalaccess.bean.Period;
 import org.diploma.personalaccess.entity.User;
 import org.diploma.personalaccess.entity.UserIndex;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.sql.Date;
 import java.util.List;
 import java.util.Map;
@@ -18,16 +19,6 @@ public interface UserIndexService {
     /**
      * Get all filled user indexes for period
      *
-     * @param user user
-     * @param start start date of period
-     * @param end end date of period
-     * @return list of user indexes
-     */
-    List<UserIndex> getAllUserIndexesBySpecifiedPeriod(User user, Date start, Date end);
-
-    /**
-     * Get all filled user indexes for period
-     *
      * @param userId id of user
      * @param start start date of period
      * @param end end date of period
@@ -36,21 +27,29 @@ public interface UserIndexService {
     List<UserIndex> getAllUserIndexesBySpecifiedPeriod(long userId, Date start, Date end);
 
     /**
-     * Checking user indexes available for specified period
+     * Save all self estimates to UserIndex'es
      *
+     * @param userIndexes user indexes list with self estimates
      * @param user specified user
-     * @param period specified period
-     * @return true - if user already fill indexes for specified period,
-     * false - another one
      */
-    boolean isUserIndexesAvailableForPeriod(User user, Period period);
+    void setUpAllEstimates(List<UserIndex> userIndexes, User user);
 
     /**
-     * Save all user indexes
+     * Upload additional information about user index
      *
-     * @param userIndexes user indexes
+     * @param userIndexId user index ID
+     * @param description description of complete work
+     * @param doc approve document
      */
-    void publishAllUserIndexes(List<UserIndex> userIndexes, User user);
+    void uploadAdditionalInfo(long userIndexId, String description, MultipartFile doc);
+
+    /**
+     * Download additional info (approve file)
+     *
+     * @param docId id of document
+     * @param response response for write to it
+     */
+    void downloadAdditionalInfo(long docId, HttpServletResponse response);
 
     /**
      * Setup new lead estimates to user index

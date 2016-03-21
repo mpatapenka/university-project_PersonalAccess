@@ -141,7 +141,7 @@ DROP TABLE IF EXISTS `personal_access_database`.`_index` ;
 CREATE TABLE IF NOT EXISTS `personal_access_database`.`_index` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT 'Уникальный идентификатор',
   `name` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Наименование',
-  `estimate` INT NULL DEFAULT NULL COMMENT 'Оценка (максимальная/за единицу работы)',
+  `estimate` DOUBLE NULL DEFAULT NULL COMMENT 'Оценка (максимальная/за единицу работы)',
   `multiplier` INT NULL DEFAULT NULL COMMENT 'Множитель оценки работы (единица работы)',
   `work_name` VARCHAR(50) NULL DEFAULT NULL COMMENT 'Наименование единицы работы',
   PRIMARY KEY (`id`)  COMMENT '')
@@ -198,8 +198,8 @@ CREATE TABLE IF NOT EXISTS `personal_access_database`.`user_index` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT 'Уникальный идентификатор',
   `index_id` BIGINT(20) NOT NULL COMMENT 'Код показателя',
   `user_id` BIGINT(20) NOT NULL COMMENT 'Код пользователя',
-  `self_estimate` INT NULL DEFAULT NULL COMMENT 'Личная оценка пользователя',
-  `lead_estimate` INT NULL DEFAULT NULL COMMENT 'Оценка руководителя',
+  `self_estimate` DOUBLE NULL DEFAULT NULL COMMENT 'Личная оценка пользователя',
+  `lead_estimate` DOUBLE NULL DEFAULT NULL COMMENT 'Оценка руководителя',
   `fill_date` DATE NULL DEFAULT NULL COMMENT 'Дата заполнения показателя',
   `description` LONGTEXT NULL DEFAULT NULL COMMENT 'Краткое описание о проделанной работе',
   `is_complete` TINYINT(1) NULL DEFAULT 0 COMMENT 'Поле указывает на завершенность заполнения индекса',

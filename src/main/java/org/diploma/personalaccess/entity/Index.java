@@ -29,7 +29,7 @@ public class Index extends BaseEntity {
     @Expose
     @Column(name = "estimate")
     @Min(0)
-    private int estimate;
+    private double estimate;
 
     @Expose
     @Column(name = "multiplier")
@@ -59,11 +59,11 @@ public class Index extends BaseEntity {
         this.name = name;
     }
 
-    public int getEstimate() {
+    public double getEstimate() {
         return estimate;
     }
 
-    public void setEstimate(int estimate) {
+    public void setEstimate(double estimate) {
         this.estimate = estimate;
     }
 

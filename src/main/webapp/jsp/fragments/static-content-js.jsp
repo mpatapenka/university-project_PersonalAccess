@@ -9,3 +9,4 @@
 
 <!-- Custom JS -->
 <script src="<c:url value="/resources/js/init.js"/>"></script>
+<script src="<c:url value="/resources/js/scripts.js"/>"></script>

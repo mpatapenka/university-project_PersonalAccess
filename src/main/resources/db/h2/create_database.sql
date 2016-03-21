@@ -99,7 +99,7 @@ CREATE TABLE IF NOT EXISTS personal_access_database.user (
 CREATE TABLE IF NOT EXISTS personal_access_database._index (
   id BIGINT(20) NOT NULL AUTO_INCREMENT,
   name VARCHAR(255) NULL DEFAULT NULL,
-  estimate INT NULL DEFAULT NULL,
+  estimate DOUBLE NULL DEFAULT NULL,
   multiplier INT NULL DEFAULT NULL,
   work_name VARCHAR(50) NULL DEFAULT NULL,
   PRIMARY KEY (id));
@@ -142,8 +142,8 @@ CREATE TABLE IF NOT EXISTS personal_access_database.user_index (
   id BIGINT(20) NOT NULL AUTO_INCREMENT,
   index_id BIGINT(20) NOT NULL,
   user_id BIGINT(20) NOT NULL,
-  self_estimate INT NULL DEFAULT NULL,
-  lead_estimate INT NULL DEFAULT NULL,
+  self_estimate DOUBLE NULL DEFAULT NULL,
+  lead_estimate DOUBLE NULL DEFAULT NULL,
   fill_date DATE NULL DEFAULT NULL,
   description VARCHAR(500) NULL DEFAULT NULL,
   is_complete BOOLEAN NULL DEFAULT 0,

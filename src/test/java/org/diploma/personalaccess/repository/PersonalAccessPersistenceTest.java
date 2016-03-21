@@ -4,6 +4,7 @@ import org.diploma.personalaccess.config.DatabaseConfig;
 import org.diploma.personalaccess.entity.Index;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -34,9 +35,10 @@ public class PersonalAccessPersistenceTest {
     public void testThatIndexCanBeSaveAndGetWithActualValues() {
         /* Data for testing index repository */
         final String name = "Test index";
-        final int estimate = 50;
+        final double estimate = 50;
         final int multiplier = 1;
         final String workName = "test";
+        final double epsilon = 0.0001;
 
         /* Creating mock index */
         Index index = new Index();
@@ -68,7 +70,7 @@ public class PersonalAccessPersistenceTest {
         assertNotNull("Test index not found in database", expected);
         assertNotNull("Id is null", expected.getId());
         assertEquals("Names not equal", expected.getName(), name);
-        assertEquals("Estimate not equal", expected.getEstimate(), estimate);
+        assertEquals("Estimate not equal", expected.getEstimate(), estimate, epsilon);
         assertEquals("Multiplier not equal", expected.getMultiplier(), multiplier);
         assertEquals("Work name not equal", expected.getWorkName(), workName);
 

@@ -19,12 +19,12 @@ public interface UserIndexService {
     /**
      * Get all filled user indexes for period
      *
-     * @param userId id of user
+     * @param user user
      * @param start start date of period
      * @param end end date of period
      * @return list of user indexes
      */
-    List<UserIndex> getAllUserIndexesBySpecifiedPeriod(long userId, Date start, Date end);
+    List<UserIndex> getAllUserIndexesBySpecifiedPeriod(User user, Date start, Date end);
 
     /**
      * Save all self estimates to UserIndex'es

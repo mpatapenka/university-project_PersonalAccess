@@ -41,6 +41,7 @@ public class UserIndexServiceImpl implements UserIndexService {
      */
     private static final Logger log = Logger.getLogger(UserIndexServiceImpl.class);
 
+
     /**
      * UserIndex repository bean
      */
@@ -74,11 +75,9 @@ public class UserIndexServiceImpl implements UserIndexService {
 
     @Override
     @Transactional
-    public List<UserIndex> getAllUserIndexesBySpecifiedPeriod(long userId, Date start, Date end) {
-        User user = userRepository.findOne(userId);
-
+    public List<UserIndex> getAllUserIndexesBySpecifiedPeriod(User user, Date start, Date end) {
         Set<Index> availIndexes = user.getForm().getPosition().getAvailableIndexes();
-        List<UserIndex> userIndexes = userIndexRepository.findByUserIdAndFillDateBetween(userId, start, end);
+        List<UserIndex> userIndexes = userIndexRepository.findByUserIdAndFillDateBetween(user.getId(), start, end);
         if (userIndexes.size() == availIndexes.size()) {
             return userIndexes;
         }
@@ -102,7 +101,7 @@ public class UserIndexServiceImpl implements UserIndexService {
             userIndexRepository.save(userIndex);
         }
 
-        return userIndexRepository.findByUserIdAndFillDateBetween(userId, start, end);
+        return userIndexRepository.findByUserIdAndFillDateBetween(user.getId(), start, end);
     }
 
     @Override

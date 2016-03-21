@@ -1,5 +1,6 @@
 package org.diploma.personalaccess.service;
 
+import org.diploma.personalaccess.bean.Period;
 import org.diploma.personalaccess.entity.User;
 import org.diploma.personalaccess.entity.UserIndex;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,11 +21,11 @@ public interface UserIndexService {
      * Get all filled user indexes for period
      *
      * @param user user
-     * @param start start date of period
-     * @param end end date of period
+     * @param period period
+     * @param year year
      * @return list of user indexes
      */
-    List<UserIndex> getAllUserIndexesBySpecifiedPeriod(User user, Date start, Date end);
+    List<UserIndex> getAllUserIndexesBySpecifiedPeriod(User user, Period period, int year);
 
     /**
      * Save all self estimates to UserIndex'es

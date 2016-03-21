@@ -4,6 +4,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
+import org.diploma.personalaccess.bean.Period;
 import org.diploma.personalaccess.config.WebConfig;
 import org.diploma.personalaccess.entity.Document;
 import org.diploma.personalaccess.entity.Index;
@@ -75,7 +76,10 @@ public class UserIndexServiceImpl implements UserIndexService {
 
     @Override
     @Transactional
-    public List<UserIndex> getAllUserIndexesBySpecifiedPeriod(User user, Date start, Date end) {
+    public List<UserIndex> getAllUserIndexesBySpecifiedPeriod(User user, Period period, int year) {
+        Date start = period.getStartDateForYear(year);
+        Date end = period.getEndDateForYear(year);
+
         Set<Index> availIndexes = user.getForm().getPosition().getAvailableIndexes();
         List<UserIndex> userIndexes = userIndexRepository.findByUserIdAndFillDateBetween(user.getId(), start, end);
         if (userIndexes.size() == availIndexes.size()) {

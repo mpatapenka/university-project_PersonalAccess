@@ -1,6 +1,35 @@
 ;
 $("#publish-button").click(setupUserIndexEstimates);
+$("#period").change({otherId: "year"}, viewUserIndexControlChanged);
+$("#year").change({otherId: "period"}, viewUserIndexControlChanged);
 
+
+function viewUserIndexControlChanged(event) {
+    var current = $(this).val();
+    var other = $("#" + event.data.otherId).val();
+
+    if (!current || !other) {
+        return;
+    }
+
+    var year;
+    var periodId;
+    if (event.data.otherId === "year") {
+        periodId = current;
+        year = other;
+    } else {
+        periodId = other;
+        year = current;
+    }
+
+    var params = {
+        periodId: periodId,
+        year: year
+    };
+
+    var url = $("#sendReloadRequest").attr("action") + "?" + $.param(params);
+    location.replace(url);
+}
 
 function setupUserIndexEstimates() {
     if (!emptyValidator()) {

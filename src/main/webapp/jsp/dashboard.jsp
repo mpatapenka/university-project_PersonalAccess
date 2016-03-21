@@ -24,6 +24,28 @@
 
     <div class="container">
         <div class="section">
+            <div class="row">
+                <div class="input-field col s6">
+                    <select id="period">
+                        <option value="" disabled selected><spring:message code="control.choose"/> <spring:message code="period.${periodNameCode}"/></option>
+                        <c:forEach var="period" items="${periods}" varStatus="loop">
+                            <option value="${loop.index}">${loop.index + 1}. ${period.start} - ${period.end}</option>
+                        </c:forEach>
+                    </select>
+                    <label><spring:message code="control.available_periods"/></label>
+                </div>
+
+                <div class="input-field col s6">
+                    <select id="year">
+                        <option value="" disabled selected><spring:message code="control.choose_year"/></option>
+                        <c:forEach var="year" items="${availYears}">
+                            <option value="${year}">${year} <spring:message code="forms.short.year"/></option>
+                        </c:forEach>
+                    </select>
+                    <label><spring:message code="control.available_years"/></label>
+                </div>
+            </div>
+
             <h5><spring:message code="dashboard.header"/> (${period.dateString})</h5>
 
             <c:choose>

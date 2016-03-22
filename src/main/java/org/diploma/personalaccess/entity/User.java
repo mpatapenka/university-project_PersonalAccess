@@ -46,15 +46,6 @@ public class User extends BaseEntity implements UserDetails {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private Set<UserIndex> userIndexes = new HashSet<>();
 
-    @ManyToMany
-    @JoinTable(name = "dependency",
-            joinColumns = {@JoinColumn(name = "user_sub_id", nullable = false)},
-            inverseJoinColumns = {@JoinColumn(name = "user_lead_id", nullable = false)})
-    private Set<User> leads = new HashSet<>();
-
-    @ManyToMany(mappedBy = "leads")
-    private Set<User> subs = new HashSet<>();
-
 
     @Override
     public String getUsername() {
@@ -104,22 +95,6 @@ public class User extends BaseEntity implements UserDetails {
 
     public void setUserIndexes(Set<UserIndex> userIndexes) {
         this.userIndexes = userIndexes;
-    }
-
-    public Set<User> getLeads() {
-        return leads;
-    }
-
-    public void setLeads(Set<User> leads) {
-        this.leads = leads;
-    }
-
-    public Set<User> getSubs() {
-        return subs;
-    }
-
-    public void setSubs(Set<User> subs) {
-        this.subs = subs;
     }
 
 
@@ -175,7 +150,6 @@ public class User extends BaseEntity implements UserDetails {
                 .append("password", getPassword())
                 .append("form", getForm())
                 .append("role", getRole())
-                .append("subs", getSubs())
                 .toString();
     }
 

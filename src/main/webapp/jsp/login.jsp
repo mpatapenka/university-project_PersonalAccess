@@ -54,7 +54,7 @@
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="material-icons prefix">vpn_key</i>
-                            <input id="icon_telephone" type="password" class="validate" name="password">
+                            <input id="icon_telephone" type="password" name="password">
                             <label for="icon_telephone"><spring:message code="control.password"/></label>
                         </div>
                     </div>

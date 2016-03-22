@@ -83,7 +83,7 @@
                         <c:forEach var="uIndex" items="${userIndexes}">
                             <li class="collection-item avatar">
                                 <i class="material-icons circle orange">assignment</i>
-                                <span class="title truncate">${uIndex.index.name}</span>
+                                <span class="title truncate truncate-card-fix">${uIndex.index.name}</span>
                                 <p><spring:message code="dashboard.your_mark"/><br>
                                     <c:choose>
                                         <c:when test="${uIndex.selfEstimate eq 0}">
@@ -117,8 +117,11 @@
 
                                         <h5>${uIndex.index.name}</h5>
                                         <p><spring:message code="dashboard.mark_message1"/> ${uIndex.index.estimate}
-                                            <spring:message code="dashboard.mark_message2"/> ${uIndex.index.multiplier}
-                                            ${uIndex.index.workName}</p>
+                                            <c:if test="${not empty uIndex.index.workName}">
+                                                <spring:message code="dashboard.mark_message2"/> ${uIndex.index.multiplier}
+                                                ${uIndex.index.workName}
+                                            </c:if>
+                                        </p>
 
                                         <form id="additional-form-${uIndex.id}" method="post"
                                               action="<c:url value="/user/dashboard/additional"/>" enctype="multipart/form-data">

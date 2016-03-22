@@ -4,30 +4,15 @@ $("#period").change({otherId: "year"}, viewUserIndexControlChanged);
 $("#year").change({otherId: "period"}, viewUserIndexControlChanged);
 
 
-function viewUserIndexControlChanged(event) {
-    var current = $(this).val();
-    var other = $("#" + event.data.otherId).val();
+function viewUserIndexControlChanged() {
+    var period = $("#period").val();
+    var year = $("#year").val();
 
-    if (!current || !other) {
+    if (!period || !year) {
         return;
     }
 
-    var year;
-    var periodId;
-    if (event.data.otherId === "year") {
-        periodId = current;
-        year = other;
-    } else {
-        periodId = other;
-        year = current;
-    }
-
-    var params = {
-        periodId: periodId,
-        year: year
-    };
-
-    var url = $("#sendReloadRequest").attr("action") + "?" + $.param(params);
+    var url = $("#sendReloadRequest").attr("action") + "?" + $.param({periodId: period, year: year});
     location.replace(url);
 }
 

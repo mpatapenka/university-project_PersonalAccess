@@ -31,6 +31,7 @@ public class Position extends BaseEntity {
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "availablePositions")
     private Set<Index> availableIndexes = new HashSet<>();
 
+
     public String getName() {
         return name;
     }
@@ -54,6 +55,7 @@ public class Position extends BaseEntity {
     public void setForms(Set<Form> forms) {
         this.forms = forms;
     }
+
 
     @Override
     public boolean equals(Object o) {

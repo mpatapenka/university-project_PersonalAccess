@@ -21,6 +21,7 @@ public class ExceptionController {
      */
     private static final Logger log = Logger.getLogger(ExceptionController.class);
 
+
     @RequestMapping(value = "/403", method = RequestMethod.GET)
     public String handleAccessDenied(Principal user) {
         log.warn("User '" + (user != null ? "login = " + user.getName() : "anonymous") + "' trying get acces to secured page.");

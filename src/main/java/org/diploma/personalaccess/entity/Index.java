@@ -51,6 +51,7 @@ public class Index extends BaseEntity {
             inverseJoinColumns = {@JoinColumn(name = "position_id", referencedColumnName = "id")})
     private Set<Position> availablePositions = new HashSet<>();
 
+
     public String getName() {
         return name;
     }
@@ -98,6 +99,7 @@ public class Index extends BaseEntity {
     public void setAvailablePositions(Set<Position> availablePositions) {
         this.availablePositions = availablePositions;
     }
+
 
     @Override
     public boolean equals(Object o) {

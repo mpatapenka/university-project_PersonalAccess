@@ -18,6 +18,7 @@ public class ExceptionControllerAdvice {
      */
     private static final Logger log = Logger.getLogger(ExceptionControllerAdvice.class);
 
+
     @ExceptionHandler(NoHandlerFoundException.class)
     public String handleNoHandlerFoundException(NoHandlerFoundException e) {
         log.warn("User trying get access to not exist page.", e);

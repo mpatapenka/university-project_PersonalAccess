@@ -37,12 +37,12 @@ public class DatabaseConfig {
      */
     private static final Logger log = Logger.getLogger(DatabaseConfig.class);
 
+
     /**
      * Properties file holder. Configured by @PropertySource
      */
     @Resource
     private Environment env;
-
 
 
     @Bean
@@ -82,6 +82,7 @@ public class DatabaseConfig {
 
         return manager;
     }
+
 
     private Properties getHibernateProperties() {
         final String propertyFile = "hibernate.properties";

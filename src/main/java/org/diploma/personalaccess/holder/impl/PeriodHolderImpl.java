@@ -68,6 +68,9 @@ public class PeriodHolderImpl implements PeriodHolder {
     private List<Integer> years;
 
 
+    /**
+     * Period holder impl initializer
+     */
     public PeriodHolderImpl() {
         entries = new ArrayList<>();
         years = new ArrayList<>();
@@ -107,6 +110,15 @@ public class PeriodHolderImpl implements PeriodHolder {
         }
     }
 
+
+    /**
+     * Create period key (like property file key). To period index add
+     * default prefix (default is 'p'). If will be switched prefix in property
+     * file, then prefix must be switched here too
+     *
+     * @param index index of period
+     * @return period key
+     */
     private static String createPeriodKey(int index) {
         /* Default key prefix */
         final String keyPrefix = "p";

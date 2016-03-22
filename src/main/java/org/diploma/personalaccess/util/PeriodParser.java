@@ -18,6 +18,11 @@ public final class PeriodParser {
     private static final Logger log = Logger.getLogger(JsonParser.class);
 
 
+    /**
+     * Can not be instantiated
+     */
+    private PeriodParser() { }
+
 
     /**
      * Parse period raw string into object
@@ -48,8 +53,6 @@ public final class PeriodParser {
 
         return period;
     }
-
-
 
 
     /**
@@ -84,9 +87,5 @@ public final class PeriodParser {
 
         return components;
     }
-
-
-
-    private PeriodParser() { }
 
 }

@@ -55,6 +55,7 @@ public class User extends BaseEntity implements UserDetails {
     @ManyToMany(mappedBy = "leads")
     private Set<User> subs = new HashSet<>();
 
+
     @Override
     public String getUsername() {
         return username;
@@ -121,6 +122,7 @@ public class User extends BaseEntity implements UserDetails {
         this.subs = subs;
     }
 
+
     @Override
     public boolean isAccountNonExpired() {
         return isActive();
@@ -145,6 +147,7 @@ public class User extends BaseEntity implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singletonList(getRole());
     }
+
 
     @Override
     public boolean equals(Object o) {

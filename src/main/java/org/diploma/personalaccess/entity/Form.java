@@ -48,6 +48,7 @@ public class Form extends BaseEntity {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "form")
     private Set<User> users = new HashSet<>();
 
+
     public String getFirstName() {
         return firstName;
     }
@@ -103,6 +104,7 @@ public class Form extends BaseEntity {
     public void setUsers(Set<User> users) {
         this.users = users;
     }
+
 
     @Override
     public boolean equals(Object o) {

@@ -32,6 +32,7 @@ public class Role extends BaseEntity implements GrantedAuthority {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "role")
     private Set<User> users = new HashSet<>();
 
+
     public String getName() {
         return name;
     }
@@ -60,6 +61,7 @@ public class Role extends BaseEntity implements GrantedAuthority {
     public String getAuthority() {
         return getCode().toUpperCase();
     }
+
 
     @Override
     public boolean equals(Object o) {

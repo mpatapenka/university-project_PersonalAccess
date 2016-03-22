@@ -8,7 +8,6 @@ import org.springframework.core.style.ToStringCreator;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import java.sql.Date;
-import java.text.SimpleDateFormat;
 
 import static org.diploma.personalaccess.util.DateUtils.D_M_Y_FORMATTER;
 
@@ -57,6 +56,7 @@ public class UserIndex extends BaseEntity {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "document_id")
     private Document document;
+
 
     public double getSelfEstimate() {
         return selfEstimate;
@@ -128,6 +128,7 @@ public class UserIndex extends BaseEntity {
     public String getFormatFillDate() {
         return D_M_Y_FORMATTER.format(getFillDate());
     }
+
 
     @Override
     public boolean equals(Object o) {

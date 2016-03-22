@@ -29,12 +29,12 @@ public class AdminController {
      */
     private static final Logger log = Logger.getLogger(AdminController.class);
 
+
     @Autowired
     private IndexService indexService;
 
     @Autowired
     private PositionService positionService;
-
 
 
     @RequestMapping(value = "/dashboard", method = RequestMethod.GET)

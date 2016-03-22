@@ -156,7 +156,13 @@ public class PeriodHolderImpl implements PeriodHolder {
 
     @Override
     public Period getPeriodById(long id) {
-        return entries.get((int) id);
+        if (id >= 0 && id < entries.size()) {
+            return entries.get((int) id);
+        }
+
+        String msg = "Unsupported id '" + id + "'!";
+        log.error(msg);
+        throw new IllegalArgumentException(msg);
     }
 
     @Override
@@ -167,7 +173,10 @@ public class PeriodHolderImpl implements PeriodHolder {
                 return i;
             }
         }
-        throw new IllegalArgumentException("Unsupported period '" + period + "'!");
+
+        String msg = "Unsupported period '" + period + "'!";
+        log.error(msg);
+        throw new IllegalArgumentException(msg);
     }
 
 }

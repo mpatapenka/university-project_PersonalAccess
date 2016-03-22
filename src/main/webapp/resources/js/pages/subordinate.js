@@ -1,5 +1,26 @@
-;$("#search-btn").click(search);
-$("#publish-btn").click(publish);
+;
+$("#publish-lead-button").click(setupUserIndexLeadEstimates);
+$("#period").change(viewSubordinateControlChanged);
+$("#year").change(viewSubordinateControlChanged);
+$("#sub").change(viewSubordinateControlChanged);
+
+
+function viewSubordinateControlChanged() {
+    var period = $("#period").val();
+    var year = $("#year").val();
+    var sub = $("#sub").val();
+
+    if (!period || !year || !sub) {
+        return;
+    }
+
+    var url = $("#sendReloadRequest").attr("action") + "?" + $.param({periodId: period, year: year, subId: sub});
+    location.replace(url);
+}
+
+function setupUserIndexLeadEstimates() {
+
+}
 
 function search() {
     var period = $("#period").val();

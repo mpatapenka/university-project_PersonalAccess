@@ -45,9 +45,10 @@ function setupUserIndexEstimates() {
 
     var jsonUserIndexes = convertToJsonForTransfer(userIndexes);
 
+    var form = $("#sendEstimateForm");
     $.ajax({
-        url: $("#sendEstimateForm").attr("action"),
-        type: $("#sendEstimateForm").attr("method"),
+        url: form.attr("action"),
+        type: form.attr("method"),
         data: jsonUserIndexes,
         success: function (result) {
             if (!result) {

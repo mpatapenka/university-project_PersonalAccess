@@ -55,8 +55,9 @@ public final class ServiceUtils {
         userIndex.setComplete(false);
         userIndex.setDescription(null);
         userIndex.setIndex(index);
-        userIndex.setLeadEstimate(0);
-        userIndex.setSelfEstimate(0);
+        /* This incorrect values need for use like a flag */
+        userIndex.setLeadEstimate(-1);
+        userIndex.setSelfEstimate(-1);
 
         return userIndex;
     }

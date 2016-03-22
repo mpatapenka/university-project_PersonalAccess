@@ -23,10 +23,12 @@ public interface UserIndexService {
      * @param user user
      * @param period period
      * @param year year
-     * @param current current period
+     * @param currentPeriod current period
+     * @param currentYear current year
      * @return list of user indexes
      */
-    List<UserIndex> getAllUserIndexesBySpecifiedPeriod(User user, Period period, int year, Period current);
+    List<UserIndex> getAllUserIndexesBySpecifiedPeriod(User user, Period period, int year,
+                                                       Period currentPeriod, int currentYear);
 
     /**
      * Save all self estimates to UserIndex'es

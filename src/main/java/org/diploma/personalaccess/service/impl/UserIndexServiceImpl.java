@@ -63,7 +63,7 @@ public class UserIndexServiceImpl implements UserIndexService {
 
 
     /**
-     * Generate unique file name, which depend on current
+     * Generate unique file name, which depend on currentPeriod
      * time in milliseconds
      *
      * @param name original filename
@@ -76,12 +76,13 @@ public class UserIndexServiceImpl implements UserIndexService {
 
     @Override
     @Transactional
-    public List<UserIndex> getAllUserIndexesBySpecifiedPeriod(User user, Period period, int year, Period current) {
+    public List<UserIndex> getAllUserIndexesBySpecifiedPeriod(User user, Period period, int year,
+                                                              Period currentPeriod, int currentYear) {
         Date start = period.getStartDateForYear(year);
         Date end = period.getEndDateForYear(year);
 
         List<UserIndex> userIndexes = userIndexRepository.findByUserIdAndFillDateBetween(user.getId(), start, end);
-        if (!period.equals(current)) {
+        if (!period.equals(currentPeriod) || year != currentYear) {
             return userIndexes;
         }
 

@@ -140,7 +140,7 @@ DROP TABLE IF EXISTS `personal_access_database`.`_index` ;
 
 CREATE TABLE IF NOT EXISTS `personal_access_database`.`_index` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT 'Уникальный идентификатор',
-  `name` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Наименование',
+  `name` LONGTEXT NULL DEFAULT NULL COMMENT 'Наименование',
   `estimate` DOUBLE NULL DEFAULT NULL COMMENT 'Оценка (максимальная/за единицу работы)',
   `multiplier` INT NULL DEFAULT NULL COMMENT 'Множитель оценки работы (единица работы)',
   `work_name` VARCHAR(50) NULL DEFAULT NULL COMMENT 'Наименование единицы работы',

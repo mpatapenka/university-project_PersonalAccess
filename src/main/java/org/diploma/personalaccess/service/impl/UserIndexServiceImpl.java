@@ -115,6 +115,14 @@ public class UserIndexServiceImpl implements UserIndexService {
 
     @Override
     @Transactional
+    public List<UserIndex> getAllUserIndexesForLeadBySpecifiedPeriod(User user, Period period, int year) {
+        Date start = period.getStartDateForYear(year);
+        Date end = period.getEndDateForYear(year);
+        return userIndexRepository.findByUserIdAndFillDateBetween(user.getId(), start, end);
+    }
+
+    @Override
+    @Transactional
     public void setUpAllEstimates(List<UserIndex> userIndexes, User user) {
         Date date = DateUtils.today();
         for (UserIndex userIndex : userIndexes) {
@@ -194,13 +202,13 @@ public class UserIndexServiceImpl implements UserIndexService {
             UserIndex userIndex = userIndexRepository.findOne(entry.getKey());
 
             /* If user is not a lead for current subordinate, then throw exception and rollback transaction */
-            if (!userIndex.getUser().getLeads().contains(user)) {
+            /*if (!userIndex.getUser().getLeads().contains(user)) {
                 String msg = "User with username '" + user.getUsername() + "' trying to set estimate for incorrect" +
                         "subordinate (username of sub '" + userIndex.getUser().getUsername() + "'.";
                 log.warn(msg);
                 throw new IllegalArgumentException(msg);
 
-            }
+            }*/
 
             userIndex.setLeadEstimate(entry.getValue());
         }

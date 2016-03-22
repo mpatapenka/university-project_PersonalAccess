@@ -18,7 +18,10 @@ import java.util.Map;
 public interface UserIndexService {
 
     /**
-     * Get all filled user indexes for period
+     * Get all filled user indexes for period. If user indexes has incorrect size
+     * (check with avail indexes) then any user indexes will be created. If user doesn't
+     * have any user index, but he has available indexes, then user indexes will be
+     * created by each available index (it condition is working only for current period)
      *
      * @param user user
      * @param period period
@@ -29,6 +32,16 @@ public interface UserIndexService {
      */
     List<UserIndex> getAllUserIndexesBySpecifiedPeriod(User user, Period period, int year,
                                                        Period currentPeriod, int currentYear);
+
+    /**
+     * Get all user indexes by period
+     *
+     * @param user user object
+     * @param period period object
+     * @param year year
+     * @return list of user indexes
+     */
+    List<UserIndex> getAllUserIndexesForLeadBySpecifiedPeriod(User user, Period period, int year);
 
     /**
      * Save all self estimates to UserIndex'es

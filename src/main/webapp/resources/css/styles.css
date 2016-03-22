@@ -13,5 +13,10 @@
 .secondary-content-down {
     position: absolute;
     bottom: 5px;
-    right: 16px
+    right: 16px;
+    color: #26a69a;
+}
+
+.truncate-card-fix {
+    width: 90%;
 }

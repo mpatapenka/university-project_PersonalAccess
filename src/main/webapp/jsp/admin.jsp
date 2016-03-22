@@ -37,11 +37,11 @@
                             <li class="collection-item avatar">
                                 <i class="material-icons circle green">insert_chart</i>
 
-                                <span class="title truncate">${index.name}</span>
+                                <span class="title truncate truncate-card-fix">${index.name}</span>
 
                                 <c:choose>
                                     <c:when test="${empty index.availablePositions}">
-                                        <p><spring:message code="admin.unavailable_pos_msg"/></p>
+                                        <p class="red-text"><spring:message code="admin.unavailable_pos_msg"/></p>
                                     </c:when>
 
                                     <c:otherwise>

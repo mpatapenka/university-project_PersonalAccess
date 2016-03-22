@@ -15,19 +15,15 @@
     <title><spring:message code="global.app_name"/></title>
 
     <jsp:include page="fragments/static-content.jsp"/>
-
 </head>
 
 <body>
-
     <jsp:include page="fragments/header.jsp"/>
 
 
     <div class="container">
         <div class="section">
-
             <c:choose>
-
                 <c:when test="${not empty subs}">
                     <div class="row">
                         <div class="input-field col s6">
@@ -74,9 +70,7 @@
                 <c:otherwise>
                     <h3>У вас нет подчиненных</h3>
                 </c:otherwise>
-
             </c:choose>
-
         </div>
     </div>
 
@@ -86,7 +80,6 @@
 
     <!-- Custom JS for page -->
     <script src="<c:url value="/resources/js/pages/subordinate.js"/>"></script>
-
 </body>
 
 </html>

@@ -10,6 +10,8 @@ import javax.validation.constraints.Min;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 
+import static org.diploma.personalaccess.util.DateUtils.D_M_Y_FORMATTER;
+
 /**
  * Simple JavaBean domain object representing an user work indexes.
  *
@@ -124,8 +126,7 @@ public class UserIndex extends BaseEntity {
     }
 
     public String getFormatFillDate() {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
-        return formatter.format(getFillDate());
+        return D_M_Y_FORMATTER.format(getFillDate());
     }
 
     @Override

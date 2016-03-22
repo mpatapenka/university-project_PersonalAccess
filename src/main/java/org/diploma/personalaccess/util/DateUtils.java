@@ -1,11 +1,24 @@
 package org.diploma.personalaccess.util;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public final class DateUtils {
 
+    /**
+     * Day.Month.Year formatter
+     */
+    public static final SimpleDateFormat D_M_Y_FORMATTER = new SimpleDateFormat("dd.MM.yyyy");
+
+    /**
+     * Day.Month formatter
+     */
+    public static final SimpleDateFormat D_M_FORMATTER = new SimpleDateFormat("dd.MM");
+
+
     private DateUtils() { }
+
 
     public static Date today() {
         Calendar calendar = Calendar.getInstance();

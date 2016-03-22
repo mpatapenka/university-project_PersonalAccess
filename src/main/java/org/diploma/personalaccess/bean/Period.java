@@ -7,7 +7,9 @@ import org.springframework.core.style.ToStringCreator;
 
 import java.io.Serializable;
 import java.sql.Date;
-import java.text.SimpleDateFormat;
+
+import static org.diploma.personalaccess.util.DateUtils.D_M_FORMATTER;
+import static org.diploma.personalaccess.util.DateUtils.D_M_Y_FORMATTER;
 
 /**
  * Simple bean object representing an period.
@@ -15,17 +17,6 @@ import java.text.SimpleDateFormat;
  * @author Maksim Patapenka
  */
 public class Period implements Serializable, Comparable<Period> {
-
-    /**
-     * Day.Month.Year formatter
-     */
-    private static final SimpleDateFormat D_M_Y_FORMATTER = new SimpleDateFormat("dd.MM.yyyy");
-
-    /**
-     * Day.Month formatter
-     */
-    private static final SimpleDateFormat D_M_FORMATTER = new SimpleDateFormat("dd.MM");
-
 
     /**
      * Period start day. As default it should be 'one'

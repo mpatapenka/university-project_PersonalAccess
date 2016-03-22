@@ -7,11 +7,11 @@ import org.diploma.personalaccess.entity.User;
 import org.diploma.personalaccess.entity.UserIndex;
 import org.diploma.personalaccess.holder.PeriodHolder;
 import org.diploma.personalaccess.service.UserIndexService;
+import org.diploma.personalaccess.service.UserService;
 import org.diploma.personalaccess.util.DateUtils;
 import org.diploma.personalaccess.util.JsonParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -41,10 +41,10 @@ public class UserController {
 
 
     /**
-     * User details service bean
+     * User service bean
      */
     @Autowired
-    private UserDetailsService userDetailsService;
+    private UserService userService;
 
     /**
      * User index service bean
@@ -67,7 +67,7 @@ public class UserController {
      */
     private User getUserBySecurityInfo(Principal principal) {
         String username = principal.getName();
-        return (User) userDetailsService.loadUserByUsername(username);
+        return userService.getUserByUsername(username);
     }
 
 
@@ -76,7 +76,7 @@ public class UserController {
         User user = getUserBySecurityInfo(principal);
 
         model.addAttribute("uForm", user.getForm());
-        model.addAttribute("subs", user.getSubs());
+        model.addAttribute("subs", userService.getSubordinates(user));
 
         return "profile";
     }
@@ -140,13 +140,34 @@ public class UserController {
     }
 
     @RequestMapping(value = "/subs", method = RequestMethod.GET)
-    public String getSubordinatePage(Model model, Principal principal) {
-        User user = getUserBySecurityInfo(principal);
+    public String getSubordinatePage(Model model, Principal principal,
+                                     @RequestParam(required = false) Long periodId,
+                                     @RequestParam(required = false) Integer year,
+                                     @RequestParam(required = false) Long subId) {
+        Period currentPeriod = periodHolder.getCurrentPeriod();
+        boolean isEdit = (periodId != null && periodId == periodHolder.getIdOfPeriod(currentPeriod)
+                && year != null && year == DateUtils.currentYear());
 
-        model.addAttribute("subs", user.getSubs());
+        User user = getUserBySecurityInfo(principal);
+        Period period = isEdit || periodId == null ? currentPeriod : periodHolder.getPeriodById(periodId);
+        int yearValue = isEdit || year == null ? DateUtils.currentYear() : year;
+        List<UserIndex> userIndexes = null;
+
+        if (subId != null) {
+            User sub = userService.getUserById(subId);
+            userIndexes = userIndexService.getAllUserIndexesForLeadBySpecifiedPeriod(sub,
+                    period, yearValue);
+        }
+
+        model.addAttribute("userIndexes", userIndexes);
+        model.addAttribute("subs", userService.getSubordinates(user));
         model.addAttribute("periods", periodHolder.getAllPeriods());
         model.addAttribute("periodNameCode", periodHolder.getPeriodsNameCode());
         model.addAttribute("availYears", periodHolder.getAvailableYears());
+        model.addAttribute("selectedPeriodId", periodId == null ? periodHolder.getIdOfPeriod(currentPeriod) : periodId);
+        model.addAttribute("selectedYear", year == null ? yearValue : year);
+        model.addAttribute("selectedSubId", subId);
+        model.addAttribute("isEdit", isEdit);
 
         return "subordinate";
     }

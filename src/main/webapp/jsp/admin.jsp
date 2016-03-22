@@ -106,7 +106,7 @@
                 <div class="row">
                     <div class="input-field col s12 m6">
                         <input id="workName" type="text" name="workName" class="validate">
-                        <label for="workName"><spring:message code="forms.name"/></label>
+                        <label for="workName"><spring:message code="forms.work_name"/></label>
                     </div>
                     <div class="input-field col s12 m6">
                         <select id="selected-poses" multiple>

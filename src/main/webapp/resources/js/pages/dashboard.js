@@ -1,7 +1,7 @@
 ;
 $("#publish-button").click(setupUserIndexEstimates);
-$("#period").change({otherId: "year"}, viewUserIndexControlChanged);
-$("#year").change({otherId: "period"}, viewUserIndexControlChanged);
+$("#period").change(viewUserIndexControlChanged);
+$("#year").change(viewUserIndexControlChanged);
 
 
 function viewUserIndexControlChanged() {

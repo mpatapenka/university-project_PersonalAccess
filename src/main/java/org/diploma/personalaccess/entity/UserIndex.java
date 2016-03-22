@@ -22,12 +22,12 @@ public class UserIndex extends BaseEntity {
 
     @Expose
     @Column(name = "self_estimate")
-    @Min(0)
+    @Min(-1)
     private double selfEstimate;
 
     @Expose(deserialize = false)
     @Column(name = "lead_estimate")
-    @Min(0)
+    @Min(-1)
     private double leadEstimate;
 
     @Expose(deserialize = false)
@@ -63,7 +63,7 @@ public class UserIndex extends BaseEntity {
     }
 
     public void setSelfEstimate(double selfEstimate) {
-        if (index != null && (selfEstimate < 0 || selfEstimate > index.getEstimate())) {
+        if (index != null && (selfEstimate < -1 || selfEstimate > index.getEstimate())) {
             throw new IllegalArgumentException("Self estimate out of bound.");
         }
         this.selfEstimate = selfEstimate;
@@ -74,6 +74,9 @@ public class UserIndex extends BaseEntity {
     }
 
     public void setLeadEstimate(double leadEstimate) {
+        if (index != null && (leadEstimate < -1 || leadEstimate > index.getEstimate())) {
+            throw new IllegalArgumentException("Lead estimate out of bound.");
+        }
         this.leadEstimate = leadEstimate;
     }
 

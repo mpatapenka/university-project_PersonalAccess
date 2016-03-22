@@ -86,7 +86,7 @@
                                 <span class="title truncate truncate-card-fix">${uIndex.index.name}</span>
                                 <p><spring:message code="dashboard.your_mark"/><br>
                                     <c:choose>
-                                        <c:when test="${uIndex.selfEstimate eq 0}">
+                                        <c:when test="${uIndex.selfEstimate eq -1}">
                                             <c:set var="selfEstimateValue" value=""/>
                                         </c:when>
 

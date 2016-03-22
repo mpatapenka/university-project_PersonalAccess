@@ -29,7 +29,11 @@
                     <select id="period">
                         <option value="" disabled selected><spring:message code="control.choose"/> <spring:message code="period.${periodNameCode}"/></option>
                         <c:forEach var="period" items="${periods}" varStatus="loop">
-                            <option value="${loop.index}">${loop.index + 1}. ${period.start} - ${period.end}</option>
+                            <c:set var="isSelected" value=""/>
+                            <c:if test="${selectedPeriodId eq loop.index}">
+                                <c:set var="isSelected" value="selected"/>
+                            </c:if>
+                            <option value="${loop.index}" ${isSelected}>${loop.index + 1}. ${period.start} - ${period.end}</option>
                         </c:forEach>
                     </select>
                     <label><spring:message code="control.available_periods"/></label>
@@ -39,19 +43,39 @@
                     <select id="year">
                         <option value="" disabled selected><spring:message code="control.choose_year"/></option>
                         <c:forEach var="year" items="${availYears}">
-                            <option value="${year}">${year} <spring:message code="forms.short.year"/></option>
+                            <c:set var="isSelected" value=""/>
+                            <c:if test="${selectedYear eq year}">
+                                <c:set var="isSelected" value="selected"/>
+                            </c:if>
+                            <option value="${year}" ${isSelected}>${year} <spring:message code="forms.short.year"/></option>
                         </c:forEach>
                     </select>
                     <label><spring:message code="control.available_years"/></label>
                 </div>
             </div>
 
-            <h5><spring:message code="dashboard.header"/> (${period.dateString})</h5>
+            <h5>
+                <c:choose>
+                    <c:when test="${isEdit}">
+                        <spring:message code="dashboard.header"/> (${period.dateString})
+                    </c:when>
+
+                    <c:otherwise>
+                        <spring:message code="dashboard.non_edit_header"/>
+                        (${period.start}.${selectedYear} - ${period.end}.${selectedYear})
+                    </c:otherwise>
+                </c:choose>
+            </h5>
 
             <c:choose>
-                <c:when test="${empty userIndexes}">
+                <c:when test="${empty userIndexes and isEdit}">
                     <hr>
                     <h6><spring:message code="dashboard.indexes_missed"/></h6>
+                </c:when>
+
+                <c:when test="${empty userIndexes and not isEdit}">
+                    <hr>
+                    <h6><spring:message code="dashboard.filled_indexes_missed"/></h6>
                 </c:when>
 
                 <c:otherwise>
@@ -70,8 +94,15 @@
                                             <c:set var="selfEstimateValue" value="${uIndex.selfEstimate}"/>
                                         </c:otherwise>
                                     </c:choose>
+
+                                    <c:set var="isDisabled" value=""/>
+                                    <c:if test="${not isEdit}">
+                                        <c:set var="isDisabled" value="disabled='disabled'"/>
+                                    </c:if>
+
                                     <input id="${uIndex.id}" name="selfEstimate" type="number" step="0.01" min="0"
-                                           max="${uIndex.index.estimate}" class="validate" value="${selfEstimateValue}"/>
+                                           max="${uIndex.index.estimate}" class="validate" value="${selfEstimateValue}"
+                                           ${isDisabled}/>
                                 </p>
 
                                 <a href="JavaScript:$('#additional-modal-${uIndex.id}').openModal();"
@@ -96,7 +127,8 @@
 
                                             <div class="row">
                                                 <div class="input-field col s12">
-                                                    <textarea id="${uIndex.id}" name="description" class="materialize-textarea"><c:out value="${uIndex.description}"/></textarea>
+                                                    <textarea id="${uIndex.id}" ${isDisabled}
+                                                              name="description" class="materialize-textarea"><c:out value="${uIndex.description}"/></textarea>
                                                     <label><spring:message code="dashboard.work_description"/></label>
                                                 </div>
                                             </div>
@@ -105,7 +137,8 @@
                                                 <div class="file-field input-field col s12">
                                                     <div class="btn">
                                                         <span><spring:message code="forms.document"/></span>
-                                                        <input id="${uIndex.id}" type="file" name="document"/>
+                                                        <input id="${uIndex.id}" ${isDisabled}
+                                                               type="file" name="document"/>
                                                     </div>
                                                     <div class="file-path-wrapper">
                                                         <c:set var="fileName" value=""/>
@@ -118,7 +151,8 @@
                                                             <c:set var="linkToFile" value="${fileUrl}"/>
                                                             <c:set var="linkMode" value=""/>
                                                         </c:if>
-                                                        <input id="${uIndex.id}" class="file-path" type="text" name="document-name" value="${fileName}"/>
+                                                        <input id="${uIndex.id}" ${isDisabled}
+                                                               class="file-path" type="text" name="document-name" value="${fileName}"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -132,9 +166,11 @@
                                     </div>
 
                                     <div class="modal-footer">
-                                        <a class="waves-effect waves-green btn-flat"
-                                           onclick="updateAdditionalInfo(${uIndex.id})">
-                                            <spring:message code="forms.save"/></a>
+                                        <c:if test="${isEdit}">
+                                            <a class="waves-effect waves-green btn-flat"
+                                               onclick="updateAdditionalInfo(${uIndex.id})">
+                                                <spring:message code="forms.save"/></a>
+                                        </c:if>
                                         <a class="modal-action modal-close waves-effect waves-red btn-flat">
                                             <spring:message code="forms.cancel"/></a>
                                     </div>
@@ -143,20 +179,24 @@
                         </c:forEach>
                     </ul>
 
-                    <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-                        <a class="btn-floating btn-large waves-effect waves-light green" id="publish-button">
-                            <i class="material-icons">publish</i></a>
-                    </div>
+                    <c:if test="${isEdit}">
+                        <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+                            <a class="btn-floating btn-large waves-effect waves-light green" id="publish-button">
+                                <i class="material-icons">publish</i></a>
+                        </div>
+                    </c:if>
                 </c:otherwise>
             </c:choose>
         </div>
     </div>
+
 
     <!-- Hidden bundled values -->
     <div id="fieldMissingError" class="hide"><spring:message code="dashboard.message.fill_up_fields"/></div>
     <div id="unsupportedMarkError" class="hide"><spring:message code="dashboard.message.unsupported_mark"/></div>
 
     <form id="sendEstimateForm" class="hide" method="post" action="<c:url value="/user/dashboard/estimates"/>"></form>
+    <form id="sendReloadRequest" class="hide" action="<c:url value="/user/dashboard"/>"></form>
 
 
     <jsp:include page="fragments/footer.jsp"/>

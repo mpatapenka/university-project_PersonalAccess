@@ -12,6 +12,14 @@ import java.util.Collection;
 public interface UserService {
 
     /**
+     * Get user by ID
+     *
+     * @param id id of user
+     * @return user object
+     */
+    User getUserById(long id);
+
+    /**
      * Get user by username
      *
      * @param username username

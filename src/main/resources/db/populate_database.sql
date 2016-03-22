@@ -43,8 +43,6 @@ INSERT INTO `personal_access_database`.`user` (`username`, `password`, `form_id`
 
 
 -- Populate table 'dependency'
-INSERT INTO `personal_access_database`.`dependency` (`user_lead_id`, `user_sub_id`) VALUES ('1', '2');
-INSERT INTO `personal_access_database`.`dependency` (`user_lead_id`, `user_sub_id`) VALUES ('1', '3');
-INSERT INTO `personal_access_database`.`dependency` (`user_lead_id`, `user_sub_id`) VALUES ('1', '4');
-INSERT INTO `personal_access_database`.`dependency` (`user_lead_id`, `user_sub_id`) VALUES ('2', '3');
-INSERT INTO `personal_access_database`.`dependency` (`user_lead_id`, `user_sub_id`) VALUES ('2', '4');
+INSERT INTO `personal_access_database`.`dependency` (`position_lead_id`, `position_sub_id`) VALUES ('2', '1');
+INSERT INTO `personal_access_database`.`dependency` (`position_lead_id`, `position_sub_id`) VALUES ('3', '2');
+INSERT INTO `personal_access_database`.`dependency` (`position_lead_id`, `position_sub_id`) VALUES ('4', '3');

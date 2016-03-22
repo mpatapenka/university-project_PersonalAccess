@@ -234,19 +234,19 @@ DROP TABLE IF EXISTS `personal_access_database`.`dependency` ;
 
 CREATE TABLE IF NOT EXISTS `personal_access_database`.`dependency` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT 'Уникальный идентификатор',
-  `user_lead_id` BIGINT(20) NOT NULL COMMENT 'Код пользователя (руководителя)',
-  `user_sub_id` BIGINT(20) NOT NULL COMMENT 'Код пользователя (подчиненного)',
+  `position_lead_id` BIGINT(20) NOT NULL COMMENT 'Код должности руководителя',
+  `position_sub_id` BIGINT(20) NOT NULL COMMENT 'Код должности подчиненного',
   PRIMARY KEY (`id`)  COMMENT '',
-  INDEX `fk_dependency_user1_idx` (`user_lead_id` ASC)  COMMENT '',
-  INDEX `fk_dependency_user2_idx` (`user_sub_id` ASC)  COMMENT '',
-  CONSTRAINT `fk_dependency_user1`
-  FOREIGN KEY (`user_lead_id`)
-  REFERENCES `personal_access_database`.`user` (`id`)
+  INDEX `fk_dependency_position1_idx` (`position_lead_id` ASC)  COMMENT '',
+  INDEX `fk_dependency_position2_idx` (`position_sub_id` ASC)  COMMENT '',
+  CONSTRAINT `fk_dependency_position1`
+  FOREIGN KEY (`position_lead_id`)
+  REFERENCES `personal_access_database`.`position` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_dependency_user2`
-  FOREIGN KEY (`user_sub_id`)
-  REFERENCES `personal_access_database`.`user` (`id`)
+  CONSTRAINT `fk_dependency_position2`
+  FOREIGN KEY (`position_sub_id`)
+  REFERENCES `personal_access_database`.`position` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
   ENGINE = InnoDB

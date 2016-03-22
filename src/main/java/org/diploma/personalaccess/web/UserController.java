@@ -94,7 +94,7 @@ public class UserController {
         Period period = isEdit ? currentPeriod : periodHolder.getPeriodById(periodId);
         int yearValue = isEdit ? DateUtils.currentYear() : year;
         List<UserIndex> userIndexes = userIndexService.getAllUserIndexesBySpecifiedPeriod(user, period,
-                yearValue, currentPeriod);
+                yearValue, currentPeriod, DateUtils.currentYear());
 
         model.addAttribute("period", period);
         model.addAttribute("periodNameCode", periodHolder.getPeriodsNameCode());
@@ -157,7 +157,7 @@ public class UserController {
     public String getSubordinateIndexes(long userId, long periodNum, int year) {
         Period period = periodHolder.getPeriodById(periodNum);
         List<UserIndex> subIndexes = userIndexService.getAllUserIndexesBySpecifiedPeriod(new User(),
-                period, year, period);
+                period, year, period, year);
         boolean isSubmitted = userIndexService.isLeadSubmitAllEstimatesForUser(userId,
                 period.getStartDateForYear(year), period.getEndDateForYear(year));
 

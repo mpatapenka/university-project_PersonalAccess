@@ -20,9 +20,9 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Type;
 import java.security.Principal;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Controller which handle requests only from /user**
@@ -91,8 +91,8 @@ public class UserController {
                 && year != null && year == DateUtils.currentYear());
 
         User user = getUserBySecurityInfo(principal);
-        Period period = isEdit ? currentPeriod : periodHolder.getPeriodById(periodId);
-        int yearValue = isEdit ? DateUtils.currentYear() : year;
+        Period period = isEdit || periodId == null ? currentPeriod : periodHolder.getPeriodById(periodId);
+        int yearValue = isEdit || year == null ? DateUtils.currentYear() : year;
         List<UserIndex> userIndexes = userIndexService.getAllUserIndexesBySpecifiedPeriod(user, period,
                 yearValue, currentPeriod, DateUtils.currentYear());
 
@@ -110,13 +110,13 @@ public class UserController {
 
     @ResponseBody
     @RequestMapping(value = "/dashboard/estimates", method = RequestMethod.POST)
-    public String publishAllIndexes(@RequestBody String data, Principal principal) {
+    public String setupSelfEstimates(@RequestBody String data, Principal principal) {
         User user = getUserBySecurityInfo(principal);
         Type listType = new TypeToken<List<UserIndex>>() { }.getType();
         List<UserIndex> userIndexes = JsonParser.convertJsonStringToObject(data, listType);
 
         try {
-            userIndexService.setUpAllEstimates(userIndexes, user);
+            userIndexService.setupSelfEstimatesOfUser(userIndexes, user);
             log.debug("'" + userIndexes.size() + "' user index self estimates was updated.");
             /* Empty string it's valid answer from server, when it parse client application */
             return "";
@@ -173,31 +173,26 @@ public class UserController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/subs", method = RequestMethod.GET, params = "search",
-            produces = "text/plain; charset=utf-8")
-    public String getSubordinateIndexes(long userId, long periodNum, int year) {
-        Period period = periodHolder.getPeriodById(periodNum);
-        List<UserIndex> subIndexes = userIndexService.getAllUserIndexesBySpecifiedPeriod(new User(),
-                period, year, period, year);
-        boolean isSubmitted = userIndexService.isLeadSubmitAllEstimatesForUser(userId,
-                period.getStartDateForYear(year), period.getEndDateForYear(year));
-
-        Map<String, Object> entries = new HashMap<>();
-        entries.put("isSubmitted", isSubmitted);
-        entries.put("subIndexes", subIndexes);
-
-        return JsonParser.convertObjectToJsonString(entries);
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "/subs/publish", method = RequestMethod.POST)
-    public String publishSubordinateIndexes(@RequestBody String data, Principal principal) {
+    @RequestMapping(value = "/subs/estimates", method = RequestMethod.POST)
+    public String setupLeadEstimates(@RequestBody String data, Principal principal) {
         User user = getUserBySecurityInfo(principal);
-        Type mapType = new TypeToken<Map<Long, Integer>>() { }.getType();
-        Map<Long, Integer> entries = JsonParser.convertJsonStringToObject(data, mapType);
-        userIndexService.publishLeadEstimates(entries, user);
+        Type mapType = new TypeToken<Map<Long, List<UserIndex>>>() { }.getType();
+        Map<Long, List<UserIndex>> infoBundle = JsonParser.convertJsonStringToObject(data, mapType);
 
-        return "success";
+        Optional<Long> firstKeyOpt = infoBundle.keySet().stream().findFirst();
+        long subId = firstKeyOpt.isPresent() ? firstKeyOpt.get() : -1;
+        List<UserIndex> userIndexes = infoBundle.get(subId);
+        User sub = userService.getUserById(subId);
+
+        try {
+            userIndexService.setupLeadEstimatesOfUser(userIndexes, user, sub);
+            log.debug("'" + userIndexes.size() + "' user index lead estimates was updated.");
+            /* Empty string it's valid answer from server, when it parse client application */
+            return "";
+        } catch (IllegalArgumentException e) {
+            log.error("Error while processing estimates of lead '" + user.getUsername() + "'.", e);
+            return e.getMessage();
+        }
     }
 
     @RequestMapping(value = "/report", method = RequestMethod.GET)

@@ -52,13 +52,16 @@ function estimateValidator(estimateFieldName) {
 // Store data to event: object with drop downs id's (name 'params'),
 //                      id of form with url for reload (name 'urlId')
 function multipleComboboxChangedReload(event) {
-    var params = event.data["params"];
-    for (var key in params) {
-        if (params.hasOwnProperty(key)) {
-            var value = $(params[key]).val();
+    var paramsKeys = event.data["params"];
+    var params = {};
+    for (var key in paramsKeys) {
+        if (paramsKeys.hasOwnProperty(key)) {
+            var value = $(paramsKeys[key]).val();
             if (!value) {
                 return;
             }
+
+            params[key] = value;
         }
     }
 
@@ -72,11 +75,13 @@ function multipleComboboxChangedReload(event) {
 //                      missing error holder id (name 'missingErrorId')
 //                      unsupported error holder id (name 'unsupportedErrorId')
 //                      form id with send url (name 'sendFormId')
+//                      user id (name 'userId', optional)
 function setupUserIndexEstimates(event) {
     var estimateFieldName = event.data["fieldName"];
     var missingError = event.data["missingErrorId"];
     var unsupportedError = event.data["unsupportedErrorId"];
     var sendForm = event.data["sendFormId"];
+    var userId = event.data["userId"];
 
     if (!emptyValidator()) {
         Materialize.toast($(missingError).html(), 4000);
@@ -88,7 +93,13 @@ function setupUserIndexEstimates(event) {
         return;
     }
 
-    var jsonUserIndexes = collectEstimatesToJSONUserIndexes(estimateFieldName);
+    var userIndexes = collectEstimatesToArrayUserIndexes(estimateFieldName);
+    var forConvert = userIndexes;
+    if (userId) {
+        forConvert = {};
+        forConvert[$(userId).val()] = userIndexes;
+    }
+    var jsonUserIndexes = convertToJsonForTransfer(forConvert);
     var form = $(sendForm);
     $.ajax({
         url: form.attr("action"),
@@ -112,7 +123,7 @@ function setupUserIndexEstimates(event) {
 
 // Collect all estimates field into user index array, which will
 // be converted to JSON
-function collectEstimatesToJSONUserIndexes(estimateFieldName) {
+function collectEstimatesToArrayUserIndexes(estimateFieldName) {
     var estimates = {};
     $("input[name=" + estimateFieldName + "]").each(function () {
         estimates[$(this).attr("id")] = $(this).val();
@@ -129,7 +140,7 @@ function collectEstimatesToJSONUserIndexes(estimateFieldName) {
         }
     }
 
-    return convertToJsonForTransfer(userIndexes);
+    return userIndexes;
 }
 
 

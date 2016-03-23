@@ -111,14 +111,14 @@
                                 <!-- Additional info modal -->
                                 <div id="additional-modal-${uIndex.id}" class="modal bottom-sheet">
                                     <div class="modal-content">
-                                        <h4><spring:message code="dashboard.additional_info"/></h4>
+                                        <h4><spring:message code="control.additional_info"/></h4>
 
                                         <hr>
 
                                         <h5>${uIndex.index.name}</h5>
-                                        <p><spring:message code="dashboard.mark_message1"/> ${uIndex.index.estimate}
+                                        <p><spring:message code="index.msg.mark_message1"/> ${uIndex.index.estimate}
                                             <c:if test="${not empty uIndex.index.workName}">
-                                                <spring:message code="dashboard.mark_message2"/> ${uIndex.index.multiplier}
+                                                <spring:message code="index.msg.mark_message2"/> ${uIndex.index.multiplier}
                                                 ${uIndex.index.workName}
                                             </c:if>
                                         </p>
@@ -132,7 +132,7 @@
                                                 <div class="input-field col s12">
                                                     <textarea id="${uIndex.id}" ${isDisabled}
                                                               name="description" class="materialize-textarea"><c:out value="${uIndex.description}"/></textarea>
-                                                    <label><spring:message code="dashboard.work_description"/></label>
+                                                    <label><spring:message code="control.work_description"/></label>
                                                 </div>
                                             </div>
 
@@ -195,8 +195,8 @@
 
 
     <!-- Hidden bundled values -->
-    <div id="fieldMissingError" class="hide"><spring:message code="dashboard.message.fill_up_fields"/></div>
-    <div id="unsupportedMarkError" class="hide"><spring:message code="dashboard.message.unsupported_mark"/></div>
+    <div id="fieldMissingError" class="hide"><spring:message code="messages.fill_up_fields"/></div>
+    <div id="unsupportedMarkError" class="hide"><spring:message code="messages.unsupported_mark"/></div>
 
     <form id="sendEstimateForm" class="hide" method="post" action="<c:url value="/user/dashboard/estimates"/>"></form>
     <form id="sendReloadRequest" class="hide" action="<c:url value="/user/dashboard"/>"></form>

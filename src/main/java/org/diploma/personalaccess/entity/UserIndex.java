@@ -25,7 +25,7 @@ public class UserIndex extends BaseEntity {
     @Min(-1)
     private double selfEstimate;
 
-    @Expose(deserialize = false)
+    @Expose
     @Column(name = "lead_estimate")
     @Min(-1)
     private double leadEstimate;

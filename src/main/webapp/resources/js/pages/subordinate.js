@@ -5,14 +5,15 @@ var eventParamsForMultipleComboboxChanged = {
         year: "#year",
         sub: "#sub"
     },
-    urlId: "sendReloadRequest"
+    urlId: "#sendReloadRequest"
 };
 
 var eventParamsForSetupEstimates = {
     fieldName: "leadEstimate",
     missingErrorId: "#fieldMissingError",
     unsupportedErrorId: "#unsupportedMarkError",
-    sendFormId: "#sendEstimateForm"
+    sendFormId: "#sendEstimateForm",
+    userId: "#sub"
 };
 
 

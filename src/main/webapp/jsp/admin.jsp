@@ -105,7 +105,7 @@
                 </div>
                 <div class="row">
                     <div class="input-field col s12 m6">
-                        <input id="workName" type="text" name="workName" class="validate">
+                        <input id="workName" type="text" name="workName">
                         <label for="workName"><spring:message code="forms.work_name"/></label>
                     </div>
                     <div class="input-field col s12 m6">

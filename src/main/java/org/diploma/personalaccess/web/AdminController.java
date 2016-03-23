@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * That secured area only fo admins
@@ -60,9 +57,8 @@ public class AdminController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/dashboard/get", method = RequestMethod.GET, params = "id",
-            produces = "text/plain; charset=utf-8")
-    public String getIndex(long id) {
+    @RequestMapping(value = "/dashboard/get", method = RequestMethod.GET, produces = "text/plain; charset=utf-8")
+    public String getIndex(@RequestParam long id) {
         Index index = indexService.findIndexById(id);
         return JsonParser.convertObjectToJsonString(index);
     }

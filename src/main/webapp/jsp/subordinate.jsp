@@ -27,7 +27,7 @@
 
             <c:choose>
                 <c:when test="${empty subs}">
-                    <hr>
+                    <br>
                     <h5><spring:message code="subordinate.subs_missed"/></h5>
                 </c:when>
 
@@ -84,7 +84,7 @@
                                     <li class="collection-item avatar">
                                         <i class="material-icons circle green">insert_chart</i>
                                         <span class="title truncate truncate-card-fix">${uIndex.index.name}</span>
-                                        <p><spring:message code="dashboard.your_mark"/><br>
+                                        <p><spring:message code="subordinate.your_mark"/><br>
                                             <c:choose>
                                                 <c:when test="${uIndex.leadEstimate eq -1}">
                                                     <c:set var="leadEstimateValue" value=""/>
@@ -112,14 +112,14 @@
                                         <!-- Additional info modal -->
                                         <div id="additional-modal-${uIndex.id}" class="modal bottom-sheet">
                                             <div class="modal-content">
-                                                <h4><spring:message code="dashboard.additional_info"/></h4>
+                                                <h4><spring:message code="control.additional_info"/></h4>
 
                                                 <hr>
 
                                                 <h5>${uIndex.index.name}</h5>
-                                                <p><spring:message code="dashboard.mark_message1"/> ${uIndex.index.estimate}
+                                                <p><spring:message code="index.msg.mark_message1"/> ${uIndex.index.estimate}
                                                     <c:if test="${not empty uIndex.index.workName}">
-                                                        <spring:message code="dashboard.mark_message2"/> ${uIndex.index.multiplier}
+                                                        <spring:message code="index.msg.mark_message2"/> ${uIndex.index.multiplier}
                                                         ${uIndex.index.workName}
                                                     </c:if>
                                                 </p>
@@ -128,7 +128,7 @@
                                                     <div class="input-field col s12">
                                                 <textarea id="${uIndex.id}" ${forceDisabled}
                                                           name="description" class="materialize-textarea"><c:out value="${uIndex.description}"/></textarea>
-                                                        <label><spring:message code="dashboard.work_description"/></label>
+                                                        <label><spring:message code="control.work_description"/></label>
                                                     </div>
                                                 </div>
 
@@ -163,15 +163,11 @@
                         </c:when>
 
                         <c:otherwise>
-                            <hr>
-                            <h6><spring:message code="dashboard.filled_indexes_missed"/></h6>
+                            <br>
+                            <h6><spring:message code="subordinate.indexes_missed"/></h6>
                         </c:otherwise>
                     </c:choose>
 
-
-                    <div id="card-container">
-                        <!-- Place cards here -->
-                    </div>
 
                     <c:if test="${isEdit}">
                         <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
@@ -186,6 +182,10 @@
 
 
     <!-- Hidden bundled values -->
+    <div id="fieldMissingError" class="hide"><spring:message code="messages.fill_up_fields"/></div>
+    <div id="unsupportedMarkError" class="hide"><spring:message code="messages.unsupported_mark"/></div>
+
+    <form id="sendEstimateForm" class="hide" method="post" action="<c:url value="/user/subs/estimates"/>"></form>
     <form id="sendReloadRequest" class="hide" action="<c:url value="/user/subs"/>"></form>
 
 

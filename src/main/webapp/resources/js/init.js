@@ -1,7 +1,10 @@
 // Instantiate materialize css
 ;$(document).ready(function () {
     $(".button-collapse").sideNav();
-    $(".dropdown-button").dropdown();
+    $(".dropdown-button").dropdown({
+        constrain_width: false,
+        belowOrigin: true
+    });
 
     $("input#input_text, textarea#textarea1").characterCounter();
 

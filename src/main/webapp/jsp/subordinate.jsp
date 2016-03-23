@@ -27,7 +27,7 @@
 
             <c:choose>
                 <c:when test="${empty subs}">
-                    <br>
+                    <hr>
                     <h5><spring:message code="subordinate.subs_missed"/></h5>
                 </c:when>
 
@@ -84,6 +84,21 @@
                                     <li class="collection-item avatar">
                                         <i class="material-icons circle green">insert_chart</i>
                                         <span class="title truncate truncate-card-fix">${uIndex.index.name}</span>
+
+                                        <p>
+                                            <spring:message code="subordinate.sub_mark"/>
+                                            <c:choose>
+                                                <c:when test="${uIndex.selfEstimate eq -1}">
+                                                    <c:set var="selfEstimateValue" value="-"/>
+                                                </c:when>
+
+                                                <c:otherwise>
+                                                    <c:set var="selfEstimateValue" value="${uIndex.selfEstimate}"/>
+                                                </c:otherwise>
+                                            </c:choose>
+                                            ${selfEstimateValue}
+                                        </p>
+
                                         <p><spring:message code="subordinate.your_mark"/><br>
                                             <c:choose>
                                                 <c:when test="${uIndex.leadEstimate eq -1}">
@@ -163,13 +178,12 @@
                         </c:when>
 
                         <c:otherwise>
-                            <br>
                             <h6><spring:message code="subordinate.indexes_missed"/></h6>
                         </c:otherwise>
                     </c:choose>
 
 
-                    <c:if test="${isEdit}">
+                    <c:if test="${isEdit and not empty userIndexes}">
                         <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
                             <a class="btn-floating btn-large waves-effect waves-light green" id="publish-lead-button">
                                 <i class="material-icons">publish</i></a>

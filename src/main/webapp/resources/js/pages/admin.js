@@ -5,7 +5,7 @@ $("#show-add-modal-btn").click(showAddModal);
 
 
 function saveIndex() {
-    if (!emptyValidator() && !numberBiggerThenZeroValidator()) {
+    if (!emptyValidator() || !numberBiggerThenZeroValidator()) {
         return;
     }
 

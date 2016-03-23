@@ -143,7 +143,7 @@ public class UserController {
     public String getSubordinatePage(Model model, Principal principal,
                                      @RequestParam(required = false) Long periodId,
                                      @RequestParam(required = false) Integer year,
-                                     @RequestParam(required = false) Long subId) {
+                                     @RequestParam(required = false) Long sub) {
         Period currentPeriod = periodHolder.getCurrentPeriod();
         boolean isEdit = (periodId != null && periodId == periodHolder.getIdOfPeriod(currentPeriod)
                 && year != null && year == DateUtils.currentYear());
@@ -153,9 +153,9 @@ public class UserController {
         int yearValue = isEdit || year == null ? DateUtils.currentYear() : year;
         List<UserIndex> userIndexes = null;
 
-        if (subId != null) {
-            User sub = userService.getUserById(subId);
-            userIndexes = userIndexService.getAllUserIndexesForLeadBySpecifiedPeriod(sub,
+        if (sub != null) {
+            User subUser = userService.getUserById(sub);
+            userIndexes = userIndexService.getAllUserIndexesForLeadBySpecifiedPeriod(subUser,
                     period, yearValue);
         }
 
@@ -166,7 +166,7 @@ public class UserController {
         model.addAttribute("availYears", periodHolder.getAvailableYears());
         model.addAttribute("selectedPeriodId", periodId == null ? periodHolder.getIdOfPeriod(currentPeriod) : periodId);
         model.addAttribute("selectedYear", year == null ? yearValue : year);
-        model.addAttribute("selectedSubId", subId);
+        model.addAttribute("selectedSubId", sub);
         model.addAttribute("isEdit", isEdit);
 
         return "subordinate";

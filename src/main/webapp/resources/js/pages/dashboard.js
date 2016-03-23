@@ -4,7 +4,7 @@ var eventParamsForMultipleComboboxChanged = {
         periodId: "#period",
         year: "#year"
     },
-    urlId: "sendReloadRequest"
+    urlId: "#sendReloadRequest"
 };
 
 var eventParamsForSetupEstimates = {

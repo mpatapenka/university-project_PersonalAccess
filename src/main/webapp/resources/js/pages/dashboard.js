@@ -1,5 +1,5 @@
 ;
-var eventParamsForMultipleComboboxChanged = {
+var eventParamsForMultipleSelectChanged = {
     params: {
         periodId: "#period",
         year: "#year"
@@ -17,8 +17,8 @@ var eventParamsForSetupEstimates = {
 
 // Set listeners to control events
 $("#publish-button").click(eventParamsForSetupEstimates, setupUserIndexEstimates);
-$("#period").change(eventParamsForMultipleComboboxChanged, multipleComboboxChangedReload);
-$("#year").change(eventParamsForMultipleComboboxChanged, multipleComboboxChangedReload);
+$("#period").change(eventParamsForMultipleSelectChanged, multipleComboboxChangedReload);
+$("#year").change(eventParamsForMultipleSelectChanged, multipleComboboxChangedReload);
 
 
 // Update additional info (user index description and document)

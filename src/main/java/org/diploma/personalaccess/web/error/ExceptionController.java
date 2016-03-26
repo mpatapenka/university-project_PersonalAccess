@@ -35,7 +35,7 @@ public class ExceptionController {
     public String handleResourceNotFound(Principal user) {
         log.warn("User '" + (user != null ? "login = " + user.getName() : User.ANONYMOUS)
                 + "' trying to get access to not exists page.");
-        return Dir.ERROR + Page.PAGE_403;
+        return Dir.ERROR + Page.PAGE_404;
     }
 
 }

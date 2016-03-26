@@ -9,9 +9,17 @@ import java.util.Set;
 
 import static org.junit.Assert.assertArrayEquals;
 
+/**
+ * Tests for service utils
+ *
+ * @author Maksim Patapenka
+ */
 @RunWith(JUnit4.class)
 public class ServiceUtilsTest {
 
+    /**
+     * Tests subtract sets method
+     */
     @Test
     public void testSubtract() {
         Set<Integer> minuend = createMockSet(1, 2, 3, 4, 5, 6, 7);
@@ -23,6 +31,12 @@ public class ServiceUtilsTest {
     }
 
 
+    /**
+     * Create mock set by arguments
+     *
+     * @param args integer arguments
+     * @return {@code HashSet<Integer>}
+     */
     private Set<Integer> createMockSet(int... args) {
         Set<Integer> mockSet = new HashSet<>();
         for (int arg : args) {

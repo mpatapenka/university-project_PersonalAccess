@@ -15,6 +15,8 @@ import static org.junit.Assert.*;
 
 /**
  * Tests for repository
+ *
+ * @author Maksim Patapenka
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = DatabaseConfig.class)

@@ -1,9 +1,11 @@
 ;
+// Set listeners to control events
 $("#add-index-btn").click(saveIndex);
 $("#delete-index-btn").click(deleteIndex);
 $("#show-add-modal-btn").click(showAddModal);
 
 
+// Create index and send it to server
 function saveIndex() {
     if (!emptyValidator() || !numberBiggerThenZeroValidator()) {
         return;
@@ -41,6 +43,7 @@ function saveIndex() {
     });
 }
 
+// Send index delete request
 function deleteIndex() {
     var form = $("#delete-form");
     $.ajax({
@@ -59,6 +62,7 @@ function deleteIndex() {
 }
 
 
+// Show and fill add index modal
 function showAddModal() {
     $("#addModalHeader").html($("#addIndexHeader").html());
     $("#index-form")[0].reset();
@@ -68,6 +72,7 @@ function showAddModal() {
     $('#add-index').openModal();
 }
 
+// Show and fill edit index modal
 function showEditModal(id) {
     $("#addModalHeader").html($("#editIndexHeader").html());
     $.ajax({
@@ -99,6 +104,7 @@ function showEditModal(id) {
     });
 }
 
+// Show delete modal
 function showDeleteModal(id) {
     $("#delete-candidate-id").val(id);
     $("#delete-index").openModal();

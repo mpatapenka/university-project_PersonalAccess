@@ -1,9 +1,11 @@
-package org.diploma.personalaccess.web;
+package org.diploma.personalaccess.web.error;
 
 import org.apache.log4j.Logger;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.NoHandlerFoundException;
+
+import static org.diploma.personalaccess.web.WebConstants.REDIRECT;
 
 /**
  * Controller advice which handle exceptions
@@ -21,9 +23,8 @@ public class ExceptionControllerAdvice {
 
     @ExceptionHandler(NoHandlerFoundException.class)
     public String handleNoHandlerFoundException(NoHandlerFoundException e) {
-        log.warn("User trying get access to not exist page.", e);
-
-        return "404";
+        log.debug("User trying to get access to not exist page.", e);
+        return REDIRECT + "/error/404";
     }
 
 }

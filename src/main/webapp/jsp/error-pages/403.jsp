@@ -9,25 +9,18 @@
 <html>
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
-
-    <title><spring:message code="404.page_not_found"/> - <spring:message code="global.app_name"/></title>
-
+    <jsp:include page="../_fragments/static-content-meta.jsp"/>
+    <title><spring:message code="403.access_denied"/> - <spring:message code="global.app_name"/></title>
     <link href="<c:url value='/resources/css/pages/error.css'/>" rel="stylesheet" type="text/css" media="screen,projection"/>
 </head>
 
 <body>
     <div class="container">
+        <h1>403</h1>
 
-        <h1>404</h1>
-
-        <p><strong><spring:message code="404.file_not_found"/></strong></p>
-
-        <p><spring:message code="404.description"/></p>
-
-        <p><spring:message code="404.solve_description"/></p>
-
+        <p><strong><spring:message code="403.access_denied"/></strong></p>
+        <p><spring:message code="403.description"/></p>
+        <p><spring:message code="403.solve_description"/></p>
         <p><spring:message code="github.pages_info"/></p>
 
         <div id="suggestions">

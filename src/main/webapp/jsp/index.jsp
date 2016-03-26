@@ -9,21 +9,17 @@
 <html>
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
-
+    <jsp:include page="_fragments/static-content-meta.jsp"/>
     <title><spring:message code="index.page_name"/> - <spring:message code="global.app_name"/></title>
-
-    <jsp:include page="fragments/static-content.jsp"/>
+    <jsp:include page="_fragments/static-content-styles.jsp"/>
 </head>
 
 <body>
-    <jsp:include page="fragments/header.jsp"/>
+    <jsp:include page="_fragments/header.jsp"/>
 
 
     <div class="section no-pad-bot" id="index-banner">
         <div class="container">
-
             <br><br>
 
             <h1 class="header center orange-text"><spring:message code="index.welcome"/></h1>
@@ -37,7 +33,6 @@
             </div>
 
             <br><br>
-
         </div>
     </div>
 
@@ -78,8 +73,8 @@
     </div>
 
 
-    <jsp:include page="fragments/footer.jsp"/>
-    <jsp:include page="fragments/static-content-js.jsp"/>
+    <jsp:include page="_fragments/footer.jsp"/>
+    <jsp:include page="_fragments/static-content-scripts.jsp"/>
 </body>
 
 </html>

@@ -9,16 +9,13 @@
 <html>
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
-
+    <jsp:include page="../_fragments/static-content-meta.jsp"/>
     <title><spring:message code="subordinate.page_name"/> - <spring:message code="global.app_name"/></title>
-
-    <jsp:include page="fragments/static-content.jsp"/>
+    <jsp:include page="../_fragments/static-content-styles.jsp"/>
 </head>
 
 <body>
-    <jsp:include page="fragments/header.jsp"/>
+    <jsp:include page="../_fragments/header.jsp"/>
 
 
     <div class="container">
@@ -177,6 +174,10 @@
                             </ul>
                         </c:when>
 
+                        <c:when test="${empty selectedSubId}">
+                            <h6><spring:message code="subordinate.select_sub"/></h6>
+                        </c:when>
+
                         <c:otherwise>
                             <h6><spring:message code="subordinate.indexes_missed"/></h6>
                         </c:otherwise>
@@ -203,8 +204,8 @@
     <form id="sendReloadRequest" class="hide" action="<c:url value="/user/subs"/>"></form>
 
 
-    <jsp:include page="fragments/footer.jsp"/>
-    <jsp:include page="fragments/static-content-js.jsp"/>
+    <jsp:include page="../_fragments/footer.jsp"/>
+    <jsp:include page="../_fragments/static-content-scripts.jsp"/>
 
     <!-- Custom JS for page -->
     <script src="<c:url value="/resources/js/pages/subordinate.js"/>"></script>

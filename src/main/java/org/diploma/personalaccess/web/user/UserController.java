@@ -1,4 +1,4 @@
-package org.diploma.personalaccess.web;
+package org.diploma.personalaccess.web.user;
 
 import com.google.gson.reflect.TypeToken;
 import org.apache.log4j.Logger;
@@ -24,6 +24,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import static org.diploma.personalaccess.web.WebConstants.Dir;
+import static org.diploma.personalaccess.web.WebConstants.Page;
+
 /**
  * Controller which handle requests only from /user**
  *
@@ -40,21 +43,12 @@ public class UserController {
     private static final Logger log = Logger.getLogger(UserController.class);
 
 
-    /**
-     * User service bean
-     */
     @Autowired
     private UserService userService;
 
-    /**
-     * User index service bean
-     */
     @Autowired
     private UserIndexService userIndexService;
 
-    /**
-     * Period holder bean
-     */
     @Autowired
     private PeriodHolder periodHolder;
 
@@ -78,7 +72,7 @@ public class UserController {
         model.addAttribute("uForm", user.getForm());
         model.addAttribute("subs", userService.getSubordinates(user));
 
-        return "profile";
+        return Dir.USER + Page.PROFILE;
     }
 
     @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
@@ -105,7 +99,7 @@ public class UserController {
         model.addAttribute("selectedPeriodId", periodId);
         model.addAttribute("selectedYear", year);
 
-        return "dashboard";
+        return Dir.USER + Page.DASHBOARD;
     }
 
     @ResponseBody
@@ -169,7 +163,7 @@ public class UserController {
         model.addAttribute("selectedSubId", sub);
         model.addAttribute("isEdit", isEdit);
 
-        return "subordinate";
+        return Dir.USER + Page.SUBORDINATE;
     }
 
     @ResponseBody
@@ -193,11 +187,6 @@ public class UserController {
             log.error("Error while processing estimates of lead '" + user.getUsername() + "'.", e);
             return e.getMessage();
         }
-    }
-
-    @RequestMapping(value = "/report", method = RequestMethod.GET)
-    public String getReportPage(Model model, Principal principal) {
-        return "report";
     }
 
 }

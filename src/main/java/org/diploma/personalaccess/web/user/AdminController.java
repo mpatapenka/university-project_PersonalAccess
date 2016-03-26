@@ -1,4 +1,4 @@
-package org.diploma.personalaccess.web;
+package org.diploma.personalaccess.web.user;
 
 import org.apache.log4j.Logger;
 import org.diploma.personalaccess.entity.Index;
@@ -10,6 +10,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import static org.diploma.personalaccess.web.WebConstants.Dir;
+import static org.diploma.personalaccess.web.WebConstants.Page;
 
 /**
  * That secured area only fo admins
@@ -38,7 +41,7 @@ public class AdminController {
     public String getDashboardPage(Model model) {
         model.addAttribute("indexes", indexService.findAll());
         model.addAttribute("positions", positionService.findAll());
-        return "admin";
+        return Dir.USER + Page.ADMIN;
     }
 
     @ResponseBody

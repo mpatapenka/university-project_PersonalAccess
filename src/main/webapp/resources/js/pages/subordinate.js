@@ -19,6 +19,6 @@ var eventParamsForSetupEstimates = {
 
 // Set listeners to control events
 $("#publish-lead-button").click(eventParamsForSetupEstimates, setupUserIndexEstimates);
-$("#period").change(eventParamsForMultipleSelectChanged, multipleComboboxChangedReload);
-$("#year").change(eventParamsForMultipleSelectChanged, multipleComboboxChangedReload);
-$("#sub").change(eventParamsForMultipleSelectChanged, multipleComboboxChangedReload);
+$("#period").change(eventParamsForMultipleSelectChanged, multipleSelectChangedReload);
+$("#year").change(eventParamsForMultipleSelectChanged, multipleSelectChangedReload);
+$("#sub").change(eventParamsForMultipleSelectChanged, multipleSelectChangedReload);

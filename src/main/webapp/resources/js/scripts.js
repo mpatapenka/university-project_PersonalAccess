@@ -51,7 +51,7 @@ function estimateValidator(estimateFieldName) {
 // reload page with new parameters
 // Store data to event: object with drop downs id's (name 'params'),
 //                      id of form with url for reload (name 'urlId')
-function multipleComboboxChangedReload(event) {
+function multipleSelectChangedReload(event) {
     var paramsKeys = event.data["params"];
     var params = {};
     for (var key in paramsKeys) {

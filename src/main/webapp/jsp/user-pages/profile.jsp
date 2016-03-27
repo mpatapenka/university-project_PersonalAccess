@@ -59,7 +59,7 @@
                         <div class="block">
                             <h5>${uForm.lastName} ${uForm.firstName} ${uForm.middleName}</h5>
                             <p class="helping-text"><i class="mdi-maps-place indigo-text"></i> <spring:message code="global.location.gomel"/>
-                                <i class="mdi-action-today indigo-text"></i> 23 Февраля 2016 </p>
+                                <i class="mdi-action-today indigo-text"></i> 23.02.2016 </p>
                             <p>Какого-то рода личная информация, которая может вестись в виде заметок с привязкой
                                 по дате и месту.</p>
                         </div>
@@ -68,23 +68,24 @@
                         <div class="block">
                             <h5><spring:message code="profile.position"/></h5>
                             <p class="helping-text"><i class="mdi-maps-place indigo-text"></i> <spring:message code="global.location.gomel"/> <i
-                                    class="mdi-action-today indigo-text"></i> 24 Февраля 2016</p>
-                            <p>Был принят на должность - ${uForm.position.name}.</p>
+                                    class="mdi-action-today indigo-text"></i> 24.02.2016</p>
+                            <p><spring:message code="profile.got_position"/> - ${uForm.position.name}.</p>
                         </div>
                         <div class="block">
                             <h5><spring:message code="profile.unit"/></h5>
                             <p class="helping-text"><i class="mdi-maps-place indigo-text"></i> <spring:message code="global.location.gstu"/>
-                                <i class="mdi-action-today indigo-text"></i> 25 Февраля 2016</p>
-                            <p>Был зачислен в подразделение - ${uForm.unit.name}.</p>
+                                <i class="mdi-action-today indigo-text"></i> 25.02.2016</p>
+                            <p><spring:message code="profile.got_unit"/> - ${uForm.unit.name}.</p>
                         </div>
                         <div class="block">
                             <h5><spring:message code="profile.faculty"/></h5>
                             <p class="helping-text"><i class="mdi-maps-place indigo-text"></i> <spring:message code="global.location.gstu"/>
-                                <i class="mdi-action-today indigo-text"></i> 25 Февраля 2016</p>
-                            <p>Был привязан к факультету - ${uForm.faculty.shortName}. Полное название - ${uForm.faculty.fullName}</p>
+                                <i class="mdi-action-today indigo-text"></i> 25.02.2016</p>
+                            <p><spring:message code="profile.got_faculty"/> - ${uForm.faculty.shortName}.
+                                <spring:message code="profile.faculty_full_name"/> - ${uForm.faculty.fullName}</p>
                         </div>
 
-                        <h4 class="left-align"><i class="mdi-social-school"></i> Штат</h4>
+                        <h4 class="left-align"><i class="mdi-social-school"></i> <spring:message code="profile.staff"/></h4>
                         <div class="block">
                             <h5><spring:message code="profile.subs"/></h5>
                             <p>

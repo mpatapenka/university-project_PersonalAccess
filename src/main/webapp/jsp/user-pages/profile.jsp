@@ -60,8 +60,7 @@
                             <h5>${uForm.lastName} ${uForm.firstName} ${uForm.middleName}</h5>
                             <p class="helping-text"><i class="mdi-maps-place indigo-text"></i> <spring:message code="global.location.gomel"/>
                                 <i class="mdi-action-today indigo-text"></i> 23.02.2016 </p>
-                            <p>Какого-то рода личная информация, которая может вестись в виде заметок с привязкой
-                                по дате и месту.</p>
+                            <p><spring:message code="profile.develop_info"/></p>
                         </div>
 
                         <h4 class="left-align"><i class="mdi-social-school"></i> <spring:message code="profile.work_info"/></h4>

@@ -11,12 +11,9 @@
     <packaging>war</packaging>
 
 
-
     <properties>
-
         <!-- Java -->
         <java.version>1.8</java.version>
-
 
 
         <!-- Spring -->
@@ -25,10 +22,8 @@
         <spring-security.version>4.0.3.RELEASE</spring-security.version>
 
 
-
         <!-- Hibernate -->
         <hibernate.version>5.0.2.Final</hibernate.version>
-
 
 
         <!-- Database -->
@@ -38,15 +33,12 @@
         <h2.version>1.4.191</h2.version>
 
 
-
         <!-- JUnit -->
         <junit.version>4.12</junit.version>
 
 
-
         <!-- Logging -->
         <log4j.version>1.2.17</log4j.version>
-
 
 
         <!-- Commons IO (file upload lib) -->
@@ -54,11 +46,9 @@
         <commons-fileupload.version>1.3.1</commons-fileupload.version>
 
 
-
         <!-- Apache Commons -->
         <commons-codec.version>1.10</commons-codec.version>
         <commons-lang3.version>3.3.2</commons-lang3.version>
-
 
 
         <!-- Web -->
@@ -66,16 +56,12 @@
         <jstl.version>1.2</jstl.version>
 
 
-
         <!-- Google lib -->
         <gson.version>2.5</gson.version>
-
     </properties>
 
 
-
     <dependencies>
-
         <!-- Spring -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -131,7 +117,6 @@
         </dependency>
 
 
-
         <!-- JUnit -->
         <dependency>
             <groupId>junit</groupId>
@@ -141,14 +126,12 @@
         </dependency>
 
 
-
         <!-- Logging -->
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>${log4j.version}</version>
         </dependency>
-
 
 
         <!-- Commons IO (file upload lib) -->
@@ -163,7 +146,6 @@
             <artifactId>commons-fileupload</artifactId>
             <version>${commons-fileupload.version}</version>
         </dependency>
-
 
 
         <!-- Servlet, Web, Jstl -->
@@ -181,7 +163,6 @@
         </dependency>
 
 
-
         <!-- Hibernate -->
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -194,7 +175,6 @@
             <artifactId>hibernate-validator</artifactId>
             <version>${hibernate.version}</version>
         </dependency>
-
 
 
         <!-- Database connection -->
@@ -217,7 +197,6 @@
         </dependency>
 
 
-
         <!-- Apache Commons -->
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -232,23 +211,19 @@
         </dependency>
 
 
-
         <!-- Gson -->
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>${gson.version}</version>
         </dependency>
-
     </dependencies>
-
 
 
     <build>
         <finalName>PersonalAccess</finalName>
 
         <plugins>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -266,8 +241,6 @@
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
             </plugin>
-
         </plugins>
     </build>
-
 </project>

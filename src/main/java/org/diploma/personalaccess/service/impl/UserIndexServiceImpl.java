@@ -185,7 +185,7 @@ public class UserIndexServiceImpl implements UserIndexService {
         File file = new File(WebConfig.STORAGE_PATH + doc.getSystemName());
 
         response.setContentType("application/octet-stream");
-        response.setHeader("Content-Disposition", "attachment;filename=\"" + doc.getName() + "\"");
+        response.setHeader("Content-Disposition", ServiceUtils.createContentDispositionWithFilename(doc.getName()));
 
         try (InputStream is = new FileInputStream(file);
              OutputStream os = response.getOutputStream()) {

@@ -18,11 +18,13 @@
     <jsp:include page="../_fragments/header.jsp"/>
 
 
-    <div class="container">
-        <div class="section">
-            <h3>Not ready yet!</h3>
+    <main>
+        <div class="container">
+            <div class="section">
+                <h3>Not ready yet!</h3>
+            </div>
         </div>
-    </div>
+    </main>
 
 
     <jsp:include page="../_fragments/footer.jsp"/>

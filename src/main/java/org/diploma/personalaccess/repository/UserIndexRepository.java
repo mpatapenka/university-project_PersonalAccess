@@ -27,6 +27,16 @@ public interface UserIndexRepository extends JpaRepository<UserIndex, Long> {
     List<UserIndex> findByUserIdAndFillDateBetween(long userId, Date startPeriod, Date endPeriod);
 
     /**
+     * Find user indexes by specified position for period
+     *
+     * @param positionId  position id
+     * @param startPeriod start period date
+     * @param endPeriod   end period date
+     * @return list of user indexes
+     */
+    List<UserIndex> findByUserFormPositionIdAndFillDateBetween(long positionId, Date startPeriod, Date endPeriod);
+
+    /**
      * Count of user indexes by specified time period
      *
      * @param userId      specified user id

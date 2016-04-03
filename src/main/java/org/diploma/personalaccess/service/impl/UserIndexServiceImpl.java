@@ -9,7 +9,6 @@ import org.diploma.personalaccess.config.WebConfig;
 import org.diploma.personalaccess.entity.*;
 import org.diploma.personalaccess.repository.DocumentRepository;
 import org.diploma.personalaccess.repository.UserIndexRepository;
-import org.diploma.personalaccess.repository.UserRepository;
 import org.diploma.personalaccess.service.UserIndexService;
 import org.diploma.personalaccess.util.DateUtils;
 import org.diploma.personalaccess.util.ServiceUtils;
@@ -44,12 +43,6 @@ public class UserIndexServiceImpl implements UserIndexService {
      */
     @Autowired
     private UserIndexRepository userIndexRepository;
-
-    /**
-     * User repository bean
-     */
-    @Autowired
-    private UserRepository userRepository;
 
     /**
      * Document repository bean

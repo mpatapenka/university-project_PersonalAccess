@@ -68,18 +68,30 @@
                 </div>
 
                 <c:choose>
-                    <c:when test="${empty employees and empty selectedPosId}">
+                    <c:when test="${empty rates or empty selectedPosId}">
                         <br>
                         <h6><spring:message code="report.results_missed"/></h6>
                     </c:when>
 
                     <c:otherwise>
+                        <c:forEach var="rate" items="${rates}">
+                            ${rate.user.username} -
+                            <c:choose>
+                                <c:when test="${rate.rate lt 0}">
+                                    Не заполнено
+                                </c:when>
+
+                                <c:otherwise>
+                                    ${rate.rate}
+                                </c:otherwise>
+                            </c:choose>
+                            <br>
+                        </c:forEach>
 
 
-
-                        <c:if test="${not empty employees}">
+                        <c:if test="${not empty rates}">
                             <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-                                <a class="btn-floating btn-large waves-effect waves-light blue" id="">
+                                <a class="btn-floating btn-large waves-effect waves-light blue" id="sort-revert">
                                     <i class="material-icons">swap_calls</i></a>
                             </div>
                         </c:if>
@@ -87,6 +99,10 @@
                 </c:choose>
             </div>
         </div>
+
+
+        <!-- Hidden bundled values -->
+        <form id="sendReloadRequest" class="hide" action="<c:url value="/report/employees"/>"></form>
     </main>
 
 

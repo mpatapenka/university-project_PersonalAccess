@@ -21,11 +21,11 @@ public interface UserIndexService {
      * have any user index, but he has available indexes, then user indexes will be
      * created by each available index (it condition is working only for current period)
      *
-     * @param user user
-     * @param period period
-     * @param year year
+     * @param user          user
+     * @param period        period
+     * @param year          year
      * @param currentPeriod current period
-     * @param currentYear current year
+     * @param currentYear   current year
      * @return list of user indexes
      */
     List<UserIndex> getAllUserIndexesBySpecifiedPeriod(User user, Period period, int year,
@@ -34,9 +34,9 @@ public interface UserIndexService {
     /**
      * Get all user indexes by period
      *
-     * @param user user object
+     * @param user   user object
      * @param period period object
-     * @param year year
+     * @param year   year
      * @return list of user indexes
      */
     List<UserIndex> getAllUserIndexesForLeadBySpecifiedPeriod(User user, Period period, int year);
@@ -45,7 +45,7 @@ public interface UserIndexService {
      * Save all self estimates to UserIndex'es
      *
      * @param userIndexes user indexes list with self estimates
-     * @param user specified user
+     * @param user        specified user
      */
     void setupSelfEstimatesOfUser(List<UserIndex> userIndexes, User user);
 
@@ -54,14 +54,14 @@ public interface UserIndexService {
      *
      * @param userIndexId user index ID
      * @param description description of complete work
-     * @param doc approve document
+     * @param doc         approve document
      */
     void uploadAdditionalInfo(long userIndexId, String description, MultipartFile doc);
 
     /**
      * Download additional info (approve file)
      *
-     * @param docId id of document
+     * @param docId    id of document
      * @param response response for write to it
      */
     void downloadAdditionalInfo(long docId, HttpServletResponse response);
@@ -70,8 +70,8 @@ public interface UserIndexService {
      * Setup new lead estimates to user index
      *
      * @param userIndexes list of editable user indexes
-     * @param lead user - lead
-     * @param sub user - subordinate
+     * @param lead        user - lead
+     * @param sub         user - subordinate
      */
     void setupLeadEstimatesOfUser(List<UserIndex> userIndexes, User lead, User sub);
 

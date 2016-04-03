@@ -27,7 +27,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     /**
      * Retrieve users by faculty and positions
      *
-     * @param faculty faculty
+     * @param faculty   faculty
      * @param positions collection of search positions
      * @return collection of users
      */

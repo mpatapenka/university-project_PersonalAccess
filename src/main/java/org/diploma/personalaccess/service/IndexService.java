@@ -1,6 +1,7 @@
 package org.diploma.personalaccess.service;
 
 import org.diploma.personalaccess.entity.Index;
+import org.diploma.personalaccess.entity.Position;
 
 import java.util.List;
 
@@ -16,14 +17,22 @@ public interface IndexService {
      *
      * @param index index for saving/updating
      */
-    void saveOrUpdateIndex(Index index);
+    void save(Index index);
 
     /**
      * Get all indexes
      *
      * @return list of available indexes
      */
-    List<Index> findAll();
+    List<Index> getAll();
+
+    /**
+     * Get all indexes for specified position
+     *
+     * @param position Position object
+     * @return list of available indexes
+     */
+    List<Index> getByPosition(Position position);
 
     /**
      * Find index by 'id'
@@ -31,13 +40,13 @@ public interface IndexService {
      * @param id index id (long value)
      * @return found index
      */
-    Index findIndexById(long id);
+    Index getById(long id);
 
     /**
      * Delete index by 'id'
      *
      * @param id index id (long value)
      */
-    void deleteIndex(long id);
+    void remove(long id);
 
 }

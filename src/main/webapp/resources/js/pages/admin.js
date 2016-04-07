@@ -1,9 +1,17 @@
 ;
 // Set listeners to control events
+$("#positions").change(loadIndexesForPosition);
 $("#add-index-btn").click(saveIndex);
 $("#delete-index-btn").click(deleteIndex);
 $("#show-add-modal-btn").click(showAddModal);
 
+
+// Load available indexes for selected position
+function loadIndexesForPosition() {
+    var posId = $("#positions").val();
+    var url = $("#loadIndexesForm").attr("action") + "?" + $.param({posId: posId});
+    location.replace(url);
+}
 
 // Create index and send it to server
 function saveIndex() {
@@ -67,7 +75,7 @@ function showAddModal() {
     $("#addModalHeader").html($("#addIndexHeader").html());
     $("#index-form")[0].reset();
     $("input,textarea").next("label").removeClass("active");
-    $("#selected-poses").val([]);
+    $("#selected-poses").val($("#positions").val());
     $("select").material_select();
     $("#add-index").openModal();
 }

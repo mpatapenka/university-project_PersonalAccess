@@ -26,8 +26,14 @@ public class PositionServiceImpl implements PositionService {
 
     @Override
     @Transactional
-    public List<Position> findAll() {
+    public List<Position> getAll() {
         return positionRepository.findAll();
+    }
+
+    @Override
+    @Transactional
+    public Position getById(long id) {
+        return positionRepository.findOne(id);
     }
 
 }

@@ -23,6 +23,20 @@
             <div class="section">
                 <h4><spring:message code="admin.header"/></h4>
 
+                <div class="input-field col s12">
+                    <select id="positions">
+                        <option value="" disabled selected><spring:message code="control.choose_position"/></option>
+                        <c:forEach var="pos" items="${positions}">
+                            <c:set var="isSelected" value=""/>
+                            <c:if test="${selectedPosId eq pos.id}">
+                                <c:set var="isSelected" value="selected"/>
+                            </c:if>
+                            <option value="${pos.id}" ${isSelected}>${pos.name}</option>
+                        </c:forEach>
+                    </select>
+                    <label><spring:message code="control.available_positions"/></label>
+                </div>
+
                 <c:choose>
                     <c:when test="${empty indexes}">
                         <hr><br>
@@ -75,6 +89,7 @@
         <div id="editIndexHeader" class="hide"><spring:message code="admin.header.edit_index"/></div>
 
         <form id="getIndexForm" class="hide" method="get" action="<c:url value="/admin/dashboard/get"/>"></form>
+        <form id="loadIndexesForm" class="hide" method="get" action="<c:url value="/admin/dashboard"/>"></form>
 
 
         <!-- Modals -->

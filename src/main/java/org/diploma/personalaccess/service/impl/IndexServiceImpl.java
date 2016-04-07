@@ -1,6 +1,7 @@
 package org.diploma.personalaccess.service.impl;
 
 import org.diploma.personalaccess.entity.Index;
+import org.diploma.personalaccess.entity.Position;
 import org.diploma.personalaccess.repository.IndexRepository;
 import org.diploma.personalaccess.service.IndexService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,32 +27,31 @@ public class IndexServiceImpl implements IndexService {
 
     @Override
     @Transactional
-    public void saveOrUpdateIndex(final Index index) {
-        Index updated = index.isNew() ? new Index() : indexRepository.findOne(index.getId());
-        updated.setEstimate(index.getEstimate());
-        updated.setMultiplier(index.getMultiplier());
-        updated.setName(index.getName());
-        updated.setWorkName(index.getWorkName());
-        updated.setAvailablePositions(index.getAvailablePositions());
-
-        indexRepository.save(updated);
+    public void save(Index index) {
+        indexRepository.save(index);
     }
 
     @Override
     @Transactional
-    public List<Index> findAll() {
+    public List<Index> getAll() {
         return indexRepository.findAll();
     }
 
     @Override
     @Transactional
-    public Index findIndexById(long id) {
+    public List<Index> getByPosition(Position position) {
+        return indexRepository.findByAvailablePositions(position);
+    }
+
+    @Override
+    @Transactional
+    public Index getById(long id) {
         return indexRepository.findOne(id);
     }
 
     @Override
     @Transactional
-    public void deleteIndex(long id) {
+    public void remove(long id) {
         indexRepository.delete(id);
     }
 

@@ -33,7 +33,7 @@ public interface RateService {
         DOWNWARDS {
 
             public Comparator<Rate> getComparator() {
-                return (left, right) -> Double.compare(left.getRate(), right.getRate());
+                return (left, right) -> Double.compare(right.getRate(), left.getRate());
             }
 
         },
@@ -41,7 +41,7 @@ public interface RateService {
         UPWARDS {
 
             public Comparator<Rate> getComparator() {
-                return (left, right) -> Double.compare(right.getRate(), left.getRate());
+                return (left, right) -> Double.compare(left.getRate(), right.getRate());
             }
 
         };

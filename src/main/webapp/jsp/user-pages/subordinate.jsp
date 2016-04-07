@@ -97,6 +97,8 @@
                                                 ${selfEstimateValue}
                                             </p>
 
+                                            <p><span class="truncate truncate-card-fix">Отзыв: <c:out value="${uIndex.description}">-</c:out></span></p>
+
                                             <p><spring:message code="subordinate.your_mark"/><br>
                                                 <c:choose>
                                                     <c:when test="${uIndex.leadEstimate eq -1}">

@@ -47,8 +47,9 @@ public class RateServiceImpl implements RateService {
             }
         }
 
-//        Collection<Rate> rates = Collections.sort((List<Rate>) rateContainer.values());
-        return rateContainer.values();
+        List<Rate> rates = new ArrayList<>(rateContainer.values());
+        Collections.sort(rates, sortType.getComparator());
+        return rates;
     }
 
 }

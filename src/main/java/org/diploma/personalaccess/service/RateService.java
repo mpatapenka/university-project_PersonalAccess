@@ -4,6 +4,7 @@ import org.diploma.personalaccess.bean.Period;
 import org.diploma.personalaccess.bean.Rate;
 
 import java.util.Collection;
+import java.util.Comparator;
 
 /**
  * Service for working with rates and depend on it items
@@ -29,7 +30,28 @@ public interface RateService {
      */
     enum RateSort {
 
-        DOWNWARDS, UPWARDS
+        DOWNWARDS {
+
+            public Comparator<Rate> getComparator() {
+                return (left, right) -> Double.compare(left.getRate(), right.getRate());
+            }
+
+        },
+
+        UPWARDS {
+
+            public Comparator<Rate> getComparator() {
+                return (left, right) -> Double.compare(right.getRate(), left.getRate());
+            }
+
+        };
+
+        /**
+         * Getting comparator for rate objects
+         *
+         * @return comparator for rate objects
+         */
+        public abstract Comparator<Rate> getComparator();
 
     }
 

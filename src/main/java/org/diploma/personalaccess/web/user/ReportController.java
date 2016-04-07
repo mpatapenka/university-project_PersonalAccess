@@ -54,7 +54,7 @@ public class ReportController {
                 rateService.getRatesByEmployeePosition(posId, lookupPeriod, lookupYear, rateSort);
 
         model.addAttribute("rates", rates);
-        model.addAttribute("poses", positionService.findAll());
+        model.addAttribute("poses", positionService.getAll());
         model.addAttribute("periods", periodHolder.getAllPeriods());
         model.addAttribute("periodNameCode", periodHolder.getPeriodsNameCode());
         model.addAttribute("availYears", periodHolder.getAvailableYears());

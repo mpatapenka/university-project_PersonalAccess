@@ -17,9 +17,9 @@ public interface RateService {
      * Get all rates by position
      *
      * @param positionId position id
-     * @param period specified period
-     * @param year specified year
-     * @param sortType rate sort type
+     * @param period     specified period
+     * @param year       specified year
+     * @param sortType   rate sort type
      * @return rate collection
      */
     Collection<Rate> getRatesByEmployeePosition(long positionId, Period period, int year, RateService.RateSort sortType);
@@ -31,19 +31,15 @@ public interface RateService {
     enum RateSort {
 
         DOWNWARDS {
-
             public Comparator<Rate> getComparator() {
                 return (left, right) -> Double.compare(right.getRate(), left.getRate());
             }
-
         },
 
         UPWARDS {
-
             public Comparator<Rate> getComparator() {
                 return (left, right) -> Double.compare(left.getRate(), right.getRate());
             }
-
         };
 
         /**

@@ -38,12 +38,12 @@ public class RateServiceImpl implements RateService {
             if (!rateContainer.containsKey(user)) {
                 Rate rate = new Rate();
                 rate.setUser(user);
-                rate.setRate(userIndex.getSelfEstimate());
+                rate.setRate(userIndex.getLeadEstimate());
 
                 rateContainer.put(user, rate);
             } else {
                 Rate rate = rateContainer.get(user);
-                rate.setRate(rate.getRate() + userIndex.getSelfEstimate());
+                rate.setRate(rate.getRate() + userIndex.getLeadEstimate());
             }
         }
 

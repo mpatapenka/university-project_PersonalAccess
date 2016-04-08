@@ -74,19 +74,28 @@
                     </c:when>
 
                     <c:otherwise>
-                        <c:forEach var="rate" items="${rates}">
-                            ${rate.user.username} -
-                            <c:choose>
-                                <c:when test="${rate.rate lt 0}">
-                                    Не заполнено
-                                </c:when>
+                        <ul class="collection">
+                            <c:forEach var="rate" items="${rates}">
+                                <li class="collection-item avatar">
+                                    <i class="material-icons circle blue lighten-2">import_export</i>
 
-                                <c:otherwise>
-                                    ${rate.rate}
-                                </c:otherwise>
-                            </c:choose>
-                            <br>
-                        </c:forEach>
+                                    <span class="title truncate truncate-card-fix">${rate.user.form.lastName}
+                                    ${rate.user.form.firstName} ${rate.user.form.middleName}</span>
+
+                                    <c:choose>
+                                        <c:when test="${rate.rate lt 0}">
+                                            <c:set var="rateVal"><spring:message code="control.not_fill"/></c:set>
+                                        </c:when>
+
+                                        <c:otherwise>
+                                            <c:set var="rateVal" value="${rate.rate}"/>
+                                        </c:otherwise>
+                                    </c:choose>
+
+                                    <p><spring:message code="report.rate"/> ${rateVal}</p>
+                                </li>
+                            </c:forEach>
+                        </ul>
 
 
                         <c:if test="${not empty rates}">
@@ -102,6 +111,16 @@
 
 
         <!-- Hidden bundled values -->
+        <select id="sort-type" class="hide">
+            <c:forEach var="sType" items="UPWARDS,DOWNWARDS">
+                <c:set var="isSelected" value=""/>
+                <c:if test="${sortType eq sType}">
+                    <c:set var="isSelected" value="selected"/>
+                </c:if>
+                <option value="${sType}" ${isSelected}></option>
+            </c:forEach>
+        </select>
+
         <form id="sendReloadRequest" class="hide" action="<c:url value="/report/employees"/>"></form>
     </main>
 

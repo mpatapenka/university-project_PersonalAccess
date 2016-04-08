@@ -61,6 +61,7 @@ public class ReportController {
         model.addAttribute("selectedPeriodId", periodHolder.getIdOfPeriod(lookupPeriod));
         model.addAttribute("selectedYear", lookupYear);
         model.addAttribute("selectedPosId", posId);
+        model.addAttribute("sortType", rateSort);
 
         return Dir.REPORT + Page.REPORT_EMPLOYEES;
     }

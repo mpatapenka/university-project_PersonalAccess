@@ -8,8 +8,8 @@
 <nav class="light-blue lighten-1" role="navigation">
     <div class="container">
         <div class="nav-wrapper">
-            <a href="<c:url value="/"/>" class="brand-logo">
-                <img src="<c:url value="/resources/img/logo_55x55.png"/>" class="responsive-img"
+            <a href="<c:url value="/"/>">
+                <img src="<c:url value="/resources/img/logo_55x55.png"/>" class="brand-logo responsive-img"
                      alt="<spring:message code="global.app_name"/>"></a>
 
             <ul class="right hide-on-med-and-down">

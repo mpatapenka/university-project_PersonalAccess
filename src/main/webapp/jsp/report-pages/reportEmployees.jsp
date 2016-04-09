@@ -77,7 +77,7 @@
                         <ul class="collection">
                             <c:forEach var="rate" items="${rates}">
                                 <li class="collection-item avatar">
-                                    <i class="material-icons circle blue lighten-2">import_export</i>
+                                    <i class="material-icons circle light-blue lighten-1">import_export</i>
 
                                     <span class="title truncate truncate-card-fix">${rate.user.form.lastName}
                                     ${rate.user.form.firstName} ${rate.user.form.middleName}</span>

@@ -59,4 +59,12 @@ public interface PeriodHolder {
      */
     Period getPeriodById(long id);
 
+    /**
+     * Get ID of specified period
+     *
+     * @param period Period object
+     * @return ID of period
+     */
+    long getIdOfPeriod(Period period);
+
 }

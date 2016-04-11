@@ -4,14 +4,11 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
+import org.diploma.personalaccess.bean.Period;
 import org.diploma.personalaccess.config.WebConfig;
-import org.diploma.personalaccess.entity.Document;
-import org.diploma.personalaccess.entity.Index;
-import org.diploma.personalaccess.entity.User;
-import org.diploma.personalaccess.entity.UserIndex;
+import org.diploma.personalaccess.entity.*;
 import org.diploma.personalaccess.repository.DocumentRepository;
 import org.diploma.personalaccess.repository.UserIndexRepository;
-import org.diploma.personalaccess.repository.UserRepository;
 import org.diploma.personalaccess.service.UserIndexService;
 import org.diploma.personalaccess.util.DateUtils;
 import org.diploma.personalaccess.util.ServiceUtils;
@@ -24,7 +21,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.sql.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -41,17 +37,12 @@ public class UserIndexServiceImpl implements UserIndexService {
      */
     private static final Logger log = Logger.getLogger(UserIndexServiceImpl.class);
 
+
     /**
      * UserIndex repository bean
      */
     @Autowired
     private UserIndexRepository userIndexRepository;
-
-    /**
-     * User repository bean
-     */
-    @Autowired
-    private UserRepository userRepository;
 
     /**
      * Document repository bean
@@ -61,7 +52,7 @@ public class UserIndexServiceImpl implements UserIndexService {
 
 
     /**
-     * Generate unique file name, which depend on current
+     * Generate unique file name, which depend on currentPeriod
      * time in milliseconds
      *
      * @param name original filename
@@ -74,11 +65,17 @@ public class UserIndexServiceImpl implements UserIndexService {
 
     @Override
     @Transactional
-    public List<UserIndex> getAllUserIndexesBySpecifiedPeriod(long userId, Date start, Date end) {
-        User user = userRepository.findOne(userId);
+    public List<UserIndex> getAllUserIndexesBySpecifiedPeriod(User user, Period period, int year,
+                                                              Period currentPeriod, int currentYear) {
+        Date start = period.getStartDateForYear(year);
+        Date end = period.getEndDateForYear(year);
+
+        List<UserIndex> userIndexes = userIndexRepository.findByUserIdAndFillDateBetween(user.getId(), start, end);
+        if (!period.equals(currentPeriod) || year != currentYear) {
+            return userIndexes;
+        }
 
         Set<Index> availIndexes = user.getForm().getPosition().getAvailableIndexes();
-        List<UserIndex> userIndexes = userIndexRepository.findByUserIdAndFillDateBetween(userId, start, end);
         if (userIndexes.size() == availIndexes.size()) {
             return userIndexes;
         }
@@ -102,15 +99,30 @@ public class UserIndexServiceImpl implements UserIndexService {
             userIndexRepository.save(userIndex);
         }
 
-        return userIndexRepository.findByUserIdAndFillDateBetween(userId, start, end);
+        return userIndexRepository.findByUserIdAndFillDateBetween(user.getId(), start, end);
     }
 
     @Override
     @Transactional
-    public void setUpAllEstimates(List<UserIndex> userIndexes, User user) {
+    public List<UserIndex> getAllUserIndexesForLeadBySpecifiedPeriod(User user, Period period, int year) {
+        Date start = period.getStartDateForYear(year);
+        Date end = period.getEndDateForYear(year);
+        return userIndexRepository.findByUserIdAndFillDateBetween(user.getId(), start, end);
+    }
+
+    @Override
+    @Transactional
+    public void setupSelfEstimatesOfUser(List<UserIndex> userIndexes, User user) {
         Date date = DateUtils.today();
         for (UserIndex userIndex : userIndexes) {
             UserIndex oldUserIndex = userIndexRepository.findOne(userIndex.getId());
+
+            if (!oldUserIndex.getUser().equals(user)) {
+                String msg = "Trying to edit user indexes by other user! Editor '" + user.getUsername() + "'!";
+                log.error(msg);
+                throw new IllegalArgumentException(msg);
+            }
+
             oldUserIndex.setFillDate(date);
             oldUserIndex.setSelfEstimate(userIndex.getSelfEstimate());
             oldUserIndex.setComplete(true);
@@ -166,7 +178,7 @@ public class UserIndexServiceImpl implements UserIndexService {
         File file = new File(WebConfig.STORAGE_PATH + doc.getSystemName());
 
         response.setContentType("application/octet-stream");
-        response.setHeader("Content-Disposition", "attachment;filename=\"" + doc.getName() + "\"");
+        response.setHeader("Content-Disposition", ServiceUtils.createContentDispositionWithFilename(doc.getName()));
 
         try (InputStream is = new FileInputStream(file);
              OutputStream os = response.getOutputStream()) {
@@ -181,29 +193,28 @@ public class UserIndexServiceImpl implements UserIndexService {
 
     @Override
     @Transactional
-    public void publishLeadEstimates(Map<Long, Integer> userIndexIdMarkDependency, User user) {
-        for (Map.Entry<Long, Integer> entry : userIndexIdMarkDependency.entrySet()) {
-            UserIndex userIndex = userIndexRepository.findOne(entry.getKey());
+    public void setupLeadEstimatesOfUser(List<UserIndex> userIndexes, User lead, User sub) {
+        Position subPos = sub.getForm().getPosition();
+        Position leadPos = lead.getForm().getPosition();
+        if (!leadPos.getSubs().contains(subPos)
+                || !lead.getForm().getFaculty().equals(sub.getForm().getFaculty())) {
+            String msg = "Trying to edit user indexes of other user which not your subordinate! Editor '" +
+                    lead.getUsername() + "'!";
+            log.error(msg);
+            throw new IllegalArgumentException(msg);
+        }
 
-            /* If user is not a lead for current subordinate, then throw exception and rollback transaction */
-            if (!userIndex.getUser().getLeads().contains(user)) {
-                String msg = "User with username '" + user.getUsername() + "' trying to set estimate for incorrect" +
-                        "subordinate (username of sub '" + userIndex.getUser().getUsername() + "'.";
-                log.warn(msg);
+        for (UserIndex userIndex : userIndexes) {
+            UserIndex oldUserIndex = userIndexRepository.findOne(userIndex.getId());
+
+            if (!oldUserIndex.getUser().equals(sub)) {
+                String msg = "Trying to edit user indexes of other user! Editor '" + lead.getUsername() + "'!";
+                log.error(msg);
                 throw new IllegalArgumentException(msg);
-
             }
 
-            userIndex.setLeadEstimate(entry.getValue());
+            oldUserIndex.setLeadEstimate(userIndex.getLeadEstimate());
         }
-    }
-
-    @Override
-    @Transactional
-    public boolean isLeadSubmitAllEstimatesForUser(long userId, Date start, Date end) {
-        User user = userRepository.findOne(userId);
-        return userIndexRepository.countByUserAndFillDateBetween(userId, start, end) > 0
-                && userIndexRepository.countByUserAndFillDateBetweenAndLeadEstimate(user, start, end, 0) == 0;
     }
 
 }

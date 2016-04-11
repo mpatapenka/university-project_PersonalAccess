@@ -13,6 +13,7 @@
                     <spring:message code="footer.company_message"/>
                 </p>
             </div>
+
             <div class="col l3 s12">
                 <h5 class="white-text"><spring:message code="general.options"/></h5>
                 <ul>
@@ -20,6 +21,7 @@
                     <li><a class="white-text" href="<c:url value="?lang=en"/>"><spring:message code="lang.en"/></a></li>
                 </ul>
             </div>
+
             <div class="col l3 s12">
                 <h5 class="white-text"><spring:message code="general.connect"/></h5>
                 <ul>
@@ -33,6 +35,7 @@
             </div>
         </div>
     </div>
+
     <div class="footer-copyright">
         <div class="container">
             <spring:message code="footer.made_by"/>

@@ -32,6 +32,7 @@ public class Document extends BaseEntity {
     @OneToMany(mappedBy = "document")
     private Set<UserIndex> userIndexes = new HashSet<>();
 
+
     public String getName() {
         return name;
     }
@@ -55,6 +56,7 @@ public class Document extends BaseEntity {
     public void setUserIndexes(Set<UserIndex> userIndexes) {
         this.userIndexes = userIndexes;
     }
+
 
     @Override
     public boolean equals(Object o) {

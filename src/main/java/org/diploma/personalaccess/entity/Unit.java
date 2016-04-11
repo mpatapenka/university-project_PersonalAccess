@@ -26,6 +26,7 @@ public class Unit extends BaseEntity {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "unit")
     private Set<Form> forms = new HashSet<>();
 
+
     public String getName() {
         return name;
     }
@@ -41,6 +42,7 @@ public class Unit extends BaseEntity {
     public void setForms(Set<Form> forms) {
         this.forms = forms;
     }
+
 
     @Override
     public boolean equals(Object o) {

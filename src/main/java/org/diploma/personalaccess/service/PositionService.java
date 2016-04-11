@@ -16,6 +16,14 @@ public interface PositionService {
      *
      * @return all positions from database
      */
-    List<Position> findAll();
+    List<Position> getAll();
+
+    /**
+     * Get position by ID
+     *
+     * @param id id
+     * @return Position object
+     */
+    Position getById(long id);
 
 }

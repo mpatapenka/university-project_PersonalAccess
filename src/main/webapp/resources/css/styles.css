@@ -1,3 +1,13 @@
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
 .content {
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
     border-radius: 2px;
@@ -13,5 +23,10 @@
 .secondary-content-down {
     position: absolute;
     bottom: 5px;
-    right: 16px
+    right: 16px;
+    color: #26a69a;
+}
+
+.truncate-card-fix {
+    width: 90%;
 }

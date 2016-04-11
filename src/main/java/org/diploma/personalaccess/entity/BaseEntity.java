@@ -23,6 +23,7 @@ public class BaseEntity implements Serializable {
     @GenericGenerator(name = "increment", strategy = "increment")
     protected Long id;
 
+
     public Long getId() {
         return id;
     }
@@ -34,6 +35,7 @@ public class BaseEntity implements Serializable {
     public boolean isNew() {
         return (this.id == null);
     }
+
 
     @Override
     public int hashCode() {

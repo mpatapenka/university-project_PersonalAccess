@@ -1,16 +1,21 @@
 ;
+// Set listeners to control events
+$("#positions").change(loadIndexesForPosition);
 $("#add-index-btn").click(saveIndex);
 $("#delete-index-btn").click(deleteIndex);
 $("#show-add-modal-btn").click(showAddModal);
 
 
+// Load available indexes for selected position
+function loadIndexesForPosition() {
+    var posId = $("#positions").val();
+    var url = $("#loadIndexesForm").attr("action") + "?" + $.param({posId: posId});
+    location.replace(url);
+}
 
+// Create index and send it to server
 function saveIndex() {
-    if (!emptyValidator()) {
-        return;
-    }
-
-    if (!numberBiggerThenZeroValidator()) {
+    if (!emptyValidator() || !numberBiggerThenZeroValidator()) {
         return;
     }
 
@@ -18,7 +23,7 @@ function saveIndex() {
     var selectedPoses = $("#selected-poses").val();
 
     var poses = [];
-    $.each(selectedPoses, function(index, value) {
+    $.each(selectedPoses, function (index, value) {
         poses.push({
             id: value
         });
@@ -46,6 +51,7 @@ function saveIndex() {
     });
 }
 
+// Send index delete request
 function deleteIndex() {
     var form = $("#delete-form");
     $.ajax({
@@ -64,29 +70,31 @@ function deleteIndex() {
 }
 
 
-
+// Show and fill add index modal
 function showAddModal() {
     $("#addModalHeader").html($("#addIndexHeader").html());
     $("#index-form")[0].reset();
     $("input,textarea").next("label").removeClass("active");
-    $("#selected-poses").val([]);
+    $("#selected-poses").val($("#positions").val());
     $("select").material_select();
-    $('#add-index').openModal();
+    $("#add-index").openModal();
 }
 
+// Show and fill edit index modal
 function showEditModal(id) {
     $("#addModalHeader").html($("#editIndexHeader").html());
+    var form = $("#getIndexForm");
     $.ajax({
-        url: $("#getIndexForm").attr("action") + "?id=" + id,
-        type: $("#getIndexForm").attr("method"),
+        url: form.attr("action") + "?id=" + id,
+        type: form.attr("method"),
         contentType: "text/plain; charset=UTF-8",
         success: function (result) {
             var obj = JSON.parse(result);
-            $("#form-id").val(obj.id);
-            $("#name").val(obj.name);
-            $("#estimate").val(obj.estimate);
-            $("#multiplier").val(obj.multiplier);
-            $("#workName").val(obj.workName);
+            $("#form-id").val(obj["id"]);
+            $("#name").val(obj["name"]);
+            $("#estimate").val(obj["estimate"]);
+            $("#multiplier").val(obj["multiplier"]);
+            $("#workName").val(obj["workName"]);
 
             var selected = [];
             obj.availablePositions.forEach(function (entry) {
@@ -105,6 +113,7 @@ function showEditModal(id) {
     });
 }
 
+// Show delete modal
 function showDeleteModal(id) {
     $("#delete-candidate-id").val(id);
     $("#delete-index").openModal();

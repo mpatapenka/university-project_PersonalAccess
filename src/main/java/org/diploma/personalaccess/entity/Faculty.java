@@ -31,6 +31,7 @@ public class Faculty extends BaseEntity {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "faculty")
     private Set<Form> forms = new HashSet<>();
 
+
     public String getFullName() {
         return fullName;
     }
@@ -54,6 +55,7 @@ public class Faculty extends BaseEntity {
     public void setForms(Set<Form> forms) {
         this.forms = forms;
     }
+
 
     @Override
     public boolean equals(Object o) {

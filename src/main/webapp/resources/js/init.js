@@ -1,13 +1,15 @@
 // Instantiate materialize css
 ;$(document).ready(function () {
     $(".button-collapse").sideNav();
-    $(".dropdown-button").dropdown();
+    $(".dropdown-button").dropdown({
+        constrain_width: false,
+        belowOrigin: true
+    });
 
     $("input#input_text, textarea#textarea1").characterCounter();
 
     $("select").material_select();
 });
-
 
 // Replacing serializeObject method for serializing forms to Json
 $.fn.serializeObject = function () {

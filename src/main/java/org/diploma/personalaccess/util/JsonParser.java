@@ -20,10 +20,12 @@ public final class JsonParser {
      */
     private static final Logger log = Logger.getLogger(JsonParser.class);
 
+
     /**
      * Common json converter (from google library)
      */
     private static Gson GSON;
+
 
     static {
         final GsonBuilder builder = new GsonBuilder();
@@ -33,13 +35,18 @@ public final class JsonParser {
     }
 
 
+    /**
+     * Can not be instantiated
+     */
+    private JsonParser() { }
+
 
     /**
      * Converter from url encoded string to object by class
      *
-     * @param data url-encoded json string
+     * @param data  url-encoded json string
      * @param clazz class for converting
-     * @param <T> supported type
+     * @param <T>   supported type
      * @return object by specified class
      */
     public static <T> T convertJsonStringToObject(String data, Class<T> clazz) {
@@ -52,7 +59,7 @@ public final class JsonParser {
      *
      * @param data url-encoded json string
      * @param type type of convert object
-     * @param <T> supported type
+     * @param <T>  supported type
      * @return object by specified type
      */
     public static <T> T convertJsonStringToObject(String data, Type type) {
@@ -69,7 +76,6 @@ public final class JsonParser {
     public static String convertObjectToJsonString(Object object) {
         return GSON.toJson(object);
     }
-
 
 
     /**
@@ -89,9 +95,5 @@ public final class JsonParser {
             throw new IllegalArgumentException(msg, e);
         }
     }
-
-
-
-    private JsonParser() { }
 
 }

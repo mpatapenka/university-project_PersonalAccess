@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 
+import static org.diploma.personalaccess.web.WebConstants.*;
+
 /**
  * Main controller of application. Entry point
  *
@@ -18,7 +20,9 @@ public class IndexController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String getStartPage(Principal principal) {
-        return principal != null ? "redirect:/user/dashboard" : "index";
+        return principal != null
+                ? REDIRECT + "/user/dashboard"
+                : Page.INDEX;
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -27,8 +31,7 @@ public class IndexController {
                                Model model) {
         model.addAttribute("isError", error != null);
         model.addAttribute("isLogout", logout != null);
-
-        return "login";
+        return Dir.USER + Page.LOGIN;
     }
 
 }

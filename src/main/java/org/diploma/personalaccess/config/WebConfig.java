@@ -40,6 +40,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
      */
     private static final Logger log = Logger.getLogger(WebConfig.class);
 
+
     /**
      * Properties file holder. Configured by @PropertySource
      */
@@ -50,7 +51,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
      * Path to file storage
      */
     public static String STORAGE_PATH;
-
 
 
     @Override

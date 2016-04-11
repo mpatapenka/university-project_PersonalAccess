@@ -1,11 +1,15 @@
 package org.diploma.personalaccess.bean;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.diploma.personalaccess.util.DateUtils;
 import org.springframework.core.style.ToStringCreator;
 
 import java.io.Serializable;
 import java.sql.Date;
-import java.text.SimpleDateFormat;
+
+import static org.diploma.personalaccess.util.DateUtils.D_M_FORMATTER;
+import static org.diploma.personalaccess.util.DateUtils.D_M_Y_FORMATTER;
 
 /**
  * Simple bean object representing an period.
@@ -35,7 +39,6 @@ public class Period implements Serializable, Comparable<Period> {
      * Period end month
      */
     private int endMonth;
-
 
 
     public int getStartDay() {
@@ -71,7 +74,6 @@ public class Period implements Serializable, Comparable<Period> {
     }
 
 
-
     public Date getStartDateForYear(int year) {
         return Date.valueOf(year + "-" + getStartMonth() + "-" + getStartDay());
     }
@@ -89,22 +91,47 @@ public class Period implements Serializable, Comparable<Period> {
     }
 
     public String getDateString() {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
-        return formatter.format(getCurrentStartDate()) + " - "
-                + formatter.format(getCurrentEndDate());
+        return D_M_Y_FORMATTER.format(getCurrentStartDate()) + " - "
+                + D_M_Y_FORMATTER.format(getCurrentEndDate());
     }
 
     public String getStart() {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM");
-        return formatter.format(getCurrentStartDate());
+        return D_M_FORMATTER.format(getCurrentStartDate());
     }
 
     public String getEnd() {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM");
-        return formatter.format(getCurrentEndDate());
+        return D_M_FORMATTER.format(getCurrentEndDate());
     }
 
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (!(o instanceof Period)) {
+            return false;
+        }
+
+        Period period = (Period) o;
+        return new EqualsBuilder()
+                .append(startDay, period.startDay)
+                .append(startMonth, period.startMonth)
+                .append(endDay, period.endDay)
+                .append(endMonth, period.endMonth)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(startDay)
+                .append(startMonth)
+                .append(endDay)
+                .append(endMonth)
+                .toHashCode();
+    }
 
     @Override
     public int compareTo(Period o) {

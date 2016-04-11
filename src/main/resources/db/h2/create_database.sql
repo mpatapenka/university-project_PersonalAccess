@@ -98,7 +98,7 @@ CREATE TABLE IF NOT EXISTS personal_access_database.user (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS personal_access_database._index (
   id BIGINT(20) NOT NULL AUTO_INCREMENT,
-  name VARCHAR(255) NULL DEFAULT NULL,
+  name VARCHAR(400) NULL DEFAULT NULL,
   estimate DOUBLE NULL DEFAULT NULL,
   multiplier INT NULL DEFAULT NULL,
   work_name VARCHAR(50) NULL DEFAULT NULL,

@@ -71,7 +71,8 @@ public class DatabaseConfig {
         return new EmbeddedDatabaseBuilder()
                 .setType(EmbeddedDatabaseType.H2)
                 .addScript("/db/h2/create_database.sql")
-                .addScript("/db/h2/populate_database.sql")
+                .addScript("/db/populate_database.sql")
+                .addScript("/db/dean_indexes.sql")
                 .build();
     }
 

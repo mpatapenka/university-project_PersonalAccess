@@ -171,16 +171,16 @@ CREATE TABLE IF NOT EXISTS personal_access_database.user_index (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS personal_access_database.dependency (
   id BIGINT(20) NOT NULL AUTO_INCREMENT,
-  user_lead_id BIGINT(20) NOT NULL,
-  user_sub_id BIGINT(20) NOT NULL,
+  position_lead_id BIGINT(20) NOT NULL,
+  position_sub_id BIGINT(20) NOT NULL,
   PRIMARY KEY (id),
-  CONSTRAINT fk_dependency_user1
-  FOREIGN KEY (user_lead_id)
-  REFERENCES personal_access_database.user (id)
+  CONSTRAINT fk_dependency_position1
+  FOREIGN KEY (position_lead_id)
+  REFERENCES personal_access_database.position (id)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT fk_dependency_user2
-  FOREIGN KEY (user_sub_id)
-  REFERENCES personal_access_database.user (id)
+  CONSTRAINT fk_dependency_position2
+  FOREIGN KEY (position_sub_id)
+  REFERENCES personal_access_database.position (id)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);

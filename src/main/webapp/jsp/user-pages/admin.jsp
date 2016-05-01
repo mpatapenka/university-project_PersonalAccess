@@ -47,7 +47,15 @@
                         <ul class="collection">
                             <c:forEach var="index" items="${indexes}">
                                 <li class="collection-item avatar">
-                                    <i class="material-icons circle green">insert_chart</i>
+                                    <c:choose>
+                                        <c:when test="${index.archived}">
+                                            <i class="material-icons circle red">perm_media</i>
+                                        </c:when>
+
+                                        <c:otherwise>
+                                            <i class="material-icons circle green">insert_chart</i>
+                                        </c:otherwise>
+                                    </c:choose>
 
                                     <span class="title truncate truncate-card-fix">${index.name}</span>
 

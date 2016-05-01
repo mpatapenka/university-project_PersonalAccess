@@ -67,7 +67,26 @@ public class ReportController {
     }
 
     @RequestMapping(value = "/indexes", method = RequestMethod.GET)
-    public String getReportIndexesPage(Model model) {
+    public String getReportIndexesPage(Model model,
+                                       @RequestParam(required = false) Long periodId,
+                                       @RequestParam(required = false) Integer year,
+                                       @RequestParam(required = false) Long posId,
+                                       @RequestParam(required = false) RateService.RateSort sortType) {
+
+        Period lookupPeriod = periodId != null ? periodHolder.getPeriodById(periodId) :
+                periodHolder.getCurrentPeriod();
+        int lookupYear = year != null ? year : DateUtils.currentYear();
+        RateService.RateSort rateSort = sortType != null ? sortType : RateService.RateSort.DOWNWARDS;
+
+        model.addAttribute("poses", positionService.getAll());
+        model.addAttribute("periods", periodHolder.getAllPeriods());
+        model.addAttribute("periodNameCode", periodHolder.getPeriodsNameCode());
+        model.addAttribute("availYears", periodHolder.getAvailableYears());
+        model.addAttribute("selectedPeriodId", periodHolder.getIdOfPeriod(lookupPeriod));
+        model.addAttribute("selectedYear", lookupYear);
+        model.addAttribute("selectedPosId", posId);
+        model.addAttribute("sortType", rateSort);
+
         return Dir.REPORT + Page.REPORT_INDEXES;
     }
 

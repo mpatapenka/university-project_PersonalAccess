@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Simple realization JPA repository for JavaBean Index
@@ -22,5 +23,14 @@ public interface IndexRepository extends JpaRepository<Index, Long> {
      * @return list of indexes
      */
     List<Index> findByAvailablePositions(Position position);
+
+    /**
+     * Get all indexes for specified position with specified archived flag from database
+     *
+     * @param position Position object
+     * @param isArchived Archived flag
+     * @return List of indexes
+     */
+    Set<Index> findByAvailablePositionsAndIsArchived(Position position, boolean isArchived);
 
 }

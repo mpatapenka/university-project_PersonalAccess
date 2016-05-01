@@ -8,6 +8,7 @@ import org.diploma.personalaccess.bean.Period;
 import org.diploma.personalaccess.config.WebConfig;
 import org.diploma.personalaccess.entity.*;
 import org.diploma.personalaccess.repository.DocumentRepository;
+import org.diploma.personalaccess.repository.IndexRepository;
 import org.diploma.personalaccess.repository.UserIndexRepository;
 import org.diploma.personalaccess.service.UserIndexService;
 import org.diploma.personalaccess.util.DateUtils;
@@ -20,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.sql.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -50,6 +52,12 @@ public class UserIndexServiceImpl implements UserIndexService {
     @Autowired
     private DocumentRepository documentRepository;
 
+    /**
+     * Index repository bean
+     */
+    @Autowired
+    private IndexRepository indexRepository;
+
 
     /**
      * Generate unique file name, which depend on currentPeriod
@@ -75,7 +83,8 @@ public class UserIndexServiceImpl implements UserIndexService {
             return userIndexes;
         }
 
-        Set<Index> availIndexes = user.getForm().getPosition().getAvailableIndexes();
+        Set<Index> availIndexes = indexRepository
+                .findByAvailablePositionsAndIsArchived(user.getForm().getPosition(), false);
         if (userIndexes.size() == availIndexes.size()) {
             return userIndexes;
         }
@@ -83,12 +92,20 @@ public class UserIndexServiceImpl implements UserIndexService {
         Date date = DateUtils.today();
         Set<Index> needToAdd = availIndexes;
 
-        // TODO: Update UserIndexes when index was transferred to other group (need delete appropriate UserIndex)
-
         if (!userIndexes.isEmpty()) {
             /* Save all index elements from each UserIndex to new Set */
             Set<Index> existIndexes = userIndexes.stream().map(UserIndex::getIndex).collect(Collectors.toSet());
             needToAdd = ServiceUtils.subtract(availIndexes, existIndexes);
+
+            /* Remove redundant user indexes */
+            Iterator<UserIndex> userIndexIterator = userIndexes.iterator();
+            while (userIndexIterator.hasNext()) {
+                UserIndex userIndex = userIndexIterator.next();
+                if (!availIndexes.contains(userIndex.getIndex())) {
+                    userIndexRepository.delete(userIndex);
+                    userIndexIterator.remove();
+                }
+            }
         }
 
         /* Create and push empty user indexes */

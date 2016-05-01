@@ -41,6 +41,10 @@ public class Index extends BaseEntity {
     @Length(max = 50)
     private String workName;
 
+    @Expose
+    @Column(name = "is_archived")
+    private boolean isArchived;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "index")
     private Set<UserIndex> userIndexes = new HashSet<>();
 
@@ -84,6 +88,14 @@ public class Index extends BaseEntity {
         this.workName = workName;
     }
 
+    public boolean isArchived() {
+        return isArchived;
+    }
+
+    public void setArchived(boolean archived) {
+        isArchived = archived;
+    }
+
     public Set<UserIndex> getUserIndexes() {
         return userIndexes;
     }
@@ -117,6 +129,7 @@ public class Index extends BaseEntity {
                 .append(multiplier, index.multiplier)
                 .append(name, index.name)
                 .append(workName, index.workName)
+                .append(isArchived, index.isArchived)
                 .isEquals();
     }
 
@@ -128,6 +141,7 @@ public class Index extends BaseEntity {
                 .append("estimate", getEstimate())
                 .append("multiplier", getMultiplier())
                 .append("workName", getWorkName())
+                .append("isArchived", isArchived())
                 .toString();
     }
 

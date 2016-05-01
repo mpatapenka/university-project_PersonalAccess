@@ -102,6 +102,12 @@
                     <input id="form-id" type="hidden" name="id" value="">
                     <div class="row">
                         <div class="input-field col s12">
+                            <input id="isArchived" type="checkbox" name="isArchived"/>
+                            <label for="isArchived"><spring:message code="forms.archived"/></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
                             <textarea id="name" type="text" name="name" class="materialize-textarea validate"></textarea>
                             <label for="name"><spring:message code="forms.name"/></label>
                         </div>

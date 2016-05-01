@@ -34,6 +34,10 @@ function saveIndex() {
     !index.id && delete index.id;
     index.availablePositions = poses;
 
+    // Setup archived flag
+    delete index.isArchived;
+    index.isArchived = $("#isArchived:checked").val() !== undefined;
+
     var jsonIndex = convertToJsonForTransfer(index);
 
     $.ajax({
@@ -95,6 +99,7 @@ function showEditModal(id) {
             $("#estimate").val(obj["estimate"]);
             $("#multiplier").val(obj["multiplier"]);
             $("#workName").val(obj["workName"]);
+            $("#isArchived").prop("checked", obj["isArchived"]);
 
             var selected = [];
             obj.availablePositions.forEach(function (entry) {

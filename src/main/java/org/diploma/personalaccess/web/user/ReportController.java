@@ -71,9 +71,4 @@ public class ReportController {
         return Dir.REPORT + Page.REPORT_INDEXES;
     }
 
-    @RequestMapping(value = "/ranges", method = RequestMethod.GET)
-    public String getReportRangesPage(Model model) {
-        return Dir.REPORT + Page.REPORT_RANGES;
-    }
-
 }

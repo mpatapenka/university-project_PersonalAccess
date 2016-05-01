@@ -79,12 +79,10 @@
     <ul id="reports-drop1" class="dropdown-content">
         <li><a href="<c:url value="/report/employees"/>"><spring:message code="header.employees"/></a></li>
         <li><a href="<c:url value="/report/indexes"/>"><spring:message code="header.indexes"/></a></li>
-        <%--<li><a href="<c:url value="/report/ranges"/>"><spring:message code="header.range"/></a></li>--%>
     </ul>
 
     <ul id="reports-drop2" class="dropdown-content">
         <li><a href="<c:url value="/report/employees"/>"><spring:message code="header.employees"/></a></li>
         <li><a href="<c:url value="/report/indexes"/>"><spring:message code="header.indexes"/></a></li>
-        <%--<li><a href="<c:url value="/report/ranges"/>"><spring:message code="header.range"/></a></li>--%>
     </ul>
 </security:authorize>

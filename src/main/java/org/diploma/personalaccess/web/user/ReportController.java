@@ -2,9 +2,11 @@ package org.diploma.personalaccess.web.user;
 
 import org.diploma.personalaccess.bean.Period;
 import org.diploma.personalaccess.bean.Rate;
+import org.diploma.personalaccess.entity.Position;
 import org.diploma.personalaccess.holder.PeriodHolder;
 import org.diploma.personalaccess.service.PositionService;
 import org.diploma.personalaccess.service.RateService;
+import org.diploma.personalaccess.service.ReportService;
 import org.diploma.personalaccess.util.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -38,6 +40,9 @@ public class ReportController {
     @Autowired
     private RateService rateService;
 
+    @Autowired
+    private ReportService reportService;
+
 
     @RequestMapping(value = "/employees", method = RequestMethod.GET)
     public String getReportEmployeesPage(Model model,
@@ -70,14 +75,14 @@ public class ReportController {
     public String getReportIndexesPage(Model model,
                                        @RequestParam(required = false) Long periodId,
                                        @RequestParam(required = false) Integer year,
-                                       @RequestParam(required = false) Long posId,
-                                       @RequestParam(required = false) RateService.RateSort sortType) {
+                                       @RequestParam(required = false) Long posId) {
 
         Period lookupPeriod = periodId != null ? periodHolder.getPeriodById(periodId) :
                 periodHolder.getCurrentPeriod();
         int lookupYear = year != null ? year : DateUtils.currentYear();
-        RateService.RateSort rateSort = sortType != null ? sortType : RateService.RateSort.DOWNWARDS;
+        Position position = posId == null ? null : positionService.getById(posId);
 
+        model.addAttribute("indexGroups", reportService.getIndexGroups(position, lookupPeriod, lookupYear));
         model.addAttribute("poses", positionService.getAll());
         model.addAttribute("periods", periodHolder.getAllPeriods());
         model.addAttribute("periodNameCode", periodHolder.getPeriodsNameCode());
@@ -85,7 +90,6 @@ public class ReportController {
         model.addAttribute("selectedPeriodId", periodHolder.getIdOfPeriod(lookupPeriod));
         model.addAttribute("selectedYear", lookupYear);
         model.addAttribute("selectedPosId", posId);
-        model.addAttribute("sortType", rateSort);
 
         return Dir.REPORT + Page.REPORT_INDEXES;
     }

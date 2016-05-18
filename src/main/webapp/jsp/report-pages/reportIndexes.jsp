@@ -68,42 +68,54 @@
                 </div>
 
                 <c:choose>
-                    <c:when test="${empty rates or empty selectedPosId}">
+                    <c:when test="${empty indexGroups or empty selectedPosId}">
                         <br>
                         <h6><spring:message code="report.results_missed"/></h6>
                     </c:when>
 
                     <c:otherwise>
                         <ul class="collection">
-                            <c:forEach var="rate" items="${rates}">
+                            <c:forEach var="group" items="${indexGroups}" varStatus="loop">
                                 <li class="collection-item avatar">
                                     <i class="material-icons circle light-blue lighten-1">import_export</i>
 
-                                    <span class="title truncate truncate-card-fix">${rate.user.form.lastName}
-                                    ${rate.user.form.firstName} ${rate.user.form.middleName}</span>
+                                    <span class="title truncate truncate-card-fix">${group.indexes[0].name}</span>
+                                    <p><spring:message code="report.max_estimate"/> ${group.indexes[0].estimate}</p>
+                                    <p><spring:message code="report.sum_estimate"/> ${group.ratesSum}</p>
 
-                                    <c:choose>
-                                        <c:when test="${rate.rate lt 0}">
-                                            <c:set var="rateVal"><spring:message code="control.not_fill"/></c:set>
-                                        </c:when>
+                                    <a href="JavaScript:$('#additional-modal-${loop.index}').openModal();"
+                                       class="secondary-content"><i class="material-icons">info</i></a>
 
-                                        <c:otherwise>
-                                            <c:set var="rateVal" value="${rate.rate}"/>
-                                        </c:otherwise>
-                                    </c:choose>
+                                    <!-- Additional info modal -->
+                                    <div id="additional-modal-${loop.index}" class="modal bottom-sheet">
+                                        <div class="modal-content">
+                                            <h5>${group.indexes[0].name}</h5><hr>
 
-                                    <p><spring:message code="report.rate"/> ${rateVal}</p>
+                                            <c:choose>
+                                                <c:when test="${empty group.faculties}">
+                                                    <h6><spring:message code="report.faculty_info_missed"/></h6>
+                                                </c:when>
+
+                                                <c:otherwise>
+                                                    <h5><spring:message code="report.faculty_info"/></h5><hr>
+
+                                                    <c:forEach var="faculty" items="${group.faculties}" varStatus="loopInternal">
+                                                        <p>${faculty.shortName}: ${group.rates[loopInternal.index]}
+                                                            <spring:message code="report.marks"/></p>
+                                                        <hr>
+                                                    </c:forEach>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <a class="modal-action modal-close waves-effect waves-red btn-flat">
+                                                <spring:message code="forms.cancel"/></a>
+                                        </div>
+                                    </div>
                                 </li>
                             </c:forEach>
                         </ul>
-
-
-                        <c:if test="${not empty rates}">
-                            <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-                                <a class="btn-floating btn-large waves-effect waves-light blue" id="sort-revert">
-                                    <i class="material-icons">swap_calls</i></a>
-                            </div>
-                        </c:if>
                     </c:otherwise>
                 </c:choose>
             </div>
@@ -111,16 +123,6 @@
 
 
         <!-- Hidden bundled values -->
-        <select id="sort-type" class="hide">
-            <c:forEach var="sType" items="UPWARDS,DOWNWARDS">
-                <c:set var="isSelected" value=""/>
-                <c:if test="${sortType eq sType}">
-                    <c:set var="isSelected" value="selected"/>
-                </c:if>
-                <option value="${sType}" ${isSelected}></option>
-            </c:forEach>
-        </select>
-
         <form id="sendReloadRequest" class="hide" action="<c:url value="/report/indexes"/>"></form>
     </main>
 
@@ -129,7 +131,7 @@
     <jsp:include page="../_fragments/static-content-scripts.jsp"/>
 
     <!-- Custom JS for page -->
-    <script src="<c:url value="/resources/js/pages/report.js"/>"></script>
+    <script src="<c:url value="/resources/js/pages/reportIndexes.js"/>"></script>
 </body>
 
 </html>

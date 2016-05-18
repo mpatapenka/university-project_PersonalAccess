@@ -3,6 +3,8 @@ package org.diploma.personalaccess.repository;
 import org.diploma.personalaccess.entity.User;
 import org.diploma.personalaccess.entity.UserIndex;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Date;
@@ -57,5 +59,18 @@ public interface UserIndexRepository extends JpaRepository<UserIndex, Long> {
      * @return count of user indexes
      */
     Long countByUserAndFillDateBetweenAndLeadEstimate(User user, Date start, Date end, int leadEstimate);
+
+    @Query(value = "select sum(ui.leadEstimate) from UserIndex ui where ui.index.id = :indexId " +
+            "and ui.user.form.position.id = :positionId and ui.user.form.faculty.id = :facultyId " +
+            "and (fillDate between :_start and :_end)")
+    Double sumLeadEstimateByIndexAndUserFormFacultyAndUserFormPositionAndFillDateBetween(@Param("indexId") Long indexId,
+          @Param("positionId") Long positionId, @Param("facultyId") Long facultyId, @Param("_start") Date start,
+          @Param("_end") Date end);
+
+    @Query(value = "select sum(ui.leadEstimate) from UserIndex ui where ui.index.id = :indexId " +
+            "and ui.user.form.position.id = :positionId and ui.user.form.faculty.id is null " +
+            "and (fillDate between :_start and :_end)")
+    Double sumLeadEstimateByIndexAndUserFormFacultyNullAndUserFormPositionAndFillDateBetween(@Param("indexId") Long indexId,
+             @Param("positionId") Long positionId, @Param("_start") Date start, @Param("_end") Date end);
 
 }

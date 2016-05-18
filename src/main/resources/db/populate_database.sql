@@ -39,7 +39,7 @@ INSERT INTO `personal_access_database`.`dependency` (`position_lead_id`, `positi
 INSERT INTO `personal_access_database`.`form` (`first_name`, `last_name`, `middle_name`, `unit_id`, `faculty_id`, `position_id`) VALUES ('Максим', 'Потапенко', 'Сергеевич', '2', '1', '1');
 INSERT INTO `personal_access_database`.`form` (`first_name`, `last_name`, `middle_name`, `unit_id`, `faculty_id`, `position_id`) VALUES ('Михаил', 'Астапенко', 'Семенович', '4', '1', '2');
 INSERT INTO `personal_access_database`.`form` (`first_name`, `last_name`, `middle_name`, `unit_id`, `faculty_id`, `position_id`) VALUES ('Игорь', 'Заримов', 'Игнатьевич', '6', '1', '1');
-INSERT INTO `personal_access_database`.`form` (`first_name`, `last_name`, `middle_name`, `unit_id`, `faculty_id`, `position_id`) VALUES ('Тест', 'Проректор', 'Ректорат', '1', '1', '4');
+INSERT INTO `personal_access_database`.`form` (`first_name`, `last_name`, `middle_name`, `unit_id`, `faculty_id`, `position_id`) VALUES ('Тест', 'Проректор', 'Ректорат', '1', NULL, '4');
 INSERT INTO `personal_access_database`.`form` (`first_name`, `last_name`, `middle_name`, `unit_id`, `faculty_id`, `position_id`) VALUES ('Тест', 'Декан', 'Деканат', '5', '1', '3');
 INSERT INTO `personal_access_database`.`form` (`first_name`, `last_name`, `middle_name`, `unit_id`, `faculty_id`, `position_id`) VALUES ('Тест', 'ЗаведующийКафедрой', 'Кафедра', '7', '1', '2');
 

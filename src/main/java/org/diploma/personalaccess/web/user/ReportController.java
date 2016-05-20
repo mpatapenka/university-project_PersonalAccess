@@ -8,6 +8,7 @@ import org.diploma.personalaccess.service.PositionService;
 import org.diploma.personalaccess.service.RateService;
 import org.diploma.personalaccess.service.ReportService;
 import org.diploma.personalaccess.util.DateUtils;
+import org.diploma.personalaccess.util.JsonParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -15,8 +16,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Collection;
+import java.util.List;
 
 import static org.diploma.personalaccess.web.WebConstants.Dir;
 import static org.diploma.personalaccess.web.WebConstants.Page;
@@ -55,7 +57,7 @@ public class ReportController {
                 periodHolder.getCurrentPeriod();
         int lookupYear = year != null ? year : DateUtils.currentYear();
         RateService.RateSort rateSort = sortType != null ? sortType : RateService.RateSort.DOWNWARDS;
-        Collection<Rate> rates = posId == null ? null :
+        List<Rate> rates = posId == null ? null :
                 rateService.getRatesByEmployeePosition(posId, lookupPeriod, lookupYear, rateSort);
 
         model.addAttribute("rates", rates);
@@ -69,6 +71,26 @@ public class ReportController {
         model.addAttribute("sortType", rateSort);
 
         return Dir.REPORT + Page.REPORT_EMPLOYEES;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/employees", method = RequestMethod.GET, params = {"top5"},
+            produces = "text/plain; charset=utf-8")
+    public String getReportIndexesTop5(@RequestParam(required = false) Long periodId,
+                                       @RequestParam(required = false) Integer year,
+                                       @RequestParam(required = false) Long posId,
+                                       @RequestParam(required = false) RateService.RateSort sortType) {
+
+        Period lookupPeriod = periodId != null ? periodHolder.getPeriodById(periodId) :
+                periodHolder.getCurrentPeriod();
+        int lookupYear = year != null ? year : DateUtils.currentYear();
+        RateService.RateSort rateSort = sortType != null ? sortType : RateService.RateSort.DOWNWARDS;
+
+        List<Rate> rates = posId == null ? null :
+                rateService.getRatesByEmployeePosition(posId, lookupPeriod, lookupYear, rateSort);
+        List<Rate> top = rateService.formTop5FromAllRates(rates);
+
+        return JsonParser.convertObjectToJsonString(top);
     }
 
     @RequestMapping(value = "/indexes", method = RequestMethod.GET)

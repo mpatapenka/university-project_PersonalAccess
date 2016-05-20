@@ -12,6 +12,7 @@
     <jsp:include page="../_fragments/static-content-meta.jsp"/>
     <title><spring:message code="report.employees.page_name"/> - <spring:message code="global.app_name"/></title>
     <jsp:include page="../_fragments/static-content-styles.jsp"/>
+    <link href="<c:url value='/resources/css/pages/reportEmployees.css'/>" rel="stylesheet" type="text/css" media="screen,projection"/>
 </head>
 
 <body>
@@ -22,6 +23,12 @@
         <div class="container">
             <div class="section">
                 <h4><spring:message code="report.employees.page_name"/></h4>
+
+                <c:if test="${not empty rates}">
+                    <a id="create-chart" class="waves-effect waves-light btn">
+                        <i class="material-icons left">insert_chart</i>
+                        <spring:message code="report.employees.chart"/></a><br><br>
+                </c:if>
 
                 <div class="row">
                     <div class="input-field col s6">
@@ -110,6 +117,19 @@
         </div>
 
 
+        <!-- Chart modal -->
+        <div id="chart-modal" class="modal bottom-sheet modal-bottom-sheet-expand">
+            <div class="modal-content">
+                <div id="container" class="chart-config"></div>
+            </div>
+
+            <div class="modal-footer">
+                <a class="modal-action modal-close waves-effect waves-red btn-flat">
+                    <spring:message code="forms.cancel"/></a>
+            </div>
+        </div>
+
+
         <!-- Hidden bundled values -->
         <select id="sort-type" class="hide">
             <c:forEach var="sType" items="UPWARDS,DOWNWARDS">
@@ -121,7 +141,14 @@
             </c:forEach>
         </select>
 
+        <div id="chartTitle" class="hide"><spring:message code="chart.title"/></div>
+        <div id="yAxisTitle" class="hide"><spring:message code="chart.axis.y.title"/></div>
+        <div id="seriaName" class="hide"><spring:message code="chart.seria.name"/></div>
+
+        <div id="resultMissed" class="hide"><spring:message code="report.result_mised"/></div>
+
         <form id="sendReloadRequest" class="hide" action="<c:url value="/report/employees"/>"></form>
+        <form id="sendTop5Request" class="hide" action="<c:url value="/report/employees"/>"></form>
     </main>
 
 
@@ -129,7 +156,12 @@
     <jsp:include page="../_fragments/static-content-scripts.jsp"/>
 
     <!-- Custom JS for page -->
-    <script src="<c:url value="/resources/js/pages/report.js"/>"></script>
+    <script src="<c:url value="/resources/js/pages/reportEmployees.js"/>"></script>
+
+    <!-- HighChart.js -->
+    <script src="<c:url value="/resources/js/highcharts/highcharts.js"/>"></script>
+    <script src="<c:url value="/resources/js/highcharts/modules/data.js"/>"></script>
+    <script src="<c:url value="/resources/js/highcharts/modules/drilldown.js"/>"></script>
 </body>
 
 </html>

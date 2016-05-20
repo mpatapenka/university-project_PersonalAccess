@@ -53,21 +53,40 @@ function estimateValidator(estimateFieldName) {
 //                      id of form with url for reload (name 'urlId')
 function multipleSelectChangedReload(event) {
     var paramsKeys = event.data["params"];
-    var params = {};
-    for (var key in paramsKeys) {
-        if (paramsKeys.hasOwnProperty(key)) {
-            var value = $(paramsKeys[key]).val();
-            if (!value) {
-                return;
-            }
+    var params = createParams(paramsKeys);
 
-            params[key] = value;
-        }
+    if (params === null) {
+        return;
     }
 
     var urlFormId = event.data["urlId"];
-    var url = $(urlFormId).attr("action") + "?" + $.param(params);
+    var url = createUrl($(urlFormId).attr("action"), params);
     location.replace(url);
+}
+
+// Create params object from keys
+function createParams(paramsKeys) {
+    var params = {};
+    for (var key in paramsKeys) {
+        if (paramsKeys.hasOwnProperty(key)) {
+            var valueContainerId = paramsKeys[key];
+            if (valueContainerId !== "__-__") {
+                var value = $(valueContainerId).val();
+                if (!value) {
+                    return null;
+                }
+                params[key] = value;
+            } else {
+                params[key] = "";
+            }
+        }
+    }
+    return params;
+}
+
+// Create url from action and params
+function createUrl(action, params) {
+    return action + "?" + $.param(params);
 }
 
 // Set up estimates (lead or self) to user indexes

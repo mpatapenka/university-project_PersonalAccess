@@ -1,5 +1,6 @@
 package org.diploma.personalaccess.entity;
 
+import com.google.gson.annotations.Expose;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -18,11 +19,13 @@ import java.util.Set;
 @Table(name = "form")
 public class Form extends BaseEntity {
 
+    @Expose
     @Column(name = "first_name", length = 50)
     @NotEmpty
     @Length(max = 50)
     private String firstName;
 
+    @Expose
     @Column(name = "last_name", length = 50)
     @NotEmpty
     @Length(max = 50)

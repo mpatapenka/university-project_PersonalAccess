@@ -1,5 +1,6 @@
 package org.diploma.personalaccess.entity;
 
+import com.google.gson.annotations.Expose;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -35,6 +36,7 @@ public class User extends BaseEntity implements UserDetails {
     @Transient
     private boolean active = true;
 
+    @Expose
     @ManyToOne
     @JoinColumn(name = "form_id")
     private Form form;

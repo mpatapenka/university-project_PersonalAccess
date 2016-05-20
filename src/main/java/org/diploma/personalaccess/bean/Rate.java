@@ -1,5 +1,6 @@
 package org.diploma.personalaccess.bean;
 
+import com.google.gson.annotations.Expose;
 import org.diploma.personalaccess.entity.User;
 import org.springframework.core.style.ToStringCreator;
 
@@ -15,11 +16,13 @@ public class Rate implements Serializable {
     /**
      * User info
      */
+    @Expose
     private User user;
 
     /**
      * User rate
      */
+    @Expose
     private double rate;
 
 

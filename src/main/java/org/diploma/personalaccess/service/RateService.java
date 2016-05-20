@@ -3,8 +3,8 @@ package org.diploma.personalaccess.service;
 import org.diploma.personalaccess.bean.Period;
 import org.diploma.personalaccess.bean.Rate;
 
-import java.util.Collection;
 import java.util.Comparator;
+import java.util.List;
 
 /**
  * Service for working with rates and depend on it items
@@ -22,7 +22,9 @@ public interface RateService {
      * @param sortType   rate sort type
      * @return rate collection
      */
-    Collection<Rate> getRatesByEmployeePosition(long positionId, Period period, int year, RateService.RateSort sortType);
+    List<Rate> getRatesByEmployeePosition(long positionId, Period period, int year, RateService.RateSort sortType);
+
+    List<Rate> formTop5FromAllRates(List<Rate> allRates);
 
 
     /**

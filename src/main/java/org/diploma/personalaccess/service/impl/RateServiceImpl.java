@@ -25,7 +25,7 @@ public class RateServiceImpl implements RateService {
 
 
     @Override
-    public Collection<Rate> getRatesByEmployeePosition(long positionId, Period period, int year,
+    public List<Rate> getRatesByEmployeePosition(long positionId, Period period, int year,
                                                        RateService.RateSort sortType) {
         Date startPeriod = period.getStartDateForYear(year);
         Date endPeriod = period.getEndDateForYear(year);
@@ -50,6 +50,29 @@ public class RateServiceImpl implements RateService {
         List<Rate> rates = new ArrayList<>(rateContainer.values());
         Collections.sort(rates, sortType.getComparator());
         return rates;
+    }
+
+    @Override
+    public List<Rate> formTop5FromAllRates(List<Rate> allRates) {
+        final int TOP5_VALUE = 5;
+
+        List<Rate> result;
+        if (allRates.size() > TOP5_VALUE) {
+            // We create list with top 5 person, because we have more then 5
+            result = new ArrayList<>(allRates.subList(0, TOP5_VALUE));
+        } else {
+            result = allRates;
+        }
+
+        Iterator<Rate> iterator = result.iterator();
+        while (iterator.hasNext()) {
+            Rate rate = iterator.next();
+            if (rate.getRate() < 0) {
+                iterator.remove();
+            }
+        }
+
+        return result;
     }
 
 }

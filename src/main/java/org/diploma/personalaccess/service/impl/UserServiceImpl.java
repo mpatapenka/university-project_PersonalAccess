@@ -71,4 +71,9 @@ public class UserServiceImpl implements UserDetailsService, UserService {
                 user.getForm().getPosition().getSubs());
     }
 
+    @Override
+    public void addUser(User user) {
+        userRepository.save(user);
+    }
+
 }

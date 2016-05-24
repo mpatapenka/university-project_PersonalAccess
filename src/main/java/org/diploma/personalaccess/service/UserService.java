@@ -35,4 +35,6 @@ public interface UserService {
      */
     Collection<User> getSubordinates(User user);
 
+    void addUser(User user);
+
 }

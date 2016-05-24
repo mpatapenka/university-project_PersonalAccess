@@ -1,10 +1,10 @@
 package org.diploma.personalaccess.util;
 
 import org.apache.log4j.Logger;
-import org.diploma.personalaccess.entity.Index;
-import org.diploma.personalaccess.entity.User;
-import org.diploma.personalaccess.entity.UserIndex;
+import org.diploma.personalaccess.entity.*;
 
+import javax.naming.NamingException;
+import javax.naming.directory.Attributes;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.sql.Date;
@@ -88,6 +88,42 @@ public final class ServiceUtils {
         }
 
         return prefix + filename + suffix + encodedFilename;
+    }
+
+    public static User buildUserFromLdapAttributes(Attributes attr) {
+        Position position = new Position();
+
+
+        Faculty faculty = new Faculty();
+
+
+        Unit unit = new Unit();
+        unit.setName(getAttr("ou", attr));
+
+
+        Form form = new Form();
+        form.setFirstName(getAttr("givenName", attr));
+        form.setMiddleName(getAttr("initials", attr));
+        form.setLastName(getAttr("sn", attr));
+        form.setPosition(position);
+        form.setFaculty(faculty);
+        form.setUnit(unit);
+
+        User user = new User();
+        user.setUsername(getAttr("uid", attr));
+        user.setPassword("dummy");
+        user.setForm(form);
+
+        return user;
+    }
+
+    private static String getAttr(String name, Attributes attr) {
+        try {
+            return "" + attr.get(name).get();
+        } catch (NamingException e) {
+            log.error("Default message from LDAP can't be interpreted to normal value. Attr name = " + name);
+        }
+        return "";
     }
 
 }

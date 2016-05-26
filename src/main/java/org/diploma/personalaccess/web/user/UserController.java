@@ -96,8 +96,8 @@ public class UserController {
         model.addAttribute("availYears", periodHolder.getAvailableYears());
         model.addAttribute("userIndexes", userIndexes);
         model.addAttribute("isEdit", isEdit);
-        model.addAttribute("selectedPeriodId", periodId);
-        model.addAttribute("selectedYear", year);
+        model.addAttribute("selectedPeriodId", periodHolder.getIdOfPeriod(period));
+        model.addAttribute("selectedYear", yearValue);
 
         return Dir.USER + Page.DASHBOARD;
     }

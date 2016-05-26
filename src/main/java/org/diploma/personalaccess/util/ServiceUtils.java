@@ -5,11 +5,12 @@ import org.diploma.personalaccess.entity.*;
 
 import javax.naming.NamingException;
 import javax.naming.directory.Attributes;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.sql.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Util methods for using in services
@@ -90,31 +91,92 @@ public final class ServiceUtils {
         return prefix + filename + suffix + encodedFilename;
     }
 
-    public static User buildUserFromLdapAttributes(Attributes attr) {
-        Position position = new Position();
-
-
-        Faculty faculty = new Faculty();
-
+    public static User buildUserFromLdapAttributes(Attributes attr, List<Position> positions) {
+        Position position = parseCustomPosition(getAttr("title", attr), positions);
 
         Unit unit = new Unit();
         unit.setName(getAttr("ou", attr));
-
 
         Form form = new Form();
         form.setFirstName(getAttr("givenName", attr));
         form.setMiddleName(getAttr("initials", attr));
         form.setLastName(getAttr("sn", attr));
         form.setPosition(position);
-        form.setFaculty(faculty);
         form.setUnit(unit);
 
         User user = new User();
         user.setUsername(getAttr("uid", attr));
-        user.setPassword("dummy");
+        user.setPassword("unused");
         user.setForm(form);
 
         return user;
+    }
+
+    public static Faculty associateFacultyByUnit(Unit unit, List<Faculty> faculties) {
+        final String propertyFile = "unit-association.properties";
+
+        try {
+            InputStream is = ServiceUtils.class.getClassLoader().getResourceAsStream(propertyFile);
+            Properties properties = new Properties();
+            properties.load(is);
+
+            Map<String, Faculty> chairFacultyAssoc = chairFacultyMapAssociation(properties, faculties);
+
+            return chairFacultyAssoc.get(unit.getName());
+
+        } catch (IOException e) {
+            String message = "Can not find '" + propertyFile + "' in classpath.";
+            log.error(message, e);
+            throw new IllegalArgumentException(message, e);
+        }
+    }
+
+    private static Map<String, Faculty> chairFacultyMapAssociation(Properties bundle, List<Faculty> faculties) {
+        Map<String, Faculty> result = new HashMap<>();
+        for (Object key : bundle.keySet()) {
+            String keyValue = (String) key;
+
+            Faculty value = null;
+            for (Faculty faculty : faculties) {
+                if (keyValue.equals(faculty.getShortName())) {
+                    value = faculty;
+                    break;
+                }
+            }
+
+            if (value == null) {
+                continue;
+            }
+
+            String allCChairs = (String) bundle.get(key);
+            String[] chairsStrs = allCChairs.split(",");
+
+            for (String chairStr : chairsStrs) {
+                result.put(chairStr, value);
+            }
+        }
+
+        return result;
+    }
+
+    private static Position parseCustomPosition(String name, List<Position> positions) {
+        Position employeePos = null;
+
+        for (Position pos : positions) {
+            String simplePosName = pos.getName().trim().toLowerCase();
+            name = name.trim().toLowerCase();
+
+            if (name.contains(simplePosName)) {
+                return pos;
+            }
+
+            /* Hardcoded it lol */
+            if ("сотрудник".equals(simplePosName)) {
+                employeePos = pos;
+            }
+        }
+
+        return employeePos;
     }
 
     private static String getAttr(String name, Attributes attr) {

@@ -55,7 +55,9 @@ public class CustomLdapAuthoritiesPopulator implements LdapAuthoritiesPopulator 
             }
 
             Unit newUnit = unitService.getByName(user.getForm().getUnit().getName());
-            user.getForm().setUnit(newUnit);
+            if (newUnit != null) {
+                user.getForm().setUnit(newUnit);
+            }
 
             Faculty faculty = ServiceUtils.associateFacultyByUnit(user.getForm().getUnit(), facultyService.getAll());
             user.getForm().setFaculty(faculty);

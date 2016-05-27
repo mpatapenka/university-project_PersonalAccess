@@ -36,7 +36,7 @@ public class Form extends BaseEntity {
     @Length(max = 50)
     private String middleName;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "unit_id")
     private Unit unit;
 

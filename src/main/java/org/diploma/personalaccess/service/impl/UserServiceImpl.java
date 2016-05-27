@@ -20,7 +20,7 @@ import java.util.Collection;
  * @author Maksim Patapenka
  */
 @Service
-@Transactional(readOnly = true)
+@Transactional
 public class UserServiceImpl implements UserDetailsService, UserService {
 
     /**

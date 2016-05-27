@@ -37,7 +37,7 @@ public class User extends BaseEntity implements UserDetails {
     private boolean active = true;
 
     @Expose
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "form_id")
     private Form form;
 

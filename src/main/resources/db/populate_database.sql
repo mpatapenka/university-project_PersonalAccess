@@ -35,26 +35,6 @@ INSERT INTO `personal_access_database`.`dependency` (`position_lead_id`, `positi
 
 
 
--- Populate table 'form'
-INSERT INTO `personal_access_database`.`form` (`first_name`, `last_name`, `middle_name`, `unit_id`, `faculty_id`, `position_id`) VALUES ('Максим', 'Потапенко', 'Сергеевич', '2', '1', '1');
-INSERT INTO `personal_access_database`.`form` (`first_name`, `last_name`, `middle_name`, `unit_id`, `faculty_id`, `position_id`) VALUES ('Михаил', 'Астапенко', 'Семенович', '4', '1', '2');
-INSERT INTO `personal_access_database`.`form` (`first_name`, `last_name`, `middle_name`, `unit_id`, `faculty_id`, `position_id`) VALUES ('Игорь', 'Заримов', 'Игнатьевич', '6', '1', '1');
-INSERT INTO `personal_access_database`.`form` (`first_name`, `last_name`, `middle_name`, `unit_id`, `faculty_id`, `position_id`) VALUES ('Тест', 'Проректор', 'Ректорат', '1', NULL, '4');
-INSERT INTO `personal_access_database`.`form` (`first_name`, `last_name`, `middle_name`, `unit_id`, `faculty_id`, `position_id`) VALUES ('Тест', 'Декан', 'Деканат', '5', '1', '3');
-INSERT INTO `personal_access_database`.`form` (`first_name`, `last_name`, `middle_name`, `unit_id`, `faculty_id`, `position_id`) VALUES ('Тест', 'ЗаведующийКафедрой', 'Кафедра', '7', '1', '2');
-
-
-
 -- Populate table 'role'
 INSERT INTO `personal_access_database`.`role` (`name`, `code`) VALUES ('Пользователь', 'ROLE_USER');
 INSERT INTO `personal_access_database`.`role` (`name`, `code`) VALUES ('Администратор', 'ROLE_ADMIN');
-
-
-
--- Populate table 'user'
-INSERT INTO `personal_access_database`.`user` (`username`, `password`, `form_id`, `role_id`) VALUES ('maxim', 'maxim', '1', '2');
-INSERT INTO `personal_access_database`.`user` (`username`, `password`, `form_id`, `role_id`) VALUES ('mihail', '', '2', '1');
-INSERT INTO `personal_access_database`.`user` (`username`, `password`, `form_id`, `role_id`) VALUES ('ihar', '', '3', '1');
-INSERT INTO `personal_access_database`.`user` (`username`, `password`, `form_id`, `role_id`) VALUES ('prorektor', '', '4', '1');
-INSERT INTO `personal_access_database`.`user` (`username`, `password`, `form_id`, `role_id`) VALUES ('dekan', '', '5', '1');
-INSERT INTO `personal_access_database`.`user` (`username`, `password`, `form_id`, `role_id`) VALUES ('zavkaf', '', '6', '1');

@@ -1,5 +1,6 @@
 package org.diploma.personalaccess.util;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.diploma.personalaccess.entity.*;
 
@@ -131,10 +132,11 @@ public final class ServiceUtils {
         }
     }
 
-    private static Map<String, Faculty> chairFacultyMapAssociation(Properties bundle, List<Faculty> faculties) {
+    private static Map<String, Faculty> chairFacultyMapAssociation(Properties bundle, List<Faculty> faculties)
+            throws UnsupportedEncodingException {
         Map<String, Faculty> result = new HashMap<>();
         for (Object key : bundle.keySet()) {
-            String keyValue = (String) key;
+            String keyValue = new String(("" + key).getBytes("ISO-8859-1"), "UTF-8");
 
             Faculty value = null;
             for (Faculty faculty : faculties) {
@@ -148,8 +150,13 @@ public final class ServiceUtils {
                 continue;
             }
 
-            String allCChairs = (String) bundle.get(key);
-            String[] chairsStrs = allCChairs.split(",");
+            String allCChairsNotEncoded = (String) bundle.get(key);
+            String allCChairs = new String(allCChairsNotEncoded.getBytes("ISO-8859-1"), "UTF-8");
+            String[] chairsStrs = allCChairs.split(";");
+
+            if (chairsStrs.length == 1 && StringUtils.isEmpty(chairsStrs[0])) {
+                continue;
+            }
 
             for (String chairStr : chairsStrs) {
                 result.put(chairStr, value);

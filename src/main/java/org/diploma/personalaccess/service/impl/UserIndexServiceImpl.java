@@ -134,7 +134,7 @@ public class UserIndexServiceImpl implements UserIndexService {
         for (UserIndex userIndex : userIndexes) {
             UserIndex oldUserIndex = userIndexRepository.findOne(userIndex.getId());
 
-            if (!oldUserIndex.getUser().equals(user)) {
+            if (!oldUserIndex.getUser().getUsername().equals(user.getUsername())) {
                 String msg = "Trying to edit user indexes by other user! Editor '" + user.getUsername() + "'!";
                 log.error(msg);
                 throw new IllegalArgumentException(msg);

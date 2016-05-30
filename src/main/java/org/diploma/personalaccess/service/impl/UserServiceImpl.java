@@ -1,7 +1,9 @@
 package org.diploma.personalaccess.service.impl;
 
 import org.apache.log4j.Logger;
+import org.diploma.personalaccess.entity.Position;
 import org.diploma.personalaccess.entity.User;
+import org.diploma.personalaccess.repository.FacultyRepository;
 import org.diploma.personalaccess.repository.UserRepository;
 import org.diploma.personalaccess.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +13,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 
 /**
  * UserService internal implementation. Service retrieve user from
@@ -34,6 +38,9 @@ public class UserServiceImpl implements UserDetailsService, UserService {
      */
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private FacultyRepository facultyRepository;
 
 
     /**
@@ -67,7 +74,22 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Override
     public Collection<User> getSubordinates(User user) {
-        return userRepository.findByFormFacultyAndFormPosition(user.getForm().getFaculty(),
+        if (user.getForm().getPosition().getSubs().size() > 1) {
+            Collection<User> allSubs = new ArrayList<>();
+
+            for (Position pos : user.getForm().getPosition().getSubs()) {
+                String posName = pos.getName().toLowerCase();
+                if ("сотрудник".equals(posName)) {
+                    allSubs.addAll(userRepository.findByPositionAndNullFaculty(pos.getId()));
+                } else {
+                    allSubs.addAll(userRepository.findByFormFacultyInAndFormPositionIn(facultyRepository.findAll(),
+                            Collections.singletonList(pos)));
+                }
+            }
+
+            return allSubs;
+        }
+        return userRepository.findByFormFacultyInAndFormPositionIn(Collections.singletonList(user.getForm().getFaculty()),
                 user.getForm().getPosition().getSubs());
     }
 

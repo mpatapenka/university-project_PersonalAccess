@@ -4,6 +4,8 @@ import org.diploma.personalaccess.entity.Faculty;
 import org.diploma.personalaccess.entity.Position;
 import org.diploma.personalaccess.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
@@ -27,10 +29,14 @@ public interface UserRepository extends JpaRepository<User, Long> {
     /**
      * Retrieve users by faculty and positions
      *
-     * @param faculty   faculty
+     * @param faculties List of faculties
      * @param positions collection of search positions
      * @return collection of users
      */
-    Collection<User> findByFormFacultyAndFormPosition(Faculty faculty, Collection<Position> positions);
+    Collection<User> findByFormFacultyInAndFormPositionIn(Collection<Faculty> faculties, Collection<Position> positions);
+
+    @Query(value = "select u from User u where u.form.faculty is null " +
+            "and u.form.position.id = :positionId ")
+    Collection<User> findByPositionAndNullFaculty(@Param("positionId") Long positionId);
 
 }

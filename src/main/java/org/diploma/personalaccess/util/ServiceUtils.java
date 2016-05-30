@@ -116,8 +116,7 @@ public final class ServiceUtils {
     public static Faculty associateFacultyByUnit(Unit unit, List<Faculty> faculties) {
         final String propertyFile = "unit-association.properties";
 
-        try {
-            InputStream is = ServiceUtils.class.getClassLoader().getResourceAsStream(propertyFile);
+        try (InputStream is = ServiceUtils.class.getClassLoader().getResourceAsStream(propertyFile)) {
             Properties properties = new Properties();
             properties.load(is);
 

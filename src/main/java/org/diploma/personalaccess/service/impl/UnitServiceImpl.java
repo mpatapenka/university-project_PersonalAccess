@@ -14,6 +14,11 @@ public class UnitServiceImpl implements UnitService {
 
 
     @Override
+    public void addNew(Unit unit) {
+        unitRepository.save(unit);
+    }
+
+    @Override
     public Unit getByName(String name) {
         return unitRepository.findByName(name);
     }

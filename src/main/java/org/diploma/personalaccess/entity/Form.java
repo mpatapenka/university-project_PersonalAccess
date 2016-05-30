@@ -36,11 +36,11 @@ public class Form extends BaseEntity {
     @Length(max = 50)
     private String middleName;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "unit_id")
     private Unit unit;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "faculty_id")
     private Faculty faculty;
 

@@ -77,13 +77,16 @@
                                     <i class="mdi-action-today indigo-text"></i> 25.02.2016</p>
                                 <p><spring:message code="profile.got_unit"/> - ${uForm.unit.name}.</p>
                             </div>
-                            <div class="block">
-                                <h5><spring:message code="profile.faculty"/></h5>
-                                <p class="helping-text"><i class="mdi-maps-place indigo-text"></i> <spring:message code="global.location.gstu"/>
-                                    <i class="mdi-action-today indigo-text"></i> 25.02.2016</p>
-                                <p><spring:message code="profile.got_faculty"/> - ${uForm.faculty.shortName}.
-                                    <spring:message code="profile.faculty_full_name"/> - ${uForm.faculty.fullName}</p>
-                            </div>
+
+                            <c:if test="${not empty uForm.faculty}">
+                                <div class="block">
+                                    <h5><spring:message code="profile.faculty"/></h5>
+                                    <p class="helping-text"><i class="mdi-maps-place indigo-text"></i> <spring:message code="global.location.gstu"/>
+                                        <i class="mdi-action-today indigo-text"></i> 25.02.2016</p>
+                                    <p><spring:message code="profile.got_faculty"/> - ${uForm.faculty.shortName}.
+                                        <spring:message code="profile.faculty_full_name"/> - ${uForm.faculty.fullName}</p>
+                                </div>
+                            </c:if>
 
                             <h4 class="left-align"><i class="mdi-social-school"></i> <spring:message code="profile.staff"/></h4>
                             <div class="block">

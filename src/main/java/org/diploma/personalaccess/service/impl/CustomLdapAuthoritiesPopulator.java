@@ -54,10 +54,14 @@ public class CustomLdapAuthoritiesPopulator implements LdapAuthoritiesPopulator 
                 user.setRole(roleService.getRoleByCode(RoleService.ROLE_USER));
             }
 
-            Unit newUnit = unitService.getByName(user.getForm().getUnit().getName());
-            if (newUnit != null) {
-                user.getForm().setUnit(newUnit);
+            Unit oldUnit = unitService.getByName(user.getForm().getUnit().getName());
+            if (oldUnit == null) {
+                oldUnit = user.getForm().getUnit();
+                unitService.addNew(oldUnit);
+
+                oldUnit = unitService.getByName(oldUnit.getName());
             }
+            user.getForm().setUnit(oldUnit);
 
             Faculty faculty = ServiceUtils.associateFacultyByUnit(user.getForm().getUnit(), facultyService.getAll());
             user.getForm().setFaculty(faculty);

@@ -9,17 +9,6 @@ INSERT INTO `personal_access_database`.`faculty` (`full_name`, `short_name`) VAL
 
 
 
--- Populate table 'unit'
-INSERT INTO `personal_access_database`.`unit` (`name`) VALUES ('Ректорат');
-INSERT INTO `personal_access_database`.`unit` (`name`) VALUES ('Учебно-методический отдел');
-INSERT INTO `personal_access_database`.`unit` (`name`) VALUES ('Отдел кадров');
-INSERT INTO `personal_access_database`.`unit` (`name`) VALUES ('Библиотека');
-INSERT INTO `personal_access_database`.`unit` (`name`) VALUES ('Деканат');
-INSERT INTO `personal_access_database`.`unit` (`name`) VALUES ('Канцелярия');
-INSERT INTO `personal_access_database`.`unit` (`name`) VALUES ('Кафедра');
-
-
-
 -- Populate table 'position'
 INSERT INTO `personal_access_database`.`position` (`name`) VALUES ('Сотрудник');
 INSERT INTO `personal_access_database`.`position` (`name`) VALUES ('Заведующий кафедрой');
@@ -32,6 +21,7 @@ INSERT INTO `personal_access_database`.`position` (`name`) VALUES ('Прорек
 INSERT INTO `personal_access_database`.`dependency` (`position_lead_id`, `position_sub_id`) VALUES ('2', '1');
 INSERT INTO `personal_access_database`.`dependency` (`position_lead_id`, `position_sub_id`) VALUES ('3', '2');
 INSERT INTO `personal_access_database`.`dependency` (`position_lead_id`, `position_sub_id`) VALUES ('4', '3');
+INSERT INTO `personal_access_database`.`dependency` (`position_lead_id`, `position_sub_id`) VALUES ('4', '1');
 
 
 

@@ -81,16 +81,36 @@ public class UserServiceImpl implements UserDetailsService, UserService {
                 String posName = pos.getName().toLowerCase();
                 if ("сотрудник".equals(posName)) {
                     allSubs.addAll(userRepository.findByPositionAndNullFaculty(pos.getId()));
+
+                    if (log.isDebugEnabled()) {
+                        log.debug("Subs with pos employee: ");
+                        for (User sub : allSubs) {
+                            log.debug(sub.getUsername());
+                        }
+                    }
                 } else {
                     allSubs.addAll(userRepository.findByFormFacultyInAndFormPositionIn(facultyRepository.findAll(),
                             Collections.singletonList(pos)));
+
+                    if (log.isDebugEnabled()) {
+                        log.debug("Subs with other pos: ");
+                        for (User sub : allSubs) {
+                            log.debug(sub.getUsername());
+                        }
+                    }
                 }
             }
 
             return allSubs;
         }
-        return userRepository.findByFormFacultyInAndFormPositionIn(Collections.singletonList(user.getForm().getFaculty()),
-                user.getForm().getPosition().getSubs());
+
+        if (user.getForm().getFaculty() != null) {
+            return userRepository.findByFormFacultyInAndFormPositionIn(
+                    Collections.singletonList(user.getForm().getFaculty()),
+                    user.getForm().getPosition().getSubs());
+        }
+
+        return new ArrayList<>();
     }
 
     @Override

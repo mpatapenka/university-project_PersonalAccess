@@ -143,6 +143,13 @@ public class UserIndexServiceImpl implements UserIndexService {
             oldUserIndex.setFillDate(date);
             oldUserIndex.setSelfEstimate(userIndex.getSelfEstimate());
             oldUserIndex.setComplete(true);
+
+            /* If user is main lead, his marks setting up not only self estimate but also
+             * it's copied to lead estimates */
+            if (user.getForm().getPosition().getLeads() == null
+                    || user.getForm().getPosition().getLeads().isEmpty()) {
+                oldUserIndex.setLeadEstimate(userIndex.getSelfEstimate());
+            }
         }
     }
 

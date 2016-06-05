@@ -3,7 +3,6 @@ package org.diploma.personalaccess.service.impl;
 import org.diploma.personalaccess.bean.Period;
 import org.diploma.personalaccess.bean.ReportHolder;
 import org.diploma.personalaccess.entity.Faculty;
-import org.diploma.personalaccess.entity.Form;
 import org.diploma.personalaccess.entity.Index;
 import org.diploma.personalaccess.entity.Position;
 import org.diploma.personalaccess.repository.FacultyRepository;
@@ -17,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -43,22 +41,8 @@ public class ReportServiceImpl implements ReportService {
             return reports;
         }
 
-        boolean isUseAllFaculties = true;
-
-        if (position.getForms() != null) {
-            Optional<Form> formOptional = position.getForms().stream().findFirst();
-            if (formOptional.isPresent()) {
-                Form randomForm = formOptional.get();
-                if (randomForm.getFaculty() == null) {
-                    isUseAllFaculties = false;
-                }
-            } else {
-                return reports;
-            }
-        }
-
         Set<Index> availableIndexes = indexRepository.findByAvailablePositionsAndIsArchived(position, false);
-        List<Faculty> availableFaculties = facultyRepository.findAll();
+        List<Faculty> availableFaculties = new ArrayList<>(facultyRepository.findAll()); // need copy
         Date start = period.getStartDateForYear(year);
         Date end = period.getEndDateForYear(year);
 
@@ -66,32 +50,39 @@ public class ReportServiceImpl implements ReportService {
             ReportHolder holder = ReportHolder.buildSimpleReportHolder();
             holder.getIndexes().add(availableIndex);
             holder.setUsers(null); // not needed for this report type
-            holder.setFaculties(null); // we might have positions without faculty
+            holder.setFaculties(availableFaculties);
 
             Double sum = 0d;
-            if (isUseAllFaculties) {
-                holder.setFaculties(availableFaculties);
+            for (Faculty availableFaculty : availableFaculties) {
+                Double facultyRate = userIndexRepository
+                        .sumLeadEstimateByIndexAndUserFormFacultyAndUserFormPositionAndFillDateBetween(
+                                availableIndex.getId(), availableFaculty.getId(), position.getId(), start, end);
 
-                for (Faculty availableFaculty : availableFaculties) {
-                    Double facultyRate = userIndexRepository
-                            .sumLeadEstimateByIndexAndUserFormFacultyAndUserFormPositionAndFillDateBetween(
-                                    availableIndex.getId(), availableFaculty.getId(), position.getId(), start, end);
+                facultyRate = facultyRate != null && facultyRate >= 0 ? facultyRate : 0d;
 
-                    facultyRate = facultyRate != null && facultyRate >= 0 ? facultyRate : 0d;
-
-                    holder.getRates().add(facultyRate);
-                    sum += facultyRate;
-                }
-            } else {
-                sum = userIndexRepository
-                        .sumLeadEstimateByIndexAndUserFormFacultyNullAndUserFormPositionAndFillDateBetween(
-                                availableIndex.getId(), position.getId(), start, end);
-                sum = sum!= null && sum >= 0 ? sum : 0d;
+                holder.getRates().add(facultyRate);
+                sum += facultyRate;
             }
+
+            Double withoutFacultyRate = userIndexRepository
+                    .sumLeadEstimateByIndexAndUserFormFacultyNullAndUserFormPositionAndFillDateBetween(
+                            availableIndex.getId(), position.getId(), start, end);
+
+            withoutFacultyRate = withoutFacultyRate!= null && withoutFacultyRate >= 0 ? withoutFacultyRate : 0d;
+
+            holder.getRates().add(withoutFacultyRate);
+            sum += withoutFacultyRate;
+
             holder.setRatesSum(sum);
 
             reports.add(holder);
         }
+
+        Faculty emptyFaculty = new Faculty();
+        emptyFaculty.setShortName("Остальные");
+
+        availableFaculties.add(emptyFaculty);
+
         return reports;
     }
 

@@ -220,8 +220,7 @@ public class UserIndexServiceImpl implements UserIndexService {
     public void setupLeadEstimatesOfUser(List<UserIndex> userIndexes, User lead, User sub) {
         Position subPos = sub.getForm().getPosition();
         Position leadPos = lead.getForm().getPosition();
-        if (!leadPos.getSubs().contains(subPos)
-                || !lead.getForm().getFaculty().equals(sub.getForm().getFaculty())) {
+        if (!leadPos.getSubs().contains(subPos)) {
             String msg = "Trying to edit user indexes of other user which not your subordinate! Editor '" +
                     lead.getUsername() + "'!";
             log.error(msg);
@@ -231,7 +230,7 @@ public class UserIndexServiceImpl implements UserIndexService {
         for (UserIndex userIndex : userIndexes) {
             UserIndex oldUserIndex = userIndexRepository.findOne(userIndex.getId());
 
-            if (!oldUserIndex.getUser().equals(sub)) {
+            if (!oldUserIndex.getUser().getUsername().equals(sub.getUsername())) {
                 String msg = "Trying to edit user indexes of other user! Editor '" + lead.getUsername() + "'!";
                 log.error(msg);
                 throw new IllegalArgumentException(msg);

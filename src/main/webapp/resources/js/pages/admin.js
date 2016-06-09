@@ -78,6 +78,7 @@ function deleteIndex() {
 function showAddModal() {
     $("#addModalHeader").html($("#addIndexHeader").html());
     $("#index-form")[0].reset();
+    $("#form-id").val("");
     $("input,textarea").next("label").removeClass("active");
     $("#selected-poses").val($("#positions").val());
     $("select").material_select();

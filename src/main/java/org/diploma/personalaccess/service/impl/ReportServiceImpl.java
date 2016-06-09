@@ -56,7 +56,7 @@ public class ReportServiceImpl implements ReportService {
             for (Faculty availableFaculty : availableFaculties) {
                 Double facultyRate = userIndexRepository
                         .sumLeadEstimateByIndexAndUserFormFacultyAndUserFormPositionAndFillDateBetween(
-                                availableIndex.getId(), availableFaculty.getId(), position.getId(), start, end);
+                                availableIndex.getId(), position.getId(), availableFaculty.getId(), start, end);
 
                 facultyRate = facultyRate != null && facultyRate >= 0 ? facultyRate : 0d;
 

@@ -172,9 +172,9 @@ public class PeriodHolderImpl implements PeriodHolder {
             return entries.get((int) id);
         }
 
-        String msg = "Unsupported id '" + id + "'!";
-        log.error(msg);
-        throw new IllegalArgumentException(msg);
+        log.error("Unsupported id '" + id + "'!");
+
+        return getCurrentPeriod();
     }
 
     @Override
